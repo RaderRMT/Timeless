@@ -1,4 +1,4 @@
-package fr.rader.timeless.mixin.oldhitanimation;
+package fr.rader.timeless.mixin.hitdirection;
 
 import fr.rader.timeless.Timeless;
 import net.minecraft.entity.EntityType;

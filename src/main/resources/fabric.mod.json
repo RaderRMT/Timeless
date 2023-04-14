@@ -1,0 +1,36 @@
+{
+  "schemaVersion": 1,
+  "id": "timeless",
+  "version": "${version}",
+  "name": "Timeless",
+  "description": "Brings back old features/bugs to new versions",
+  "authors": [
+    "Rader"
+  ],
+  "contact": {
+    "website": "https://rader.fr/",
+    "repo": "https://github.com/RaderRMT/Timeless"
+  },
+  "license": "GPL-3.0",
+  "icon": "assets/timeless/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "fr.rader.timeless.client.TimelessClient"
+    ],
+    "main": [
+      "fr.rader.timeless.Timeless"
+    ],
+    "modmenu": [
+      "fr.rader.timeless.gui.ConfigScreen"
+    ]
+  },
+  "mixins": [
+    "timeless.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "fabric": "*",
+    "minecraft": "${minecraft_version}"
+  }
+}

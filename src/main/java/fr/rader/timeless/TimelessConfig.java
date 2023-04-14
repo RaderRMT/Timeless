@@ -7,5 +7,5 @@ import me.shedaniel.autoconfig.annotation.Config;
 public class TimelessConfig implements ConfigData {
 
     public boolean useOldWorldMenu = true;
-    public boolean useOldHitAnimation = true;
+    public boolean disableHitDirection = true;
 }

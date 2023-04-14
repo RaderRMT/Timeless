@@ -20,7 +20,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
 
     @Override
     public void animateDamage(float yaw) {
-        if (Timeless.getConfig().useOldHitAnimation) {
+        if (Timeless.getConfig().disableHitDirection) {
             yaw = 0;
         }
 

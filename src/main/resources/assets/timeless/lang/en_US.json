@@ -2,5 +2,5 @@
   "text.autoconfig.timeless.title": "Timeless",
 
   "text.autoconfig.timeless.option.useOldWorldMenu": "Use Old World Menu",
-  "text.autoconfig.timeless.option.useOldHitAnimation": "Use Old Hit Animation"
+  "text.autoconfig.timeless.option.disableHitDirection": "Disable Hit Direction"
 }

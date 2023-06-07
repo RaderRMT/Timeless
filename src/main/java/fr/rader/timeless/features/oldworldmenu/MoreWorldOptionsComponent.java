@@ -3,6 +3,7 @@ package fr.rader.timeless.features.oldworldmenu;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.font.MultilineText;
 import net.minecraft.client.font.TextRenderer;
+import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.world.CreateWorldScreen;
 import net.minecraft.client.gui.screen.world.LevelScreenProvider;
 import net.minecraft.client.gui.screen.world.WorldCreator;
@@ -10,7 +11,6 @@ import net.minecraft.client.gui.widget.ButtonWidget;
 import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.client.util.math.MatrixStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -116,15 +116,15 @@ public class MoreWorldOptionsComponent {
         this.seedField.setVisible(visible);
     }
 
-    public void render(MatrixStack matrices) {
+    public void render(DrawContext context) {
         boolean isDebug = isDebug();
 
         if (!isDebug) {
-            this.textRenderer.drawWithShadow(matrices, GENERATE_STRUCTURES_INFO_TEXT, this.halfWidth - 150, 122, GRAY_COLOR);
+            context.drawTextWithShadow(this.textRenderer, GENERATE_STRUCTURES_INFO_TEXT, this.halfWidth - 150, 122, GRAY_COLOR);
         }
 
         if (this.worldCreator.getWorldType().isAmplified()) {
-            this.amplifiedWorldInfo.drawWithShadow(matrices, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, GRAY_COLOR);
+            this.amplifiedWorldInfo.drawWithShadow(context, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, GRAY_COLOR);
         }
 
         this.generateStructuresButton.visible = !isDebug;

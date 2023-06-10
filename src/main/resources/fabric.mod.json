@@ -16,9 +16,6 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "fr.rader.timeless.client.TimelessClient"
-    ],
-    "main": [
       "fr.rader.timeless.Timeless"
     ],
     "modmenu": [

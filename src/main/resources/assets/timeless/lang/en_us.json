@@ -4,5 +4,6 @@
   "text.autoconfig.timeless.option.useOldWorldMenu": "Use Old World Menu",
   "text.autoconfig.timeless.option.disableHitDirection": "Disable Hit Direction",
   "text.autoconfig.timeless.option.useOldIcons": "Use Old Icons",
-  "text.autoconfig.timeless.option.doPistonClunk": "Do Piston Clunk"
+  "text.autoconfig.timeless.option.doPistonClunk": "Do Piston Clunk",
+  "text.autoconfig.timeless.option.skeletonShootPurpleArrow": "Skeleton Shoot Purple Arrow"
 }

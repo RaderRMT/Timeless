@@ -14,4 +14,5 @@ public class TimelessConfig implements ConfigData {
     public boolean useOldIcons = true;
 
     public boolean doPistonClunk = true;
+    public boolean skeletonShootPurpleArrow = true;
 }

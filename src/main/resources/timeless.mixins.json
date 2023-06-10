@@ -9,7 +9,9 @@
     "hitdirection.MixinPlayerEntity",
     "icons.MixinIcons",
     "oldworldmenu.MixinCreateWorldScreen",
-    "piston.MixinPistonBlock"
+    "piston.MixinPistonBlock",
+    "purplearrow.MixinArrowEntityRenderer",
+    "purplearrow.MixinEntity"
   ],
   "injectors": {
     "defaultRequire": 1

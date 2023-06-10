@@ -12,4 +12,6 @@ public class TimelessConfig implements ConfigData {
 
     @ConfigEntry.Gui.RequiresRestart()
     public boolean useOldIcons = true;
+
+    public boolean doPistonClunk = true;
 }

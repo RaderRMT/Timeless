@@ -4,11 +4,12 @@
   "package": "fr.rader.timeless.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
-    "hitdirection.MixinPlayerEntity"
   ],
   "client": [
+    "hitdirection.MixinPlayerEntity",
     "icons.MixinIcons",
-    "oldworldmenu.MixinCreateWorldScreen"
+    "oldworldmenu.MixinCreateWorldScreen",
+    "piston.MixinPistonBlock"
   ],
   "injectors": {
     "defaultRequire": 1

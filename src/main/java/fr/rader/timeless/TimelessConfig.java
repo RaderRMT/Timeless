@@ -24,8 +24,8 @@ public class TimelessConfig implements ConfigData {
 
     @ConfigEntry.Gui.RequiresRestart()
     @Comment(
-            "Use the old window icons that was a" +
-            "crafting table.\n"
+            "Use the old window icons that was a\n" +
+            "crafting table."
     )
     public boolean useOldWindowIcons = true;
 

@@ -25,22 +25,22 @@ group = project.maven_group
 
 def mappingsVersions = [
         11904: "1.19.4+build.2",
-        12000: "1.20+build.1"
+        12001: "1.20.1+build.1"
 ]
 
 def fabricApiVersions = [
         11904: "0.83.0+1.19.4",
-        12000: "0.83.0+1.20"
+        12001: "0.83.0+1.20.1"
 ]
 
 def modMenuVersions = [
         11904: "6.2.3",
-        12000: "7.0.1"
+        12001: "7.0.1"
 ]
 
 def clothConfigVersions = [
         11904: "10.0.96",
-        12000: "11.0.99"
+        12001: "11.0.99"
 ]
 
 repositories {
@@ -62,7 +62,7 @@ dependencies {
     }
 }
 
-if (project.name == '1.20') {
+if (project.name == '1.20.1') {
     tasks.register('generateJava', Copy) {
         from "${project.parent.projectDir}/src/template/java"
         into "${project.parent.buildDir}/generated/java"
@@ -83,14 +83,12 @@ preprocess {
 
 processResources {
     inputs.property("version", project.version)
-    inputs.property("minecraft_version", project.name)
     inputs.property("loader_version", project.loader_version)
 
     filteringCharset("UTF-8")
     filesMatching("fabric.mod.json") {
         expand(
                 "version": project.version,
-                "minecraft_version": project.name,
                 "loader_version": project.loader_version
         )
     }

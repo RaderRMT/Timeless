@@ -7,11 +7,16 @@
   ],
   "client": [
     "hitdirection.MixinPlayerEntity",
-    "icons.MixinIcons",
     "oldworldmenu.MixinCreateWorldScreen",
     "piston.MixinPistonBlock",
     "purplearrow.MixinArrowEntityRenderer",
-    "purplearrow.MixinEntity"
+    "purplearrow.MixinEntity",
+
+    //#if MC>=12000
+    "icons.MixinIcons"
+    //#else
+    //$$ "icons.MixinMinecraftClient"
+    //#endif
   ],
   "injectors": {
     "defaultRequire": 1

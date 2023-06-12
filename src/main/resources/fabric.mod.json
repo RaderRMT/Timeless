@@ -3,7 +3,7 @@
   "id": "timeless",
   "version": "${version}",
   "name": "Timeless",
-  "description": "Brings back old features/bugs to new versions",
+  "description": "Reintroduce removed features, fixed bugs, or mentioned features that never made it to the game.",
   "authors": [
     "Rader"
   ],

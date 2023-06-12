@@ -9,7 +9,6 @@ import net.minecraft.sound.SoundCategory;
 import net.minecraft.sound.SoundEvents;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Direction;
-import net.minecraft.world.RedstoneView;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -18,6 +17,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+//#if MC>=12000
+import net.minecraft.world.RedstoneView;
+//#endif
+
 @Mixin(PistonBlock.class)
 public abstract class MixinPistonBlock {
 
@@ -25,7 +28,11 @@ public abstract class MixinPistonBlock {
     protected abstract boolean move(World world, BlockPos pos, Direction dir, boolean retract);
 
     @Shadow
+    //#if MC>=12000
     protected abstract boolean shouldExtend(RedstoneView world, BlockPos pos, Direction pistonFace);
+    //#else
+    //$$ protected abstract boolean shouldExtend(World world, BlockPos pos, Direction pistonFace);
+    //#endif
 
     private static final int PISTON_CLUNK_EVENT_ID = 100;
 

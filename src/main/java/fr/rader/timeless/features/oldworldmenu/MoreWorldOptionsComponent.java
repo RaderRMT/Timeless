@@ -12,6 +12,10 @@ import net.minecraft.client.gui.widget.ClickableWidget;
 import net.minecraft.client.gui.widget.CyclingButtonWidget;
 import net.minecraft.client.gui.widget.TextFieldWidget;
 
+//#if MC<=11904
+//$$ import net.minecraft.client.util.math.MatrixStack;
+//#endif
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -116,6 +120,7 @@ public class MoreWorldOptionsComponent {
         this.seedField.setVisible(visible);
     }
 
+    //#if MC>=12000
     public void render(DrawContext context) {
         boolean isDebug = isDebug();
 
@@ -131,6 +136,23 @@ public class MoreWorldOptionsComponent {
         this.bonusChestButton.visible = !isDebug;
         this.customizeWorldButton.visible = !isDebug && this.worldCreator.getLevelScreenProvider() != null;
     }
+    //#else
+    //$$ public void render(MatrixStack matrices) {
+    //$$     boolean isDebug = isDebug();
+    //$$
+    //$$     if (!isDebug) {
+    //$$         this.textRenderer.drawWithShadow(matrices, GENERATE_STRUCTURES_INFO_TEXT, this.halfWidth - 150, 122, GRAY_COLOR);
+    //$$     }
+    //$$
+    //$$     if (this.worldCreator.getWorldType().isAmplified()) {
+    //$$         this.amplifiedWorldInfo.drawWithShadow(matrices, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, GRAY_COLOR);
+    //$$     }
+    //$$
+    //$$     this.generateStructuresButton.visible = !isDebug;
+    //$$     this.bonusChestButton.visible = !isDebug;
+    //$$     this.customizeWorldButton.visible = !isDebug && this.worldCreator.getLevelScreenProvider() != null;
+    //$$ }
+    //#endif
 
     private CyclingButtonWidget.Values<WorldCreator.WorldType> getWorldTypes() {
         return new CyclingButtonWidget.Values<>() {

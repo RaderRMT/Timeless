@@ -27,7 +27,7 @@ public abstract class MixinIcons {
             cancellable = true
     )
     public void getIcons(ResourcePack resourcePack, CallbackInfoReturnable<List<InputSupplier<InputStream>>> cir) {
-        if (!Timeless.getConfig().useOldIcons) {
+        if (!Timeless.getConfig().useOldWindowIcons) {
             return;
         }
 
@@ -45,7 +45,7 @@ public abstract class MixinIcons {
             cancellable = true
     )
     public void getMacIcon(ResourcePack resourcePack, CallbackInfoReturnable<InputSupplier<InputStream>> cir) {
-        if (!Timeless.getConfig().useOldIcons) {
+        if (!Timeless.getConfig().useOldWindowIcons) {
             return;
         }
 

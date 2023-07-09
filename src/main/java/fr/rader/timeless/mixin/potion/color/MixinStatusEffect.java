@@ -9,7 +9,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 @Mixin(StatusEffect.class)
-public class MixinStatusEffect {
+public abstract class MixinStatusEffect {
 
     @Unique
     private static final int[] POTION_COLORS = {

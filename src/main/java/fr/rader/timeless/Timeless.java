@@ -10,12 +10,15 @@ public class Timeless implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
-        AutoConfig.register(TimelessConfig.class, GsonConfigSerializer::new);
-
-        Timeless.config = AutoConfig.getConfigHolder(TimelessConfig.class).getConfig();
     }
 
     public static TimelessConfig getConfig() {
-        return config;
+        if (Timeless.config == null) {
+            AutoConfig.register(TimelessConfig.class, GsonConfigSerializer::new);
+
+            Timeless.config = AutoConfig.getConfigHolder(TimelessConfig.class).getConfig();
+        }
+
+        return Timeless.config;
     }
 }

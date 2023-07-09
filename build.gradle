@@ -62,6 +62,12 @@ dependencies {
     }
 }
 
+if (mcVersion >= 12000) {
+    loom.accessWidenerPath = rootProject.file("src/main/resources/timeless.accesswidener")
+} else {
+    loom.accessWidenerPath = rootProject.file("versions/1.19.4/src/main/resources/timeless.accesswidener")
+}
+
 if (project.name == '1.20.1') {
     tasks.register('generateJava', Copy) {
         from "${project.parent.projectDir}/src/template/java"

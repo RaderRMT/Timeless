@@ -7,8 +7,11 @@
   ],
   "client": [
     "hitdirection.MixinPlayerEntity",
+    "oldinventory.MixinItemGroups",
     "oldworldmenu.MixinCreateWorldScreen",
     "piston.MixinPistonBlock",
+    "potion.color.MixinStatusEffect",
+    "potion.glint.MixinPotionItem",
     "purplearrow.MixinArrowEntityRenderer",
     "purplearrow.MixinEntity",
 

@@ -42,4 +42,22 @@ public class TimelessConfig implements ConfigData {
             "used to in Survival Test."
     )
     public boolean skeletonShootPurpleArrow = true;
+
+    @ConfigEntry.Gui.RequiresRestart()
+    @Comment(
+            "§c§lWARNING: MIGHT BE UNSTABLE WITH OTHER MODS\n" +
+            "§fUse the inventory layout used prior to 1.19.4"
+    )
+    public boolean useOldInventoryLayout = true;
+
+    @Comment(
+            "Enable the potion glint that was removed in 1.19.4"
+    )
+    public boolean enablePotionGlint = true;
+
+    @Comment(
+            "Use the old potion colors that were\n" +
+            "changed in 1.19.4"
+    )
+    public boolean useOldPotionColors = true;
 }

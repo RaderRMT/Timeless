@@ -25,22 +25,26 @@ group = project.maven_group
 
 def mappingsVersions = [
         11904: "1.19.4+build.2",
-        12001: "1.20.1+build.1"
+        12001: "1.20.1+build.1",
+        12002: "1.20.2-rc2+build.4"
 ]
 
 def fabricApiVersions = [
         11904: "0.83.0+1.19.4",
-        12001: "0.83.0+1.20.1"
+        12001: "0.83.0+1.20.1",
+        12002: "0.88.5+1.20.2"
 ]
 
 def modMenuVersions = [
         11904: "6.2.3",
-        12001: "7.0.1"
+        12001: "7.0.1",
+        12002: "8.0.0-beta.2"
 ]
 
 def clothConfigVersions = [
         11904: "10.0.96",
-        12001: "11.0.99"
+        12001: "11.0.99",
+        12002: "12.0.107"
 ]
 
 repositories {
@@ -68,7 +72,7 @@ if (mcVersion >= 12000) {
     loom.accessWidenerPath = rootProject.file("versions/1.19.4/src/main/resources/timeless.accesswidener")
 }
 
-if (project.name == '1.20.1') {
+if (project.name == '1.20.2-rc2') {
     tasks.register('generateJava', Copy) {
         from "${project.parent.projectDir}/src/template/java"
         into "${project.parent.buildDir}/generated/java"

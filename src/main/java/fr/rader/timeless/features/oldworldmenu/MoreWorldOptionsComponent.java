@@ -98,9 +98,11 @@ public class MoreWorldOptionsComponent {
         return elements;
     }
 
-    public void tick() {
-        this.seedField.tick();
-    }
+    //#if MC<=12001
+    //$$ public void tick() {
+    //$$     this.seedField.tick();
+    //$$ }
+    //#endif
 
     public boolean isDebug() {
         return this.worldCreator.isDebug();

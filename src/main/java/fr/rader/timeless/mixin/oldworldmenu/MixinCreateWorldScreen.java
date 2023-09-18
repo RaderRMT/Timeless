@@ -79,7 +79,12 @@ public abstract class MixinCreateWorldScreen extends Screen {
             return;
         }
 
-        renderBackground(context);
+        //#if MC>=12002
+        renderBackground(context, mouseX, mouseY, delta);
+        //#else
+        //$$ renderBackground(context);
+        //#endif
+
         context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.halfWidth, 20, -1);
 
         int textPositionX = this.halfWidth - 100;
@@ -252,21 +257,23 @@ public abstract class MixinCreateWorldScreen extends Screen {
         ci.cancel();
     }
 
-    @Inject(
-            method = "tick",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    public void tick(CallbackInfo ci) {
-        if (!Timeless.getConfig().useOldWorldMenu) {
-            return;
-        }
-
-        this.worldName.tick();
-        this.moreWorldOptionsComponent.tick();
-
-        ci.cancel();
-    }
+    //#if MC<=12001
+    //$$ @Inject(
+    //$$         method = "tick",
+    //$$         at = @At("HEAD"),
+    //$$         cancellable = true
+    //$$ )
+    //$$ public void tick(CallbackInfo ci) {
+    //$$     if (!Timeless.getConfig().useOldWorldMenu) {
+    //$$         return;
+    //$$     }
+    //$$
+    //$$     this.worldName.tick();
+    //$$     this.moreWorldOptionsComponent.tick();
+    //$$
+    //$$     ci.cancel();
+    //$$ }
+    //#endif
 
     @Inject(
             method = "keyPressed",

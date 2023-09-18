@@ -2,6 +2,7 @@ package fr.rader.timeless.mixin.potion.color;
 
 import fr.rader.timeless.Timeless;
 import net.minecraft.entity.effect.StatusEffect;
+import net.minecraft.registry.Registries;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
@@ -59,7 +60,11 @@ public abstract class MixinStatusEffect {
         }
 
         // we have to subtract 1 because potion id starts at 1
-        int id = StatusEffect.getRawId((StatusEffect) (Object) this) - 1;
+        //#if MC>=12002
+        int id = Registries.STATUS_EFFECT.getRawId(((StatusEffect) (Object) this));
+        //#else
+        //$$int id = StatusEffect.getRawId((StatusEffect) (Object) this) - 1;
+        //#endif
         cir.setReturnValue(POTION_COLORS[id]);
     }
 }

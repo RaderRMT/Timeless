@@ -54,7 +54,7 @@ public abstract class MixinStatusEffect {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void getColor(CallbackInfoReturnable<Integer> cir) {
+    public void timeless$getColor(CallbackInfoReturnable<Integer> cir) {
         if (!Timeless.getConfig().useOldPotionColors) {
             return;
         }

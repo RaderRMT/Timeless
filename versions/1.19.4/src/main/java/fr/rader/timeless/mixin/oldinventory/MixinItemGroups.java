@@ -99,7 +99,7 @@ public abstract class MixinItemGroups {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void test(CallbackInfo ci) {
+    private static void timeless$clinit(CallbackInfo ci) {
         if (!Timeless.getConfig().useOldInventoryLayout) {
             return;
         }

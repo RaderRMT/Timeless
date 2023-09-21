@@ -17,6 +17,7 @@ import net.minecraft.world.Difficulty;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -42,25 +43,25 @@ public abstract class MixinCreateWorldScreen extends Screen {
     @Final
     WorldCreator worldCreator;
 
-    private MoreWorldOptionsComponent moreWorldOptionsComponent;
-    private boolean isWorldOptionsToggled;
+    @Unique private MoreWorldOptionsComponent moreWorldOptionsComponent;
+    @Unique private boolean isWorldOptionsToggled;
 
-    private TextFieldWidget worldName;
-    private Text worldDirectoryName;
+    @Unique private TextFieldWidget worldName;
+    @Unique private Text worldDirectoryName;
 
-    private CyclingButtonWidget<WorldCreator.Mode> gameModeButton;
-    private WorldCreator.Mode nonDebugGameMode;
-    private Text gameModeHelp1;
-    private Text gameModeHelp2;
+    @Unique private CyclingButtonWidget<WorldCreator.Mode> gameModeButton;
+    @Unique private WorldCreator.Mode nonDebugGameMode;
+    @Unique private Text gameModeHelp1;
+    @Unique private Text gameModeHelp2;
 
-    private CyclingButtonWidget<Difficulty> difficultyButton;
-    private CyclingButtonWidget<Boolean> allowCheatsButton;
+    @Unique private CyclingButtonWidget<Difficulty> difficultyButton;
+    @Unique private CyclingButtonWidget<Boolean> allowCheatsButton;
 
-    private ButtonWidget dataPacksButton;
-    private ButtonWidget gameRulesButton;
-    private ButtonWidget moreWorldOptionsButton;
+    @Unique private ButtonWidget dataPacksButton;
+    @Unique private ButtonWidget gameRulesButton;
+    @Unique private ButtonWidget moreWorldOptionsButton;
 
-    private int halfWidth;
+    @Unique private int halfWidth;
 
     protected MixinCreateWorldScreen(Text title) {
         super(title);
@@ -74,7 +75,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
             cancellable = true
     )
     //#if MC>=12000
-    public void render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void timeless$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (!Timeless.getConfig().useOldWorldMenu) {
             return;
         }
@@ -111,7 +112,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
         ci.cancel();
     }
     //#else
-    //$$ public void render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    //$$ public void timeless$render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
     //$$     if (!Timeless.getConfig().useOldWorldMenu) {
     //$$         return;
     //$$     }
@@ -149,7 +150,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void init(CallbackInfo ci) {
+    public void timeless$init(CallbackInfo ci) {
         if (!Timeless.getConfig().useOldWorldMenu) {
             return;
         }
@@ -263,7 +264,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
     //$$         at = @At("HEAD"),
     //$$         cancellable = true
     //$$ )
-    //$$ public void tick(CallbackInfo ci) {
+    //$$ public void timeless$tick(CallbackInfo ci) {
     //$$     if (!Timeless.getConfig().useOldWorldMenu) {
     //$$         return;
     //$$     }
@@ -280,7 +281,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
+    public void timeless$keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
         if (!Timeless.getConfig().useOldWorldMenu) {
             return;
         }
@@ -294,7 +295,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void initTabNavigation(CallbackInfo ci) {
+    public void timeless$initTabNavigation(CallbackInfo ci) {
         if (!Timeless.getConfig().useOldWorldMenu) {
             return;
         }
@@ -303,12 +304,14 @@ public abstract class MixinCreateWorldScreen extends Screen {
         ci.cancel();
     }
 
+    @Unique
     private void setWorldName(String newWorldName) {
         this.worldCreator.setWorldName(newWorldName);
 
         updateWorldDirectoryName();
     }
 
+    @Unique
     private void updateWorldDirectoryName() {
         this.worldDirectoryName = Text.empty()
                 .append(WORLD_DIRECTORY_NAME_LABEL)
@@ -316,12 +319,14 @@ public abstract class MixinCreateWorldScreen extends Screen {
                 .append(this.worldCreator.getWorldDirectoryName());
     }
 
+    @Unique
     private void setGameMode(WorldCreator.Mode gameMode) {
         this.worldCreator.setGameMode(gameMode);
 
         updateGameModeHelp(gameMode);
     }
 
+    @Unique
     private void updateGameModeHelp(WorldCreator.Mode gameMode) {
         String gameModeName = gameMode.name().toLowerCase();
         if (gameModeName.equals("debug")) {
@@ -332,14 +337,17 @@ public abstract class MixinCreateWorldScreen extends Screen {
         this.gameModeHelp2 = Text.translatable("selectWorld.gameMode." + gameModeName + ".line2");
     }
 
+    @Unique
     private void toggleWorldOptionsVisibility() {
         setWorldOptionsVisibility(!this.isWorldOptionsToggled);
     }
 
+    @Unique
     private void updateWorldOptionsVisibility() {
         setWorldOptionsVisibility(this.isWorldOptionsToggled);
     }
 
+    @Unique
     private void setWorldOptionsVisibility(boolean visible) {
         this.isWorldOptionsToggled = visible;
         this.gameModeButton.visible = !visible;

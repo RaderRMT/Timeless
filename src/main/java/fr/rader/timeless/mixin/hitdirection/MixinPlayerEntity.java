@@ -21,7 +21,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
             at = @At("HEAD"),
             argsOnly = true
     )
-    public float disableHitDirection(float yaw) {
+    public float timeless$disableHitDirection(float yaw) {
         if (Timeless.getConfig().disableHitDirection) {
             return 0;
         }

@@ -21,7 +21,7 @@ public abstract class MixinIcons {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void getIcons(ResourcePack resourcePack, CallbackInfoReturnable<List<InputSupplier<InputStream>>> cir) {
+    public void timeless$getIcons(ResourcePack resourcePack, CallbackInfoReturnable<List<InputSupplier<InputStream>>> cir) {
         if (!Timeless.getConfig().useOldWindowIcons) {
             return;
         }
@@ -39,7 +39,7 @@ public abstract class MixinIcons {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void getMacIcon(ResourcePack resourcePack, CallbackInfoReturnable<InputSupplier<InputStream>> cir) {
+    public void timeless$getMacIcon(ResourcePack resourcePack, CallbackInfoReturnable<InputSupplier<InputStream>> cir) {
         if (!Timeless.getConfig().useOldWindowIcons) {
             return;
         }

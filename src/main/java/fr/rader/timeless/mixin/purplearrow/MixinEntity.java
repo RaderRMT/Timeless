@@ -15,7 +15,7 @@ public abstract class MixinEntity {
             method = "onRemoved",
             at = @At("HEAD")
     )
-    public void onRemoved(CallbackInfo ci) {
+    public void timeless$onRemoved(CallbackInfo ci) {
         Entity entity = (Entity) (Object) this;
         if (!(entity instanceof ArrowEntity)) {
             return;

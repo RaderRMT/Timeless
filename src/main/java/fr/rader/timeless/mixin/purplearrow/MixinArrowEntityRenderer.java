@@ -7,6 +7,7 @@ import net.minecraft.entity.mob.SkeletonEntity;
 import net.minecraft.entity.projectile.ArrowEntity;
 import net.minecraft.util.Identifier;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
@@ -14,8 +15,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(ArrowEntityRenderer.class)
 public abstract class MixinArrowEntityRenderer {
 
+    @Unique
     private static final Identifier PURPLE_ARROW_TEXTURE = new Identifier("timeless", "textures/entity/projectiles/purple_arrow.png");
 
+    @Unique
     private final PurpleArrowHolder arrowHolder = PurpleArrowHolder.getInstance();
 
     @Inject(
@@ -23,7 +26,7 @@ public abstract class MixinArrowEntityRenderer {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void onGetTexture(ArrowEntity arrowEntity, CallbackInfoReturnable<Identifier> cir) {
+    public void timeless$onGetTexture(ArrowEntity arrowEntity, CallbackInfoReturnable<Identifier> cir) {
         boolean enabled = Timeless.getConfig().skeletonShootPurpleArrow;
         if (enabled && this.arrowHolder.contains(arrowEntity)) {
             cir.setReturnValue(PURPLE_ARROW_TEXTURE);

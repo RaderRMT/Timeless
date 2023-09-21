@@ -31,7 +31,7 @@ public abstract class MixinItemGroups {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void registerAndGetDefault(Registry<ItemGroup> registry, CallbackInfoReturnable<ItemGroup> cir) {
+    private static void timeless$registerAndGetDefault(Registry<ItemGroup> registry, CallbackInfoReturnable<ItemGroup> cir) {
         if (!Timeless.getConfig().useOldInventoryLayout) {
             return;
         }

@@ -12,6 +12,7 @@ import net.minecraft.util.math.Direction;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -34,15 +35,17 @@ public abstract class MixinPistonBlock {
     //$$ protected abstract boolean shouldExtend(World world, BlockPos pos, Direction pistonFace);
     //#endif
 
+    @Unique
     private static final int PISTON_CLUNK_EVENT_ID = 100;
 
+    @Unique
     private boolean wasPowered = false;
 
     @Inject(
             method = "tryMove",
             at = @At("TAIL")
     )
-    public void tryMove(World world, BlockPos pos, BlockState state, CallbackInfo ci) {
+    public void timeless$tryMove(World world, BlockPos pos, BlockState state, CallbackInfo ci) {
         if (!Timeless.getConfig().doPistonClunk) {
             return;
         }
@@ -71,7 +74,7 @@ public abstract class MixinPistonBlock {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void playClunkSound(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable<Boolean> cir) {
+    public void timeless$playClunkSound(BlockState state, World world, BlockPos pos, int type, int data, CallbackInfoReturnable<Boolean> cir) {
         if (type != PISTON_CLUNK_EVENT_ID) {
             return;
         }

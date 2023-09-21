@@ -24,7 +24,7 @@ public abstract class MixinMinecraftClient {
                     target = "Lnet/minecraft/client/MinecraftClient;getDefaultResourceSupplier([Ljava/lang/String;)Lnet/minecraft/resource/InputSupplier;"
             )
     )
-    public InputSupplier<InputStream> onGetDefaultResourceSupplier(MinecraftClient instance, String[] segments) throws IOException {
+    public InputSupplier<InputStream> timeless$onGetDefaultResourceSupplier(MinecraftClient instance, String[] segments) throws IOException {
         if (!segments[0].equals("icons")) {
             return getDefaultResourceSupplier(segments);
         }

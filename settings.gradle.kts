@@ -24,7 +24,7 @@ rootProject.buildFileName = "root.gradle.kts"
 listOf(
         "1.19.4",
         "1.20.1",
-        "1.20.2-rc2"
+        "1.20.2"
 ).forEach { version ->
     include(":$version")
     project(":$version").apply {

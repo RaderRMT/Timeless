@@ -65,6 +65,11 @@ public abstract class MixinStatusEffect {
         //#else
         //$$int id = StatusEffect.getRawId((StatusEffect) (Object) this) - 1;
         //#endif
+
+        if (id >= POTION_COLORS.length) {
+            return;
+        }
+
         cir.setReturnValue(POTION_COLORS[id]);
     }
 }

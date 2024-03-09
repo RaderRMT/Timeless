@@ -22,12 +22,14 @@ public class TimelessConfig implements ConfigData {
     )
     public boolean disableHitDirection = true;
 
+//#if MC>=12001
     @ConfigEntry.Gui.RequiresRestart()
     @Comment(
             "Use the old window icons that was a\n" +
             "crafting table."
     )
     public boolean useOldWindowIcons = true;
+//#endif
 
     @Comment(
             "Pistons emit a \"clunk\" sound and smoke\n" +
@@ -60,4 +62,13 @@ public class TimelessConfig implements ConfigData {
             "changed in 1.19.4"
     )
     public boolean useOldPotionColors = true;
+
+//#if MC>=12004
+    @Comment(
+            "Use the old bat model"
+    )
+    public boolean useOldBatModel = true;
+    @ConfigEntry.Gui.Excluded
+    public boolean previousUseOldBatModel = true;
+//#endif
 }

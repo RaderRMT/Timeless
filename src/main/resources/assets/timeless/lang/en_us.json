@@ -9,6 +9,7 @@
   "text.autoconfig.timeless.option.useOldInventoryLayout": "Use Old Inventory Layout",
   "text.autoconfig.timeless.option.enablePotionGlint": "Enable Potion Glint",
   "text.autoconfig.timeless.option.useOldPotionColors": "Use Old Potion Colors",
+  "text.autoconfig.timeless.option.useOldBatModel": "Use Old Bat Model",
 
   "timeless.itemGroup.decorationBlocks": "Decoration Blocks",
   "timeless.itemGroup.transportation": "Transportation",

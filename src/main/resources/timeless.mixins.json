@@ -15,6 +15,11 @@
     "purplearrow.MixinArrowEntityRenderer",
     "purplearrow.MixinEntity",
 
+    //#if MC>=12004
+    "batmodel.MixinBatEntityModel",
+    "batmodel.MixinBatEntityRenderer",
+    //#endif
+
     //#if MC>=12000
     "icons.MixinIcons"
     //#else

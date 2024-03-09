@@ -466,7 +466,11 @@ public abstract class MixinItemGroups {
             entries.add(Items.CHERRY_LEAVES);
             entries.add(Items.MANGROVE_LEAVES);
             entries.add(Items.COBWEB);
-            entries.add(Items.GRASS);
+            //#if MC>=12004
+            entries.add(Items.SHORT_GRASS);
+            //#else
+            //$$ entries.add(Items.GRASS);
+            //#endif
             entries.add(Items.FERN);
             entries.add(Items.AZALEA);
             entries.add(Items.FLOWERING_AZALEA);

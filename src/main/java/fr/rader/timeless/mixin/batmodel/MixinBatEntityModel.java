@@ -38,7 +38,7 @@ public abstract class MixinBatEntityModel extends SinglePartEntityModel<BatEntit
                     target = "Lnet/minecraft/client/render/entity/model/SinglePartEntityModel;<init>(Ljava/util/function/Function;)V"
             )
     )
-    private static Function<Identifier, RenderLayer> test(Function<Identifier, RenderLayer> function) {
+    private static Function<Identifier, RenderLayer> timeless$changeRenderLayer(Function<Identifier, RenderLayer> function) {
         if (!Timeless.getConfig().useOldBatModel) {
             return function;
         }
@@ -80,7 +80,7 @@ public abstract class MixinBatEntityModel extends SinglePartEntityModel<BatEntit
             at = @At("HEAD"),
             cancellable = true
     )
-    public void setAngles(BatEntity batEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
+    public void timeless$setAngles(BatEntity batEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
         if (!Timeless.getConfig().useOldBatModel) {
             return;
         }

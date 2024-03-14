@@ -1,7 +1,7 @@
 //#if MC>=12004
 package fr.rader.timeless.mixin.batmodel;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
@@ -39,7 +39,7 @@ public abstract class MixinBatEntityModel extends SinglePartEntityModel<BatEntit
             )
     )
     private static Function<Identifier, RenderLayer> timeless$changeRenderLayer(Function<Identifier, RenderLayer> function) {
-        if (!Timeless.getConfig().useOldBatModel) {
+        if (!TimelessConfig.get().useOldBatModel) {
             return function;
         }
 
@@ -52,7 +52,7 @@ public abstract class MixinBatEntityModel extends SinglePartEntityModel<BatEntit
             cancellable = true
     )
     private static void timeless$getTexturedModelData(CallbackInfoReturnable<TexturedModelData> cir) {
-        if (!Timeless.getConfig().useOldBatModel) {
+        if (!TimelessConfig.get().useOldBatModel) {
             return;
         }
 
@@ -81,7 +81,7 @@ public abstract class MixinBatEntityModel extends SinglePartEntityModel<BatEntit
             cancellable = true
     )
     public void timeless$setAngles(BatEntity batEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
-        if (!Timeless.getConfig().useOldBatModel) {
+        if (!TimelessConfig.get().useOldBatModel) {
             return;
         }
 

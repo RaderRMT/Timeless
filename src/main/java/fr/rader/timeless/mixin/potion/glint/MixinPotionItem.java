@@ -1,6 +1,6 @@
 package fr.rader.timeless.mixin.potion.glint;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.PotionItem;
@@ -16,7 +16,7 @@ public abstract class MixinPotionItem extends Item {
 
     @Override
     public boolean hasGlint(ItemStack stack) {
-        if (!Timeless.getConfig().enablePotionGlint) {
+        if (!TimelessConfig.get().enablePotionGlint) {
             return super.hasGlint(stack);
         }
 

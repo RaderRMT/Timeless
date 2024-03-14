@@ -19,7 +19,7 @@
       "fr.rader.timeless.Timeless"
     ],
     "modmenu": [
-      "fr.rader.timeless.gui.ConfigScreen"
+      "fr.rader.timeless.config.TimelessConfigScreen"
     ]
   },
   "mixins": [

@@ -1,6 +1,6 @@
 package fr.rader.timeless.mixin.icons;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import fr.rader.timeless.features.icons.IconSupplier;
 import net.minecraft.client.util.Icons;
 import net.minecraft.resource.InputSupplier;
@@ -22,7 +22,7 @@ public abstract class MixinIcons {
             cancellable = true
     )
     public void timeless$getIcons(ResourcePack resourcePack, CallbackInfoReturnable<List<InputSupplier<InputStream>>> cir) {
-        if (!Timeless.getConfig().useOldWindowIcons) {
+        if (!TimelessConfig.get().useOldWindowIcons) {
             return;
         }
 
@@ -40,7 +40,7 @@ public abstract class MixinIcons {
             cancellable = true
     )
     public void timeless$getMacIcon(ResourcePack resourcePack, CallbackInfoReturnable<InputSupplier<InputStream>> cir) {
-        if (!Timeless.getConfig().useOldWindowIcons) {
+        if (!TimelessConfig.get().useOldWindowIcons) {
             return;
         }
 

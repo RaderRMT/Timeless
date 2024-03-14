@@ -1,6 +1,6 @@
 package fr.rader.timeless.mixin.hitdirection;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.entity.EntityType;
 import net.minecraft.entity.LivingEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -22,7 +22,7 @@ public abstract class MixinPlayerEntity extends LivingEntity {
             argsOnly = true
     )
     public float timeless$disableHitDirection(float yaw) {
-        if (Timeless.getConfig().disableHitDirection) {
+        if (TimelessConfig.get().disableHitDirection) {
             return 0;
         }
 

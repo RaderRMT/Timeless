@@ -1,6 +1,6 @@
 package fr.rader.timeless.mixin.potion.color;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.entity.effect.StatusEffect;
 import net.minecraft.registry.Registries;
 import org.spongepowered.asm.mixin.Mixin;
@@ -55,7 +55,7 @@ public abstract class MixinStatusEffect {
             cancellable = true
     )
     public void timeless$getColor(CallbackInfoReturnable<Integer> cir) {
-        if (!Timeless.getConfig().useOldPotionColors) {
+        if (!TimelessConfig.get().useOldPotionColors) {
             return;
         }
 

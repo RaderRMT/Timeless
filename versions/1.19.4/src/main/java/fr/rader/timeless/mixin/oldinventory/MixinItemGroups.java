@@ -1,6 +1,6 @@
 package fr.rader.timeless.mixin.oldinventory;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.block.Blocks;
 import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.entity.decoration.painting.PaintingVariant;
@@ -100,7 +100,7 @@ public abstract class MixinItemGroups {
             cancellable = true
     )
     private static void timeless$clinit(CallbackInfo ci) {
-        if (!Timeless.getConfig().useOldInventoryLayout) {
+        if (!TimelessConfig.get().useOldInventoryLayout) {
             return;
         }
 

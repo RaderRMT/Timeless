@@ -3,13 +3,12 @@ package fr.rader.timeless.features.purplearrow;
 import net.minecraft.entity.projectile.ArrowEntity;
 
 import java.util.HashSet;
-import java.util.Set;
 
 public class PurpleArrowHolder {
 
     private static PurpleArrowHolder instance;
 
-    private final Set<ArrowEntity> purpleArrows;
+    private final HashSet<ArrowEntity> purpleArrows;
 
     private PurpleArrowHolder() {
         this.purpleArrows = new HashSet<>();

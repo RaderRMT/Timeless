@@ -1,6 +1,6 @@
 package fr.rader.timeless.mixin.purplearrow;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import fr.rader.timeless.features.purplearrow.PurpleArrowHolder;
 import net.minecraft.client.render.entity.ArrowEntityRenderer;
 import net.minecraft.entity.mob.SkeletonEntity;
@@ -27,7 +27,7 @@ public abstract class MixinArrowEntityRenderer {
             cancellable = true
     )
     public void timeless$onGetTexture(ArrowEntity arrowEntity, CallbackInfoReturnable<Identifier> cir) {
-        boolean enabled = Timeless.getConfig().skeletonShootPurpleArrow;
+        boolean enabled = TimelessConfig.get().skeletonShootPurpleArrow;
         if (enabled && this.arrowHolder.contains(arrowEntity)) {
             cir.setReturnValue(PURPLE_ARROW_TEXTURE);
             return;

@@ -1,7 +1,7 @@
 //#if MC>=12004
 package fr.rader.timeless.mixin.batmodel;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.client.render.entity.BatEntityRenderer;
 import net.minecraft.client.render.entity.EntityRendererFactory;
 import net.minecraft.client.render.entity.MobEntityRenderer;
@@ -32,7 +32,7 @@ public abstract class MixinBatEntityRenderer extends MobEntityRenderer<BatEntity
             cancellable = true
     )
     public void timeless$onGetTexture(BatEntity batEntity, CallbackInfoReturnable<Identifier> cir) {
-        if (!Timeless.getConfig().useOldBatModel) {
+        if (!TimelessConfig.get().useOldBatModel) {
             return;
         }
 
@@ -41,7 +41,7 @@ public abstract class MixinBatEntityRenderer extends MobEntityRenderer<BatEntity
 
     @Override
     public void scale(BatEntity entity, MatrixStack matrices, float amount) {
-        if (!Timeless.getConfig().useOldBatModel) {
+        if (!TimelessConfig.get().useOldBatModel) {
             super.scale(entity, matrices, amount);
             return;
         }
@@ -51,7 +51,7 @@ public abstract class MixinBatEntityRenderer extends MobEntityRenderer<BatEntity
 
     @Override
     public void setupTransforms(BatEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta) {
-        if (Timeless.getConfig().useOldBatModel) {
+        if (TimelessConfig.get().useOldBatModel) {
             if (entity.isRoosting()) {
                 matrices.translate(0f, -0.1f, 0f);
             } else {

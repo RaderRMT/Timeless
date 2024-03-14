@@ -1,6 +1,6 @@
 package fr.rader.timeless.mixin.oldworldmenu;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import fr.rader.timeless.features.oldworldmenu.MoreWorldOptionsComponent;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -76,7 +76,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
     )
     //#if MC>=12000
     public void timeless$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-        if (!Timeless.getConfig().useOldWorldMenu) {
+        if (!TimelessConfig.get().useOldWorldMenu) {
             return;
         }
 
@@ -113,7 +113,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
     }
     //#else
     //$$ public void timeless$render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-    //$$     if (!Timeless.getConfig().useOldWorldMenu) {
+    //$$     if (!TimelessConfig.get().useOldWorldMenu) {
     //$$         return;
     //$$     }
     //$$
@@ -151,7 +151,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
             cancellable = true
     )
     public void timeless$init(CallbackInfo ci) {
-        if (!Timeless.getConfig().useOldWorldMenu) {
+        if (!TimelessConfig.get().useOldWorldMenu) {
             return;
         }
 
@@ -265,7 +265,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
     //$$         cancellable = true
     //$$ )
     //$$ public void timeless$tick(CallbackInfo ci) {
-    //$$     if (!Timeless.getConfig().useOldWorldMenu) {
+    //$$     if (!TimelessConfig.get().useOldWorldMenu) {
     //$$         return;
     //$$     }
     //$$
@@ -282,7 +282,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
             cancellable = true
     )
     public void timeless$keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
-        if (!Timeless.getConfig().useOldWorldMenu) {
+        if (!TimelessConfig.get().useOldWorldMenu) {
             return;
         }
 
@@ -296,7 +296,7 @@ public abstract class MixinCreateWorldScreen extends Screen {
             cancellable = true
     )
     public void timeless$initTabNavigation(CallbackInfo ci) {
-        if (!Timeless.getConfig().useOldWorldMenu) {
+        if (!TimelessConfig.get().useOldWorldMenu) {
             return;
         }
 

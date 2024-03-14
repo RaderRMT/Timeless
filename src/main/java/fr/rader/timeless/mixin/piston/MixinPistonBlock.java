@@ -1,6 +1,6 @@
 package fr.rader.timeless.mixin.piston;
 
-import fr.rader.timeless.Timeless;
+import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.block.BlockState;
 import net.minecraft.block.PistonBlock;
 import net.minecraft.block.piston.PistonHandler;
@@ -46,7 +46,7 @@ public abstract class MixinPistonBlock {
             at = @At("TAIL")
     )
     public void timeless$tryMove(World world, BlockPos pos, BlockState state, CallbackInfo ci) {
-        if (!Timeless.getConfig().doPistonClunk) {
+        if (!TimelessConfig.get().doPistonClunk) {
             return;
         }
 

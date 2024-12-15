@@ -1,5 +1,6 @@
 package fr.rader.timeless.features.oldworldmenu;
 
+import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.text.Text;
 import net.minecraft.util.math.ColorHelper;
 
@@ -29,6 +30,19 @@ public class Constants {
     public static final Text AMPLIFIED_INFO_TEXT = Text.translatable("generator.minecraft.amplified.info");
 
     public static final int GRAY_COLOR = ColorHelper.Argb.getArgb(0xFF, 0xA0, 0xA0, 0xA0);
+    public static final int WHITE_COLOR = ColorHelper.Argb.getArgb(0xFF, 0xFF, 0xFF, 0xFF);
     public static final int BUTTON_WIDTH = 150;
     public static final int BUTTON_HEIGHT = 20;
+
+    public static int getTextColor() {
+        //#if MC>=12006
+        if (TimelessConfig.get().useOldScreenBackground) {
+            return GRAY_COLOR;
+        }
+
+        return WHITE_COLOR;
+        //#else
+        //$$ return GRAY_COLOR;
+        //#endif
+    }
 }

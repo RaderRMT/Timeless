@@ -50,7 +50,11 @@ public abstract class MixinBatEntityRenderer extends MobEntityRenderer<BatEntity
     }
 
     @Override
-    public void setupTransforms(BatEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta) {
+    //#if MC>=12005
+    public void setupTransforms(BatEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta, float scale) {
+    //#else
+    //$$ public void setupTransforms(BatEntity entity, MatrixStack matrices, float animationProgress, float bodyYaw, float tickDelta) {
+    //#endif
         if (TimelessConfig.get().useOldBatModel) {
             if (entity.isRoosting()) {
                 matrices.translate(0f, -0.1f, 0f);
@@ -59,7 +63,11 @@ public abstract class MixinBatEntityRenderer extends MobEntityRenderer<BatEntity
             }
         }
 
-        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta);
+        //#if MC>=12005
+        super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta, scale);
+        //#else
+        //$$ super.setupTransforms(entity, matrices, animationProgress, bodyYaw, tickDelta);
+        //#endif
     }
 }
 //#endif

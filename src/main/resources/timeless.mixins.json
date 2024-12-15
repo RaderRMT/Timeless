@@ -15,6 +15,12 @@
     "purplearrow.MixinArrowEntityRenderer",
     "purplearrow.MixinEntity",
 
+    //#if MC>=12006
+    "oldbackground.MixinScreen",
+    "oldbackground.MixinMessageScreen",
+    "oldbackground.MixinDownloadingTerrainScreen",
+    //#endif
+
     //#if MC>=12004
     "batmodel.MixinBatEntityModel",
     "batmodel.MixinBatEntityRenderer",

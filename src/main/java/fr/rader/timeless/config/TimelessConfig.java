@@ -28,6 +28,9 @@ public class TimelessConfig {
     //#if MC>=12004
     public boolean useOldBatModel = true;
     //#endif
+    //#if MC>=12006
+    public boolean useOldScreenBackground = true;
+    //#endif
 
     public void write() {
         try (FileWriter writer = new FileWriter(TimelessConfig.CONFIG_PATH)) {

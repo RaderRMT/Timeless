@@ -19,6 +19,8 @@
   "timeless.config.description.useOldPotionColors": "Use the old potion colors.",
   "timeless.config.name.useOldBatModel": "Use Old Bat Model",
   "timeless.config.description.useOldBatModel": "Use the old bat model.",
+  "timeless.config.name.useOldScreenBackground": "Use Old Screen Backgrounds",
+  "timeless.config.description.useOldScreenBackground": "Use the old backgrounds screens used to have.",
 
   "timeless.itemGroup.decorationBlocks": "Decoration Blocks",
   "timeless.itemGroup.transportation": "Transportation",

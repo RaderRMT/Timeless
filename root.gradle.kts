@@ -1,6 +1,5 @@
 plugins {
-    id("fabric-loom") version "1.0-SNAPSHOT" apply false
-    id("com.replaymod.preprocess") version "48e02ad"
+    id("com.replaymod.preprocess") version "7c980d9"
 }
 
 subprojects {
@@ -16,10 +15,12 @@ subprojects {
 }
 
 preprocess {
+    val mc12006 = createNode("1.20.6", 12006, "yarn")
     val mc12004 = createNode("1.20.4", 12004, "yarn")
     val mc12001 = createNode("1.20.1", 12001, "yarn")
     val mc11904 = createNode("1.19.4", 11904, "yarn")
 
+    mc12006.link(mc12004)
     mc12004.link(mc12001)
     mc12001.link(mc11904)
 }

@@ -2,9 +2,7 @@ package fr.rader.timeless.mixin.oldinventory;
 
 import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.block.Blocks;
-import net.minecraft.enchantment.EnchantmentTarget;
 import net.minecraft.item.*;
-import net.minecraft.potion.PotionUtil;
 import net.minecraft.potion.Potions;
 import net.minecraft.registry.Registry;
 import net.minecraft.registry.RegistryKeys;
@@ -18,7 +16,19 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-import java.util.EnumSet;
+//#if MC>=12005
+import net.minecraft.registry.tag.ItemTags;
+import net.minecraft.registry.tag.TagKey;
+import net.minecraft.component.DataComponentTypes;
+import net.minecraft.component.type.PotionContentsComponent;
+//#endif
+
+//#if MC<=12004
+//$$ import net.minecraft.enchantment.EnchantmentTarget;
+//$$ import net.minecraft.potion.PotionUtil;
+//$$ import java.util.EnumSet;
+//#endif
+
 import java.util.Set;
 
 import static net.minecraft.item.ItemGroups.*;
@@ -740,7 +750,11 @@ public abstract class MixinItemGroups {
             entries.add(Items.GREEN_BANNER);
             entries.add(Items.RED_BANNER);
             entries.add(Items.BLACK_BANNER);
-            entries.add(Raid.getOminousBanner());
+            //#if MC>=12005
+            entries.add(Raid.getOminousBanner(displayContext.lookup().getWrapperOrThrow(RegistryKeys.BANNER_PATTERN)));
+            //#else
+            //$$ entries.add(Raid.getOminousBanner());
+            //#endif
             entries.add(Items.END_CRYSTAL);
             entries.add(Items.LOOM);
             entries.add(Items.COMPOSTER);
@@ -937,7 +951,12 @@ public abstract class MixinItemGroups {
             entries.add(Items.BEACON);
             entries.add(Items.TURTLE_EGG);
             entries.add(Items.CONDUIT);
-            entries.add(Items.SCUTE);
+            //#if MC>=12005
+            entries.add(Items.TURTLE_SCUTE);
+            entries.add(Items.ARMADILLO_SCUTE);
+            //#else
+            //$$ entries.add(Items.SCUTE);
+            //#endif
             entries.add(Items.COAL);
             entries.add(Items.CHARCOAL);
             entries.add(Items.DIAMOND);
@@ -1011,6 +1030,9 @@ public abstract class MixinItemGroups {
             entries.add(Items.NETHER_WART);
             entries.add(Items.ENDER_EYE);
             entries.add(Items.ALLAY_SPAWN_EGG);
+            //#if MC>=12005
+            entries.add(Items.ARMADILLO_SPAWN_EGG);
+            //#endif
             entries.add(Items.AXOLOTL_SPAWN_EGG);
             entries.add(Items.BAT_SPAWN_EGG);
             entries.add(Items.BEE_SPAWN_EGG);
@@ -1092,7 +1114,9 @@ public abstract class MixinItemGroups {
             entries.add(Items.WRITABLE_BOOK);
             entries.add(Items.MAP);
             entries.add(Items.NETHER_STAR);
-            entries.add(Items.FIREWORK_ROCKET);
+            //#if MC<12005
+            //$$ entries.add(Items.FIREWORK_ROCKET);
+            //#endif
             ItemGroups.addFireworkRockets(entries, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
             entries.add(Items.FIREWORK_STAR);
             entries.add(Items.NETHER_BRICK);
@@ -1103,6 +1127,9 @@ public abstract class MixinItemGroups {
             entries.add(Items.GOLDEN_HORSE_ARMOR);
             entries.add(Items.DIAMOND_HORSE_ARMOR);
             entries.add(Items.LEATHER_HORSE_ARMOR);
+            //#if MC>=12005
+            entries.add(Items.WOLF_ARMOR);
+            //#endif
             entries.add(Items.CHORUS_FRUIT);
             entries.add(Items.POPPED_CHORUS_FRUIT);
             entries.add(Items.BEETROOT_SEEDS);
@@ -1238,11 +1265,19 @@ public abstract class MixinItemGroups {
             if (displayContext.enabledFeatures().contains(FeatureFlags.BUNDLE)) {
                 entries.add(Items.BUNDLE);
             }
-            EnumSet<EnchantmentTarget> set = EnumSet.of(EnchantmentTarget.VANISHABLE, EnchantmentTarget.DIGGER, EnchantmentTarget.FISHING_ROD, EnchantmentTarget.BREAKABLE);
+            //#if MC>=12005
+            Set<TagKey<Item>> set = Set.of(ItemTags.VANISHING_ENCHANTABLE, ItemTags.MINING_ENCHANTABLE, ItemTags.MINING_LOOT_ENCHANTABLE, ItemTags.FISHING_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE);
             displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(wrapper -> {
-                ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
-                ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+                ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY, displayContext.enabledFeatures());
+                ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY, displayContext.enabledFeatures());
             });
+            //#else
+            //$$ EnumSet<EnchantmentTarget> set = EnumSet.of(EnchantmentTarget.VANISHABLE, EnchantmentTarget.DIGGER, EnchantmentTarget.FISHING_ROD, EnchantmentTarget.BREAKABLE);
+            //$$ displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(wrapper -> {
+            //$$     ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
+            //$$     ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+            //$$ });
+            //#endif
             entries.add(Items.NAME_TAG);
             entries.add(Items.LEAD);
             entries.add(Items.GOAT_HORN);
@@ -1282,13 +1317,25 @@ public abstract class MixinItemGroups {
             entries.add(Items.NETHERITE_CHESTPLATE);
             entries.add(Items.NETHERITE_LEGGINGS);
             entries.add(Items.NETHERITE_BOOTS);
-            EnumSet<EnchantmentTarget> set = EnumSet.of(EnchantmentTarget.VANISHABLE, EnchantmentTarget.ARMOR, EnchantmentTarget.ARMOR_FEET, EnchantmentTarget.ARMOR_HEAD, EnchantmentTarget.ARMOR_LEGS, EnchantmentTarget.ARMOR_CHEST, EnchantmentTarget.BOW, EnchantmentTarget.WEAPON, EnchantmentTarget.WEARABLE, EnchantmentTarget.BREAKABLE, EnchantmentTarget.TRIDENT, EnchantmentTarget.CROSSBOW);
+            //#if MC>=12005
+            Set<TagKey<Item>> set = Set.of(ItemTags.VANISHING_ENCHANTABLE, ItemTags.ARMOR_ENCHANTABLE, ItemTags.FOOT_ARMOR_ENCHANTABLE, ItemTags.HEAD_ARMOR_ENCHANTABLE, ItemTags.LEG_ARMOR_ENCHANTABLE, ItemTags.CHEST_ARMOR_ENCHANTABLE, ItemTags.BOW_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.SWORD_ENCHANTABLE, ItemTags.FIRE_ASPECT_ENCHANTABLE, ItemTags.SHARP_WEAPON_ENCHANTABLE, ItemTags.MACE_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, ItemTags.TRIDENT_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE);
             displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(wrapper -> {
-                ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
-                ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+                ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY, displayContext.enabledFeatures());
+                ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY, displayContext.enabledFeatures());
             });
+            //#else
+            //$$ EnumSet<EnchantmentTarget> set = EnumSet.of(EnchantmentTarget.VANISHABLE, EnchantmentTarget.ARMOR, EnchantmentTarget.ARMOR_FEET, EnchantmentTarget.ARMOR_HEAD, EnchantmentTarget.ARMOR_LEGS, EnchantmentTarget.ARMOR_CHEST, EnchantmentTarget.BOW, EnchantmentTarget.WEAPON, EnchantmentTarget.WEARABLE, EnchantmentTarget.BREAKABLE, EnchantmentTarget.TRIDENT, EnchantmentTarget.CROSSBOW);
+            //$$ displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(wrapper -> {
+            //$$     ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
+            //$$     ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+            //$$ });
+            //#endif
             entries.add(Items.SPECTRAL_ARROW);
-            displayContext.lookup().getOptionalWrapper(RegistryKeys.POTION).ifPresent(wrapper -> ItemGroups.addPotions(entries, wrapper, Items.TIPPED_ARROW, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS));
+            //#if MC>=12005
+            displayContext.lookup().getOptionalWrapper(RegistryKeys.POTION).ifPresent(wrapper -> ItemGroups.addPotions(entries, wrapper, Items.TIPPED_ARROW, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS, displayContext.enabledFeatures()));
+            //#else
+            //$$ displayContext.lookup().getOptionalWrapper(RegistryKeys.POTION).ifPresent(wrapper -> ItemGroups.addPotions(entries, wrapper, Items.TIPPED_ARROW, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS));
+            //#endif
             entries.add(Items.SHIELD);
             entries.add(Items.TOTEM_OF_UNDYING);
             entries.add(Items.TRIDENT);
@@ -1311,11 +1358,19 @@ public abstract class MixinItemGroups {
             entries.add(Items.WAYFINDER_ARMOR_TRIM_SMITHING_TEMPLATE);
             entries.add(Items.WILD_ARMOR_TRIM_SMITHING_TEMPLATE);
         }).build());
-        Registry.register(registry, INGREDIENTS, ItemGroup.create(ItemGroup.Row.BOTTOM, 4).displayName(Text.translatable("timeless.itemGroup.brewing")).icon(() -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER)).entries((displayContext, entries) -> {
+        //#if MC>=12005
+        ItemStack brewingIcon = new ItemStack(Items.POTION);
+        brewingIcon.set(DataComponentTypes.POTION_CONTENTS, new PotionContentsComponent(Potions.WATER));
+        Registry.register(registry, INGREDIENTS, ItemGroup.create(ItemGroup.Row.BOTTOM, 4).displayName(Text.translatable("timeless.itemGroup.brewing")).icon(() -> brewingIcon).entries((displayContext, entries) -> {
+        //#else
+        //$$ Registry.register(registry, INGREDIENTS, ItemGroup.create(ItemGroup.Row.BOTTOM, 4).displayName(Text.translatable("timeless.itemGroup.brewing")).icon(() -> PotionUtil.setPotion(new ItemStack(Items.POTION), Potions.WATER)).entries((displayContext, entries) -> {
+        //#endif
             entries.add(Items.GHAST_TEAR);
-            displayContext.lookup().getOptionalWrapper(RegistryKeys.POTION).ifPresent(wrapper -> {
-                ItemGroups.addPotions(entries, wrapper, Items.POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
-            });
+            //#if MC>=12005
+            displayContext.lookup().getOptionalWrapper(RegistryKeys.POTION).ifPresent(wrapper -> ItemGroups.addPotions(entries, wrapper, Items.POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS, displayContext.enabledFeatures()));
+            //#else
+            //$$ displayContext.lookup().getOptionalWrapper(RegistryKeys.POTION).ifPresent(wrapper -> ItemGroups.addPotions(entries, wrapper, Items.POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS));
+            //#endif
             entries.add(Items.GLASS_BOTTLE);
             entries.add(Items.FERMENTED_SPIDER_EYE);
             entries.add(Items.BLAZE_POWDER);
@@ -1327,8 +1382,13 @@ public abstract class MixinItemGroups {
             entries.add(Items.RABBIT_FOOT);
             entries.add(Items.DRAGON_BREATH);
             displayContext.lookup().getOptionalWrapper(RegistryKeys.POTION).ifPresent(wrapper -> {
-                ItemGroups.addPotions(entries, wrapper, Items.SPLASH_POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
-                ItemGroups.addPotions(entries, wrapper, Items.LINGERING_POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+                //#if MC>=12005
+                ItemGroups.addPotions(entries, wrapper, Items.SPLASH_POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS, displayContext.enabledFeatures());
+                ItemGroups.addPotions(entries, wrapper, Items.LINGERING_POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS, displayContext.enabledFeatures());
+                //#else
+                //$$ ItemGroups.addPotions(entries, wrapper, Items.SPLASH_POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+                //$$ ItemGroups.addPotions(entries, wrapper, Items.LINGERING_POTION, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+                //#endif
             });
             entries.add(Items.PHANTOM_MEMBRANE);
         }).build());

@@ -1,6 +1,7 @@
 package fr.rader.timeless.mixin.oldworldmenu;
 
 import fr.rader.timeless.config.TimelessConfig;
+import fr.rader.timeless.features.oldworldmenu.Constants;
 import fr.rader.timeless.features.oldworldmenu.MoreWorldOptionsComponent;
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.Screen;
@@ -25,6 +26,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 //#if MC<=11904
 //$$ import net.minecraft.client.util.math.MatrixStack;
+//$$ import net.minecraft.client.gui.DrawableHelper;
+//$$ import org.spongepowered.asm.mixin.injection.Redirect;
+//$$ import org.objectweb.asm.Opcodes;
+//$$ import net.minecraft.util.Identifier;
 //#endif
 
 import java.util.List;
@@ -69,6 +74,39 @@ public abstract class MixinCreateWorldScreen extends Screen {
         this.isWorldOptionsToggled = false;
     }
 
+    //#if MC>=12006
+    @Inject(
+            method = "renderDarkening",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void timeless$renderDarkening(DrawContext context, CallbackInfo ci) {
+        if (!TimelessConfig.get().useOldWorldMenu) {
+            return;
+        }
+
+        ci.cancel();
+    }
+    //#else
+    //$$ @Inject(
+    //$$         method = "renderBackgroundTexture",
+    //$$         at = @At("HEAD"),
+    //$$         cancellable = true
+    //$$ )
+    //$$ //#if MC>=12000
+    //$$ public void timeless$renderBackgroundTexture(DrawContext matrices, CallbackInfo ci) {
+    //$$ //#else
+    //$$ //$$ public void timeless$renderBackgroundTexture(MatrixStack matrices, CallbackInfo ci) {
+    //$$ //#endif
+    //$$     if (!TimelessConfig.get().useOldWorldMenu) {
+    //$$         return;
+    //$$     }
+    //$$
+    //$$     super.renderBackgroundTexture(matrices);
+    //$$     ci.cancel();
+    //$$ }
+    //#endif
+
     @Inject(
             method = "render",
             at = @At("HEAD"),
@@ -80,8 +118,10 @@ public abstract class MixinCreateWorldScreen extends Screen {
             return;
         }
 
-        //#if MC>=12002
-        renderBackground(context, mouseX, mouseY, delta);
+        //#if MC>=12006
+        super.render(context, mouseX, mouseY, delta);
+        //#elseif MC>=12002
+        //$$ renderBackground(context, mouseX, mouseY, delta);
         //#else
         //$$ renderBackground(context);
         //#endif
@@ -90,24 +130,26 @@ public abstract class MixinCreateWorldScreen extends Screen {
 
         int textPositionX = this.halfWidth - 100;
         if (this.isWorldOptionsToggled) {
-            context.drawTextWithShadow(this.textRenderer, SEED_LABEL, textPositionX, 47, GRAY_COLOR);
-            context.drawTextWithShadow(this.textRenderer, SEED_INFO_LABEL, textPositionX, 85, GRAY_COLOR);
+            context.drawTextWithShadow(this.textRenderer, SEED_LABEL, textPositionX, 47, Constants.getTextColor());
+            context.drawTextWithShadow(this.textRenderer, SEED_INFO_LABEL, textPositionX, 85, Constants.getTextColor());
 
             this.moreWorldOptionsComponent.render(context);
         } else {
-            context.drawTextWithShadow(this.textRenderer, WORLD_NAME_LABEL, textPositionX, 47, GRAY_COLOR);
-            context.drawTextWithShadow(this.textRenderer, this.worldDirectoryName, textPositionX, 85, GRAY_COLOR);
+            context.drawTextWithShadow(this.textRenderer, WORLD_NAME_LABEL, textPositionX, 47, Constants.getTextColor());
+            context.drawTextWithShadow(this.textRenderer, this.worldDirectoryName, textPositionX, 85, Constants.getTextColor());
 
             textPositionX -= 50;
-            context.drawTextWithShadow(this.textRenderer, this.gameModeHelp1, textPositionX, 122, GRAY_COLOR);
-            context.drawTextWithShadow(this.textRenderer, this.gameModeHelp2, textPositionX, 134, GRAY_COLOR);
+            context.drawTextWithShadow(this.textRenderer, this.gameModeHelp1, textPositionX, 122, Constants.getTextColor());
+            context.drawTextWithShadow(this.textRenderer, this.gameModeHelp2, textPositionX, 134, Constants.getTextColor());
 
             if (!this.worldCreator.isDebug()) {
-                context.drawTextWithShadow(this.textRenderer, ALLOW_CHEATS_INFO_LABEL, textPositionX, 172, GRAY_COLOR);
+                context.drawTextWithShadow(this.textRenderer, ALLOW_CHEATS_INFO_LABEL, textPositionX, 172, Constants.getTextColor());
             }
         }
 
-        super.render(context, mouseX, mouseY, delta);
+        //#if MC<=12004
+        //$$ super.render(context, mouseX, mouseY, delta);
+        //#endif
 
         ci.cancel();
     }

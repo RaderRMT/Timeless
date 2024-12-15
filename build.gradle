@@ -5,7 +5,7 @@ buildscript {
     project.ext.mcVersion = "${major}${minor.padLeft(2, '0')}${(patch ?: '').padLeft(2, '0')}" as int
 
     dependencies {
-        classpath 'fabric-loom:fabric-loom.gradle.plugin:0.11-SNAPSHOT'
+        classpath 'fabric-loom:fabric-loom.gradle.plugin:1.6-SNAPSHOT'
     }
 }
 
@@ -17,7 +17,15 @@ apply plugin: 'fabric-loom'
 apply plugin: 'com.replaymod.preprocess'
 
 tasks.withType(JavaCompile).configureEach {
-    it.options.release.set(17)
+    sourceCompatibility = JavaVersion.VERSION_21
+
+    if (mcVersion >= 12006) {
+        options.release = 21
+        targetCompatibility = JavaVersion.VERSION_21
+    } else {
+        options.release = 17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
 }
 
 version = project.name + '-' + project.mod_version
@@ -27,25 +35,29 @@ archivesBaseName = "timeless"
 def mappingsVersions = [
         11904: "1.19.4+build.2",
         12001: "1.20.1+build.1",
-        12004: "1.20.4+build.3"
+        12004: "1.20.4+build.3",
+        12006: "1.20.6+build.3",
 ]
 
 def fabricApiVersions = [
         11904: "0.83.0+1.19.4",
         12001: "0.83.0+1.20.1",
-        12004: "0.96.4+1.20.4"
+        12004: "0.96.4+1.20.4",
+        12006: "0.98.0+1.20.6",
 ]
 
 def modMenuVersions = [
         11904: "6.2.3",
         12001: "7.0.1",
-        12004: "9.0.0"
+        12004: "9.0.0",
+        12006: "10.0.0-beta.1",
 ]
 
 def clothConfigVersions = [
         11904: "10.0.96",
         12001: "11.0.99",
-        12004: "13.0.121"
+        12004: "13.0.121",
+        12006: "14.0.126",
 ]
 
 repositories {
@@ -74,22 +86,24 @@ dependencies {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.2.2")))
+    include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.3.6")))
 }
 
-if (mcVersion >= 12000) {
+if (mcVersion >= 12006) {
     loom.accessWidenerPath = rootProject.file("src/main/resources/timeless.accesswidener")
+} else if (mcVersion >= 12000) {
+    loom.accessWidenerPath = rootProject.file("versions/1.20.4/src/main/resources/timeless.accesswidener")
 } else {
     loom.accessWidenerPath = rootProject.file("versions/1.19.4/src/main/resources/timeless.accesswidener")
 }
 
-if (project.name == '1.20.4') {
+if (project.name == '1.20.6') {
     tasks.register('generateJava', Copy) {
         from "${project.parent.projectDir}/src/template/java"
-        into "${project.parent.buildDir}/generated/java"
+        into "${project.parent.getLayout().getBuildDirectory().get().getAsFile().getAbsolutePath()}/generated/java"
     }
 
-    sourceSets.main.java.srcDir "${project.parent.buildDir}/generated/java"
+    sourceSets.main.java.srcDir "${project.parent.getLayout().getBuildDirectory().get().getAsFile().getAbsolutePath()}/generated/java"
     compileJava.dependsOn(generateJava)
 }
 
@@ -137,7 +151,7 @@ java {
     withSourcesJar()
 
     toolchain {
-        languageVersion.set(JavaLanguageVersion.of(17))
+        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 

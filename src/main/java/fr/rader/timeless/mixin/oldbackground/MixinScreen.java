@@ -29,8 +29,11 @@ import java.util.Arrays;
 public abstract class MixinScreen {
 
     @Unique
-    private static final Identifier OPTIONS_BACKGROUND_TEXTURE = new Identifier("timeless", "textures/gui/options_background.png");
-
+    //#if MC>=12100
+    private static final Identifier OPTIONS_BACKGROUND_TEXTURE = Identifier.of("timeless", "textures/gui/options_background.png");
+    //#else
+    //$$ private static final Identifier OPTIONS_BACKGROUND_TEXTURE = new Identifier("timeless", "textures/gui/options_background.png");
+    //#endif
     @Unique
     private static final Class<?>[] DIRT_BACKGROUND_CLASSES = {
             GameOptionsScreen.class,

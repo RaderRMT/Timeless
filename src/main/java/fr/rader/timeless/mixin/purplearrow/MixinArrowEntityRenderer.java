@@ -16,7 +16,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinArrowEntityRenderer {
 
     @Unique
-    private static final Identifier PURPLE_ARROW_TEXTURE = new Identifier("timeless", "textures/entity/projectiles/purple_arrow.png");
+    //#if MC>=12100
+    private static final Identifier PURPLE_ARROW_TEXTURE = Identifier.of("timeless", "textures/entity/projectiles/purple_arrow.png");
+    //#else
+    //$$ private static final Identifier PURPLE_ARROW_TEXTURE = new Identifier("timeless", "textures/entity/projectiles/purple_arrow.png");
+    //#endif
 
     @Unique
     private final PurpleArrowHolder arrowHolder = PurpleArrowHolder.getInstance();

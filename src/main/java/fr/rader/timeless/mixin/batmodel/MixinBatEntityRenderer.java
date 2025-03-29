@@ -20,7 +20,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class MixinBatEntityRenderer extends MobEntityRenderer<BatEntity, BatEntityModel> {
 
     @Unique
-    private static final Identifier OLD_BAT_TEXTURE = new Identifier("timeless", "textures/entity/bat/bat.png");
+    //#if MC>=12100
+    private static final Identifier OLD_BAT_TEXTURE = Identifier.of("timeless", "textures/entity/bat/bat.png");
+    //#else
+    //$$ private static final Identifier OLD_BAT_TEXTURE = new Identifier("timeless", "textures/entity/bat/bat.png");
+    //#endif
 
     protected MixinBatEntityRenderer(EntityRendererFactory.Context context, BatEntityModel entityModel, float f) {
         super(context, entityModel, f);

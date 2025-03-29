@@ -684,7 +684,19 @@ public abstract class MixinItemGroups {
             entries.add(Items.DEAD_HORN_CORAL_FAN);
             entries.add(Items.SCAFFOLDING);
             entries.add(Items.PAINTING);
-            displayContext.lookup().getOptionalWrapper(RegistryKeys.PAINTING_VARIANT).ifPresent(wrapper -> ItemGroups.addPaintings(entries, wrapper, registryEntry -> registryEntry.isIn(PaintingVariantTags.PLACEABLE), ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS));
+            displayContext.lookup()
+                    .getOptionalWrapper(RegistryKeys.PAINTING_VARIANT)
+                    .ifPresent(
+                            wrapper -> ItemGroups.addPaintings(
+                                    entries,
+                                    //#if MC>=12100
+                                    displayContext.lookup(),
+                                    //#endif
+                                    wrapper,
+                                    registryEntry -> registryEntry.isIn(PaintingVariantTags.PLACEABLE),
+                                    ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS
+                            )
+                    );
             entries.add(Items.OAK_SIGN);
             entries.add(Items.OAK_HANGING_SIGN);
             entries.add(Items.SPRUCE_SIGN);
@@ -945,7 +957,14 @@ public abstract class MixinItemGroups {
             }
 
             entries.addAll(set);
-        }).texture("item_search.png").special().type(ItemGroup.Type.SEARCH).build());
+        })
+        //#if MC>=12100
+        .texture(ItemGroup.getTabTextureId("item_search"))
+        //#else
+        //$$ .texture("item_search.png")
+        //#endif
+
+        .special().type(ItemGroup.Type.SEARCH).build());
 
         Registry.register(registry, NATURAL, ItemGroup.create(ItemGroup.Row.BOTTOM, 0).displayName(Text.translatable("timeless.itemGroup.miscellaneous")).icon(() -> new ItemStack(Items.LAVA_BUCKET)).entries((displayContext, entries) -> {
             entries.add(Items.BEACON);
@@ -1268,8 +1287,13 @@ public abstract class MixinItemGroups {
             //#if MC>=12005
             Set<TagKey<Item>> set = Set.of(ItemTags.VANISHING_ENCHANTABLE, ItemTags.MINING_ENCHANTABLE, ItemTags.MINING_LOOT_ENCHANTABLE, ItemTags.FISHING_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE);
             displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(wrapper -> {
-                ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY, displayContext.enabledFeatures());
-                ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY, displayContext.enabledFeatures());
+                //#if MC>=12100
+                ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
+                ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+                //#endif
+                //$$ ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY, displayContext.enabledFeatures());
+                //$$ ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY, displayContext.enabledFeatures());
+                //#else
             });
             //#else
             //$$ EnumSet<EnchantmentTarget> set = EnumSet.of(EnchantmentTarget.VANISHABLE, EnchantmentTarget.DIGGER, EnchantmentTarget.FISHING_ROD, EnchantmentTarget.BREAKABLE);
@@ -1320,8 +1344,13 @@ public abstract class MixinItemGroups {
             //#if MC>=12005
             Set<TagKey<Item>> set = Set.of(ItemTags.VANISHING_ENCHANTABLE, ItemTags.ARMOR_ENCHANTABLE, ItemTags.FOOT_ARMOR_ENCHANTABLE, ItemTags.HEAD_ARMOR_ENCHANTABLE, ItemTags.LEG_ARMOR_ENCHANTABLE, ItemTags.CHEST_ARMOR_ENCHANTABLE, ItemTags.BOW_ENCHANTABLE, ItemTags.WEAPON_ENCHANTABLE, ItemTags.SWORD_ENCHANTABLE, ItemTags.FIRE_ASPECT_ENCHANTABLE, ItemTags.SHARP_WEAPON_ENCHANTABLE, ItemTags.MACE_ENCHANTABLE, ItemTags.EQUIPPABLE_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE, ItemTags.TRIDENT_ENCHANTABLE, ItemTags.CROSSBOW_ENCHANTABLE);
             displayContext.lookup().getOptionalWrapper(RegistryKeys.ENCHANTMENT).ifPresent(wrapper -> {
-                ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY, displayContext.enabledFeatures());
-                ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY, displayContext.enabledFeatures());
+                //#if MC>=12100
+                ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
+                ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
+                //#else
+                //$$ ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY, displayContext.enabledFeatures());
+                //$$ ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY, displayContext.enabledFeatures());
+                //#endif
             });
             //#else
             //$$ EnumSet<EnchantmentTarget> set = EnumSet.of(EnchantmentTarget.VANISHABLE, EnchantmentTarget.ARMOR, EnchantmentTarget.ARMOR_FEET, EnchantmentTarget.ARMOR_HEAD, EnchantmentTarget.ARMOR_LEGS, EnchantmentTarget.ARMOR_CHEST, EnchantmentTarget.BOW, EnchantmentTarget.WEAPON, EnchantmentTarget.WEARABLE, EnchantmentTarget.BREAKABLE, EnchantmentTarget.TRIDENT, EnchantmentTarget.CROSSBOW);
@@ -1393,6 +1422,22 @@ public abstract class MixinItemGroups {
             entries.add(Items.PHANTOM_MEMBRANE);
         }).build());
 
-        cir.setReturnValue(Registry.register(registry, INVENTORY, ItemGroup.create(ItemGroup.Row.BOTTOM, 6).displayName(Text.translatable("itemGroup.inventory")).icon(() -> new ItemStack(Blocks.CHEST)).texture("inventory.png").noRenderedName().special().type(ItemGroup.Type.INVENTORY).noScrollbar().build()));
+        cir.setReturnValue(Registry.register(
+                registry,
+                INVENTORY,
+                ItemGroup.create(ItemGroup.Row.BOTTOM, 6)
+                        .displayName(Text.translatable("itemGroup.inventory"))
+                        .icon(() -> new ItemStack(Blocks.CHEST))
+                        //#if MC>=12100
+                        .texture(ItemGroup.getTabTextureId("inventory"))
+                        //#else
+                        //$$ .texture("inventory.png")
+                        //#endif
+                        .noRenderedName()
+                        .special()
+                        .type(ItemGroup.Type.INVENTORY)
+                        .noScrollbar()
+                        .build()
+        ));
     }
 }

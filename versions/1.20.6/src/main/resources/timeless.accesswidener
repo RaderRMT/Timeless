@@ -1,11 +1,11 @@
 accessWidener	v2	named
 
-accessible method net/minecraft/item/ItemGroups addPaintings (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper$WrapperLookup;Lnet/minecraft/registry/RegistryWrapper$Impl;Ljava/util/function/Predicate;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
+accessible method net/minecraft/item/ItemGroups addPaintings (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper$Impl;Ljava/util/function/Predicate;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
 accessible method net/minecraft/item/ItemGroups addPotions (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemGroup$StackVisibility;Lnet/minecraft/resource/featuretoggle/FeatureSet;)V
 accessible method net/minecraft/item/ItemGroups addSuspiciousStews (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
 accessible method net/minecraft/item/ItemGroups addFireworkRockets (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
 accessible method net/minecraft/item/ItemGroups addInstruments (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/registry/tag/TagKey;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
-accessible method net/minecraft/item/ItemGroups addMaxLevelEnchantedBooks (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
-accessible method net/minecraft/item/ItemGroups addAllLevelEnchantedBooks (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
+accessible method net/minecraft/item/ItemGroups addMaxLevelEnchantedBooks (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Ljava/util/Set;Lnet/minecraft/item/ItemGroup$StackVisibility;Lnet/minecraft/resource/featuretoggle/FeatureSet;)V
+accessible method net/minecraft/item/ItemGroups addAllLevelEnchantedBooks (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Ljava/util/Set;Lnet/minecraft/item/ItemGroup$StackVisibility;Lnet/minecraft/resource/featuretoggle/FeatureSet;)V
 
 accessible method net/minecraft/item/ItemGroup$Builder type (Lnet/minecraft/item/ItemGroup$Type;)Lnet/minecraft/item/ItemGroup$Builder;

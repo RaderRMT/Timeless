@@ -46,6 +46,11 @@ public abstract class MixinItemGroups {
             return;
         }
 
+        //#if MC>=12101
+        // we need this empty tab at top row index -1 otherwise the game would crash
+        Registry.register(registry, OPERATOR, ItemGroup.create(ItemGroup.Row.TOP, -1).displayName(Text.literal("itemGroup.op")).icon(() -> new ItemStack(Items.COMMAND_BLOCK)).entries((displayContext, entries) -> {}).build());
+        //#endif
+
         Registry.register(registry, BUILDING_BLOCKS, ItemGroup.create(ItemGroup.Row.TOP, 0).displayName(Text.translatable("itemGroup.buildingBlocks")).icon(() -> new ItemStack(Blocks.BRICKS)).entries((displayContext, entries) -> {
             entries.add(Items.STONE);
             entries.add(Items.GRANITE);
@@ -963,7 +968,6 @@ public abstract class MixinItemGroups {
         //#else
         //$$ .texture("item_search.png")
         //#endif
-
         .special().type(ItemGroup.Type.SEARCH).build());
 
         Registry.register(registry, NATURAL, ItemGroup.create(ItemGroup.Row.BOTTOM, 0).displayName(Text.translatable("timeless.itemGroup.miscellaneous")).icon(() -> new ItemStack(Items.LAVA_BUCKET)).entries((displayContext, entries) -> {

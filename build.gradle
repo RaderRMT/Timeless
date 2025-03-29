@@ -38,6 +38,7 @@ def mappingsVersions = [
         12004: "1.20.4+build.3",
         12006: "1.20.6+build.3",
         12100: "1.21+build.9",
+        12101: "1.21.1+build.3",
 ]
 
 def fabricApiVersions = [
@@ -46,6 +47,7 @@ def fabricApiVersions = [
         12004: "0.96.4+1.20.4",
         12006: "0.98.0+1.20.6",
         12100: "0.102.0+1.21",
+        12101: "0.115.4+1.21.1",
 ]
 
 def modMenuVersions = [
@@ -54,6 +56,7 @@ def modMenuVersions = [
         12004: "9.0.0",
         12006: "10.0.0-beta.1",
         12100: "11.0.3",
+        12101: "11.0.3",
 ]
 
 def clothConfigVersions = [
@@ -62,6 +65,7 @@ def clothConfigVersions = [
         12004: "13.0.121",
         12006: "14.0.126",
         12100: "15.0.140",
+        12101: "15.0.140",
 ]
 
 repositories {
@@ -106,7 +110,7 @@ if (mcVersion >= 12100) {
     loom.accessWidenerPath = rootProject.file("versions/1.19.4/src/main/resources/timeless.accesswidener")
 }
 
-if (project.name == '1.21') {
+if (project.name == '1.21.1') {
     tasks.register('generateJava', Copy) {
         from "${project.parent.projectDir}/src/template/java"
         into "${project.parent.getLayout().getBuildDirectory().get().getAsFile().getAbsolutePath()}/generated/java"

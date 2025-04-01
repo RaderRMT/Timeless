@@ -1,3 +1,4 @@
+//#if MC>=12004
 package fr.rader.timeless.mixin.batmodel;
 
 import fr.rader.timeless.config.TimelessConfig;
@@ -5,8 +6,7 @@ import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
 import net.minecraft.client.render.entity.model.EntityModelPartNames;
-import net.minecraft.client.render.entity.model.EntityModel;
-import net.minecraft.client.render.entity.state.BatEntityRenderState;
+import net.minecraft.client.render.entity.model.SinglePartEntityModel;
 import net.minecraft.entity.passive.BatEntity;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.MathHelper;
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.util.function.Function;
 
 @Mixin(BatEntityModel.class)
-public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderState> {
+public abstract class MixinBatEntityModel extends SinglePartEntityModel<BatEntity> {
 
     @Final @Shadow private ModelPart head;
     @Final @Shadow private ModelPart body;
@@ -31,15 +31,11 @@ public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderSta
     @Final @Shadow private ModelPart rightWingTip;
     @Final @Shadow private ModelPart leftWingTip;
 
-    protected MixinBatEntityModel(ModelPart root) {
-        super(root);
-    }
-
     @ModifyArg(
             method = "<init>",
             at = @At(
                     value = "INVOKE",
-                    target = "Lnet/minecraft/client/render/entity/model/EntityModel;<init>(Lnet/minecraft/client/model/ModelPart;Ljava/util/function/Function;)V"
+                    target = "Lnet/minecraft/client/render/entity/model/SinglePartEntityModel;<init>(Ljava/util/function/Function;)V"
             )
     )
     private static Function<Identifier, RenderLayer> timeless$changeRenderLayer(Function<Identifier, RenderLayer> function) {
@@ -80,26 +76,23 @@ public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderSta
     }
 
     @Inject(
-            method = "setAngles(Lnet/minecraft/client/render/entity/state/BatEntityRenderState;)V",
+            method = "setAngles(Lnet/minecraft/entity/passive/BatEntity;FFFFF)V",
             at = @At("HEAD"),
             cancellable = true
     )
-    public void timeless$setAngles(BatEntityRenderState batEntity, CallbackInfo ci) {
+    public void timeless$setAngles(BatEntity batEntity, float f, float g, float h, float i, float j, CallbackInfo ci) {
         if (!TimelessConfig.get().useOldBatModel) {
             return;
         }
 
-        float pi = (float) Math.PI;
-        float pi180 = (float) Math.PI / 180.0f;
-
-        if (batEntity.roosting) {
-            this.head.pitch = batEntity.pitch * pi180;
-            this.head.yaw = pi - batEntity.yawDegrees * pi180;
-            this.head.roll = pi;
+        if (batEntity.isRoosting()) {
+            this.head.pitch = j * 0.017453292F;
+            this.head.yaw = 3.1415927F - i * 0.017453292F;
+            this.head.roll = 3.1415927F;
             this.head.setPivot(0.0F, -2.0F, 0.0F);
             this.rightWing.setPivot(-3.0F, 0.0F, 3.0F);
             this.leftWing.setPivot(3.0F, 0.0F, 3.0F);
-            this.body.pitch = pi;
+            this.body.pitch = 3.1415927F;
             this.rightWing.pitch = -0.15707964F;
             this.rightWing.yaw = -1.2566371F;
             this.rightWingTip.yaw = -1.7278761F;
@@ -107,15 +100,15 @@ public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderSta
             this.leftWing.yaw = -this.rightWing.yaw;
             this.leftWingTip.yaw = -this.rightWingTip.yaw;
         } else {
-            this.head.pitch = batEntity.pitch * pi180;
-            this.head.yaw = batEntity.yawDegrees * pi180;
+            this.head.pitch = j * 0.017453292F;
+            this.head.yaw = i * 0.017453292F;
             this.head.roll = 0.0F;
             this.head.setPivot(0.0F, 0.0F, 0.0F);
             this.rightWing.setPivot(0.0F, 0.0F, 0.0F);
             this.leftWing.setPivot(0.0F, 0.0F, 0.0F);
-            this.body.pitch = 0.7853982F + MathHelper.cos(batEntity.age * 0.1F) * 0.15F;
+            this.body.pitch = 0.7853982F + MathHelper.cos(h * 0.1F) * 0.15F;
             this.body.yaw = 0.0F;
-            this.rightWing.yaw = MathHelper.cos(batEntity.age * 74.48451F * pi180) * pi * 0.25F;
+            this.rightWing.yaw = MathHelper.cos(h * 74.48451F * 0.017453292F) * 3.1415927F * 0.25F;
             this.leftWing.yaw = -this.rightWing.yaw;
             this.rightWingTip.yaw = this.rightWing.yaw * 0.5F;
             this.leftWingTip.yaw = -this.rightWing.yaw * 0.5F;
@@ -124,3 +117,4 @@ public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderSta
         ci.cancel();
     }
 }
+//#endif

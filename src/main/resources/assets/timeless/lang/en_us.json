@@ -27,5 +27,16 @@
   "timeless.itemGroup.miscellaneous": "Miscellaneous",
   "timeless.itemGroup.foodstuff": "Foodstuff",
   "timeless.itemGroup.tools": "Tools",
-  "timeless.itemGroup.brewing": "Brewing"
+  "timeless.itemGroup.brewing": "Brewing",
+
+  "timeless.selectWorld.resultFolder": "Will be saved in:",
+  "timeless.selectWorld.moreWorldOptions": "More World Options...",
+  "timeless.selectWorld.gameMode.survival.line1": "Search for resources, craft, gain",
+  "timeless.selectWorld.gameMode.survival.line2": "levels, health and hunger",
+  "timeless.selectWorld.gameMode.hardcore.line1": "Same as Survival Mode, locked at hardest",
+  "timeless.selectWorld.gameMode.hardcore.line2": "difficulty, and one life only",
+  "timeless.selectWorld.gameMode.creative.line1": "Unlimited resources, free flying and",
+  "timeless.selectWorld.gameMode.creative.line2": "destroy blocks instantly",
+  "timeless.selectWorld.gameMode.spectator.line1": "You can look but don't touch",
+  "timeless.selectWorld.gameMode.spectator.line2": ""
 }

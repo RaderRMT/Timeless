@@ -7,5 +7,6 @@ accessible method net/minecraft/item/ItemGroups addFireworkRockets (Lnet/minecra
 accessible method net/minecraft/item/ItemGroups addInstruments (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/registry/tag/TagKey;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
 accessible method net/minecraft/item/ItemGroups addMaxLevelEnchantedBooks (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
 accessible method net/minecraft/item/ItemGroups addAllLevelEnchantedBooks (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
+accessible method net/minecraft/item/ItemGroups addOminousBottles (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
 
 accessible method net/minecraft/item/ItemGroup$Builder type (Lnet/minecraft/item/ItemGroup$Type;)Lnet/minecraft/item/ItemGroup$Builder;

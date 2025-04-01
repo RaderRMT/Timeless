@@ -48,6 +48,8 @@ public abstract class MixinCreateWorldScreen extends Screen {
     @Final
     WorldCreator worldCreator;
 
+    @Shadow public abstract WorldCreator getWorldCreator();
+
     @Unique private MoreWorldOptionsComponent moreWorldOptionsComponent;
     @Unique private boolean isWorldOptionsToggled;
 
@@ -250,7 +252,11 @@ public abstract class MixinCreateWorldScreen extends Screen {
 
         this.gameRulesButton = ButtonWidget.builder(GAME_RULES_TEXT, button -> {
                     this.client.setScreen(new EditGameRulesScreen(
-                            this.worldCreator.getGameRules().copy(),
+                            //#if MC>=12102
+                            this.worldCreator.getGameRules().copy(getWorldCreator().getGeneratorOptionsHolder().dataConfiguration().enabledFeatures()),
+                            //#else
+                            //$$ this.worldCreator.getGameRules().copy(),
+                            //#endif
                             optional -> {
                                 this.client.setScreen(this);
                                 optional.ifPresent(this.worldCreator::setGameRules);
@@ -332,19 +338,21 @@ public abstract class MixinCreateWorldScreen extends Screen {
         cir.cancel();
     }
 
-    @Inject(
-            method = "initTabNavigation",
-            at = @At("HEAD"),
-            cancellable = true
-    )
-    public void timeless$initTabNavigation(CallbackInfo ci) {
-        if (!TimelessConfig.get().useOldWorldMenu) {
-            return;
-        }
-
-        super.initTabNavigation();
-        ci.cancel();
-    }
+    //#if MC<12102
+    //$$ @Inject(
+    //$$         method = "initTabNavigation",
+    //$$         at = @At("HEAD"),
+    //$$         cancellable = true
+    //$$ )
+    //$$ public void timeless$initTabNavigation(CallbackInfo ci) {
+    //$$     if (!TimelessConfig.get().useOldWorldMenu) {
+    //$$         return;
+    //$$     }
+    //$$
+    //$$     super.initTabNavigation();
+    //$$     ci.cancel();
+    //$$ }
+    //#endif
 
     @Unique
     private void setWorldName(String newWorldName) {
@@ -375,8 +383,8 @@ public abstract class MixinCreateWorldScreen extends Screen {
             gameModeName = "spectator";
         }
 
-        this.gameModeHelp1 = Text.translatable("selectWorld.gameMode." + gameModeName + ".line1");
-        this.gameModeHelp2 = Text.translatable("selectWorld.gameMode." + gameModeName + ".line2");
+        this.gameModeHelp1 = Text.translatable("timeless.selectWorld.gameMode." + gameModeName + ".line1");
+        this.gameModeHelp2 = Text.translatable("timeless.selectWorld.gameMode." + gameModeName + ".line2");
     }
 
     @Unique

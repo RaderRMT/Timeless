@@ -24,6 +24,9 @@
     //#if MC>=12004
     "batmodel.MixinBatEntityModel",
     "batmodel.MixinBatEntityRenderer",
+    //#if MC>=12102
+    "batmodel.MixinLivingEntityRenderer",
+    //#endif
     //#endif
 
     //#if MC>=12000

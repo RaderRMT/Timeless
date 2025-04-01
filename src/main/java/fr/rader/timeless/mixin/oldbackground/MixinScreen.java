@@ -13,8 +13,10 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.StatsScreen;
 import net.minecraft.client.gui.screen.option.*;
 import net.minecraft.client.gui.screen.pack.PackScreen;
+import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
+import net.minecraft.util.math.ColorHelper;
 import org.jetbrains.annotations.Nullable;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -34,6 +36,7 @@ public abstract class MixinScreen {
     //#else
     //$$ private static final Identifier OPTIONS_BACKGROUND_TEXTURE = new Identifier("timeless", "textures/gui/options_background.png");
     //#endif
+
     @Unique
     private static final Class<?>[] DIRT_BACKGROUND_CLASSES = {
             GameOptionsScreen.class,
@@ -99,9 +102,13 @@ public abstract class MixinScreen {
 
     @Unique
     private void timeless$renderDirtBackground(DrawContext context) {
-        context.setShaderColor(0.25F, 0.25F, 0.25F, 1.0F);
-        context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
-        context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //#if MC>=12102
+        context.drawTexture(RenderLayer::getGuiTextured, OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0.0f, 0.0f, this.width, this.height, 32, 32, ColorHelper.getArgb(255, 64, 64, 64));
+        //#else
+        //$$ context.setShaderColor(0.25F, 0.25F, 0.25F, 1.0F);
+        //$$ context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
+        //$$ context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
+        //#endif
     }
 }
 //#endif

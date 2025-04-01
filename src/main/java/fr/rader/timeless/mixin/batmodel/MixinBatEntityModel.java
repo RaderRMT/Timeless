@@ -1,6 +1,7 @@
 package fr.rader.timeless.mixin.batmodel;
 
 import fr.rader.timeless.config.TimelessConfig;
+import fr.rader.timeless.utils.ModelTransformEx;
 import net.minecraft.client.model.*;
 import net.minecraft.client.render.RenderLayer;
 import net.minecraft.client.render.entity.model.BatEntityModel;
@@ -68,13 +69,13 @@ public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderSta
         head.addChild(EntityModelPartNames.LEFT_EAR, ModelPartBuilder.create().uv(24, 0).mirrored().cuboid(1.0F, -6.0F, -2.0F, 3.0F, 4.0F, 1.0F), ModelTransform.NONE);
 
         ModelPartData body = root.addChild(EntityModelPartNames.BODY, ModelPartBuilder.create().uv(0, 16).cuboid(-3.0F, 4.0F, -3.0F, 6.0F, 12.0F, 6.0F).uv(0, 34).cuboid(-5.0F, 16.0F, 0.0F, 10.0F, 6.0F, 1.0F), ModelTransform.NONE);
-        body.addChild(EntityModelPartNames.FEET, ModelPartBuilder.create().uv(16, 16).cuboid(-1.5f, 0.0f, 0.0f, 3.0f, 2.0f, 0.0f), ModelTransform.pivot(0.0f, 5.0f, 0.0f));
+        body.addChild(EntityModelPartNames.FEET, ModelPartBuilder.create().uv(16, 16).cuboid(-1.5f, 0.0f, 0.0f, 3.0f, 2.0f, 0.0f), ModelTransformEx.pivot(0.0f, 5.0f, 0.0f));
 
         ModelPartData rightWing = body.addChild(EntityModelPartNames.RIGHT_WING, ModelPartBuilder.create().uv(42, 0).cuboid(-12.0F, 1.0F, 1.5F, 10.0F, 16.0F, 1.0F), ModelTransform.NONE);
-        rightWing.addChild(EntityModelPartNames.RIGHT_WING_TIP, ModelPartBuilder.create().uv(24, 16).cuboid(-8.0F, 1.0F, 0.0F, 8.0F, 12.0F, 1.0F), ModelTransform.pivot(-12.0F, 1.0F, 1.5F));
+        rightWing.addChild(EntityModelPartNames.RIGHT_WING_TIP, ModelPartBuilder.create().uv(24, 16).cuboid(-8.0F, 1.0F, 0.0F, 8.0F, 12.0F, 1.0F), ModelTransformEx.pivot(-12.0F, 1.0F, 1.5F));
 
         ModelPartData leftWing = body.addChild(EntityModelPartNames.LEFT_WING, ModelPartBuilder.create().uv(42, 0).mirrored().cuboid(2.0F, 1.0F, 1.5F, 10.0F, 16.0F, 1.0F), ModelTransform.NONE);
-        leftWing.addChild(EntityModelPartNames.LEFT_WING_TIP, ModelPartBuilder.create().uv(24, 16).mirrored().cuboid(0.0F, 1.0F, 0.0F, 8.0F, 12.0F, 1.0F), ModelTransform.pivot(12.0F, 1.0F, 1.5F));
+        leftWing.addChild(EntityModelPartNames.LEFT_WING_TIP, ModelPartBuilder.create().uv(24, 16).mirrored().cuboid(0.0F, 1.0F, 0.0F, 8.0F, 12.0F, 1.0F), ModelTransformEx.pivot(12.0F, 1.0F, 1.5F));
 
         cir.setReturnValue(TexturedModelData.of(modelData, 64, 64));
     }
@@ -94,11 +95,18 @@ public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderSta
 
         if (batEntity.roosting) {
             this.head.pitch = batEntity.pitch * pi180;
-            this.head.yaw = pi - batEntity.yawDegrees * pi180;
             this.head.roll = pi;
-            this.head.setPivot(0.0F, -2.0F, 0.0F);
-            this.rightWing.setPivot(-3.0F, 0.0F, 3.0F);
-            this.leftWing.setPivot(3.0F, 0.0F, 3.0F);
+            //#if MC>=12105
+            this.head.yaw = pi - batEntity.relativeHeadYaw * pi180;
+            this.head.setOrigin(0.0F, -2.0F, 0.0F);
+            this.rightWing.setOrigin(-3.0F, 0.0F, 3.0F);
+            this.leftWing.setOrigin(3.0F, 0.0F, 3.0F);
+            //#else
+            //$$ this.head.yaw = pi - batEntity.yawDegrees * pi180;
+            //$$ this.head.setPivot(0.0F, -2.0F, 0.0F);
+            //$$ this.rightWing.setPivot(-3.0F, 0.0F, 3.0F);
+            //$$ this.leftWing.setPivot(3.0F, 0.0F, 3.0F);
+            //#endif
             this.body.pitch = pi;
             this.rightWing.pitch = -0.15707964F;
             this.rightWing.yaw = -1.2566371F;
@@ -108,11 +116,18 @@ public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderSta
             this.leftWingTip.yaw = -this.rightWingTip.yaw;
         } else {
             this.head.pitch = batEntity.pitch * pi180;
-            this.head.yaw = batEntity.yawDegrees * pi180;
             this.head.roll = 0.0F;
-            this.head.setPivot(0.0F, 0.0F, 0.0F);
-            this.rightWing.setPivot(0.0F, 0.0F, 0.0F);
-            this.leftWing.setPivot(0.0F, 0.0F, 0.0F);
+            //#if MC>=12105
+            this.head.yaw = batEntity.relativeHeadYaw * pi180;
+            this.head.setOrigin(0.0F, 0.0F, 0.0F);
+            this.rightWing.setOrigin(0.0F, 0.0F, 0.0F);
+            this.leftWing.setOrigin(0.0F, 0.0F, 0.0F);
+            //#else
+            //$$ this.head.yaw = batEntity.yawDegrees * pi180;
+            //$$ this.head.setPivot(0.0F, 0.0F, 0.0F);
+            //$$ this.rightWing.setPivot(0.0F, 0.0F, 0.0F);
+            //$$ this.leftWing.setPivot(0.0F, 0.0F, 0.0F);
+            //#endif
             this.body.pitch = 0.7853982F + MathHelper.cos(batEntity.age * 0.1F) * 0.15F;
             this.body.yaw = 0.0F;
             this.rightWing.yaw = MathHelper.cos(batEntity.age * 74.48451F * pi180) * pi * 0.25F;

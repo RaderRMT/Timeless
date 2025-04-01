@@ -65,7 +65,11 @@ public abstract class MixinPistonBlock {
         boolean canPush = new PistonHandler(world, pos, direction, true).calculatePush();
 
         if (shouldExtend && isRetracted && !canPush) {
-            world.addSyncedBlockEvent(pos, (PistonBlock) (Object) this, PISTON_CLUNK_EVENT_ID, direction.getId());
+            //#if MC>=12105
+            world.addSyncedBlockEvent(pos, (PistonBlock) (Object) this, PISTON_CLUNK_EVENT_ID, direction.getIndex());
+            //#else
+            //$$ world.addSyncedBlockEvent(pos, (PistonBlock) (Object) this, PISTON_CLUNK_EVENT_ID, direction.getId());
+            //#endif
         }
     }
 
@@ -92,7 +96,11 @@ public abstract class MixinPistonBlock {
         }
 
         world.playSound(null, pos, SoundEvents.BLOCK_ANVIL_PLACE, SoundCategory.BLOCKS, 0.5f, world.random.nextFloat() * 0.25f + 0.4f);
-        world.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
+        //#if MC>=12105
+        world.addParticleClient(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
+        //#else
+        //$$ world.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
+        //#endif
 
         this.wasPowered = true;
 

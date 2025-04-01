@@ -118,16 +118,6 @@ if (mcVersion >= 12100) {
     loom.accessWidenerPath = rootProject.file("versions/1.19.4/src/main/resources/timeless.accesswidener")
 }
 
-if (project.name == '1.21.5') {
-    tasks.register('generateJava', Copy) {
-        from "${project.parent.projectDir}/src/template/java"
-        into "${project.parent.getLayout().getBuildDirectory().get().getAsFile().getAbsolutePath()}/generated/java"
-    }
-
-    sourceSets.main.java.srcDir "${project.parent.getLayout().getBuildDirectory().get().getAsFile().getAbsolutePath()}/generated/java"
-    compileJava.dependsOn(generateJava)
-}
-
 preprocess {
     vars.put("MC", project.mcVersion)
 
@@ -169,8 +159,6 @@ tasks.ideaSyncTask.doFirst {
 }
 
 java {
-    withSourcesJar()
-
     toolchain {
         languageVersion.set(JavaLanguageVersion.of(21))
     }

@@ -25,6 +25,7 @@
   "mixins": [
     "timeless.mixins.json"
   ],
+  "accessWidener": "timeless.accesswidener",
   "depends": {
     "fabricloader": ">=${loader_version}",
     "fabric": "*"

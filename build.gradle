@@ -41,6 +41,7 @@ def mappingsVersions = [
         12101: "1.21.1+build.3",
         12104: "1.21.4+build.8",
         12105: "1.21.5+build.1",
+        12106: "1.21.6+build.1",
 ]
 
 def fabricApiVersions = [
@@ -52,6 +53,7 @@ def fabricApiVersions = [
         12101: "0.115.4+1.21.1",
         12104: "0.119.2+1.21.4",
         12105: "0.119.6+1.21.5",
+        12106: "0.127.0+1.21.6",
 ]
 
 def modMenuVersions = [
@@ -63,6 +65,7 @@ def modMenuVersions = [
         12101: "11.0.3",
         12104: "13.0.3",
         12105: "14.0.0-rc.2",
+        12106: "15.0.0-beta.1",
 ]
 
 def clothConfigVersions = [
@@ -74,6 +77,7 @@ def clothConfigVersions = [
         12101: "15.0.140",
         12104: "17.0.144",
         12105: "18.0.145",
+        12106: "19.0.146",
 ]
 
 repositories {

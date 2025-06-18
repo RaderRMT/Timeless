@@ -56,11 +56,14 @@ public class BuildingBlocksTab extends Tab {
         entries.add(Items.JUNGLE_PLANKS);
         entries.add(Items.ACACIA_PLANKS);
         entries.add(Items.DARK_OAK_PLANKS);
-        entries.add(Items.CRIMSON_PLANKS);
-        entries.add(Items.WARPED_PLANKS);
         entries.add(Items.BAMBOO_PLANKS);
         entries.add(Items.CHERRY_PLANKS);
         entries.add(Items.MANGROVE_PLANKS);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_PLANKS);
+        //#endif
+        entries.add(Items.CRIMSON_PLANKS);
+        entries.add(Items.WARPED_PLANKS);
         entries.add(Items.BEDROCK);
         entries.add(Items.SAND);
         entries.add(Items.SUSPICIOUS_SAND);
@@ -154,10 +157,13 @@ public class BuildingBlocksTab extends Tab {
         entries.add(Items.JUNGLE_LOG);
         entries.add(Items.ACACIA_LOG);
         entries.add(Items.DARK_OAK_LOG);
-        entries.add(Items.CRIMSON_STEM);
-        entries.add(Items.WARPED_STEM);
         entries.add(Items.CHERRY_LOG);
         entries.add(Items.MANGROVE_LOG);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_LOG);
+        //#endif
+        entries.add(Items.CRIMSON_STEM);
+        entries.add(Items.WARPED_STEM);
         entries.add(Items.STRIPPED_OAK_LOG);
         entries.add(Items.STRIPPED_SPRUCE_LOG);
         entries.add(Items.STRIPPED_BIRCH_LOG);
@@ -167,6 +173,9 @@ public class BuildingBlocksTab extends Tab {
         entries.add(Items.STRIPPED_BAMBOO_BLOCK);
         entries.add(Items.STRIPPED_CHERRY_LOG);
         entries.add(Items.STRIPPED_MANGROVE_LOG);
+        //#if MC>=12104
+        entries.add(Items.STRIPPED_PALE_OAK_LOG);
+        //#endif
         entries.add(Items.STRIPPED_CRIMSON_STEM);
         entries.add(Items.STRIPPED_WARPED_STEM);
         entries.add(Items.STRIPPED_OAK_WOOD);
@@ -177,6 +186,9 @@ public class BuildingBlocksTab extends Tab {
         entries.add(Items.STRIPPED_DARK_OAK_WOOD);
         entries.add(Items.STRIPPED_CHERRY_WOOD);
         entries.add(Items.STRIPPED_MANGROVE_WOOD);
+        //#if MC>=12104
+        entries.add(Items.STRIPPED_PALE_OAK_WOOD);
+        //#endif
         entries.add(Items.STRIPPED_CRIMSON_HYPHAE);
         entries.add(Items.STRIPPED_WARPED_HYPHAE);
         entries.add(Items.OAK_WOOD);
@@ -222,6 +234,9 @@ public class BuildingBlocksTab extends Tab {
         entries.add(Items.BAMBOO_SLAB);
         entries.add(Items.CHERRY_SLAB);
         entries.add(Items.MANGROVE_SLAB);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_SLAB);
+        //#endif
         entries.add(Items.CRIMSON_SLAB);
         entries.add(Items.WARPED_SLAB);
         entries.add(Items.STONE_SLAB);
@@ -294,6 +309,9 @@ public class BuildingBlocksTab extends Tab {
         entries.add(Items.BAMBOO_STAIRS);
         entries.add(Items.CHERRY_STAIRS);
         entries.add(Items.MANGROVE_STAIRS);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_STAIRS);
+        //#endif
         entries.add(Items.CRIMSON_STAIRS);
         entries.add(Items.WARPED_STAIRS);
         entries.add(Items.QUARTZ_BLOCK);
@@ -456,5 +474,13 @@ public class BuildingBlocksTab extends Tab {
         entries.add(Items.PACKED_MUD);
         entries.add(Items.MUD_BRICKS);
         entries.add(Items.MUDDY_MANGROVE_ROOTS);
+        //#if MC>=12104
+        entries.add(Items.CREAKING_HEART);
+        entries.add(Items.RESIN_BLOCK);
+        entries.add(Items.RESIN_BRICKS);
+        entries.add(Items.RESIN_BRICK_SLAB);
+        entries.add(Items.RESIN_BRICK_STAIRS);
+        entries.add(Items.CHISELED_RESIN_BRICKS);
+        //#endif
     }
 }

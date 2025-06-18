@@ -62,11 +62,14 @@ public class RedstoneTab extends Tab {
         entries.add(Items.JUNGLE_BUTTON);
         entries.add(Items.ACACIA_BUTTON);
         entries.add(Items.DARK_OAK_BUTTON);
-        entries.add(Items.CRIMSON_BUTTON);
-        entries.add(Items.WARPED_BUTTON);
         entries.add(Items.BAMBOO_BUTTON);
         entries.add(Items.CHERRY_BUTTON);
         entries.add(Items.MANGROVE_BUTTON);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_BUTTON);
+        //#endif
+        entries.add(Items.CRIMSON_BUTTON);
+        entries.add(Items.WARPED_BUTTON);
         entries.add(Items.STONE_PRESSURE_PLATE);
         entries.add(Items.POLISHED_BLACKSTONE_PRESSURE_PLATE);
         entries.add(Items.LIGHT_WEIGHTED_PRESSURE_PLATE);
@@ -77,11 +80,14 @@ public class RedstoneTab extends Tab {
         entries.add(Items.JUNGLE_PRESSURE_PLATE);
         entries.add(Items.ACACIA_PRESSURE_PLATE);
         entries.add(Items.DARK_OAK_PRESSURE_PLATE);
-        entries.add(Items.CRIMSON_PRESSURE_PLATE);
-        entries.add(Items.WARPED_PRESSURE_PLATE);
         entries.add(Items.BAMBOO_PRESSURE_PLATE);
         entries.add(Items.CHERRY_PRESSURE_PLATE);
         entries.add(Items.MANGROVE_PRESSURE_PLATE);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_PRESSURE_PLATE);
+        //#endif
+        entries.add(Items.CRIMSON_PRESSURE_PLATE);
+        entries.add(Items.WARPED_PRESSURE_PLATE);
         entries.add(Items.IRON_DOOR);
         entries.add(Items.OAK_DOOR);
         entries.add(Items.SPRUCE_DOOR);
@@ -89,11 +95,14 @@ public class RedstoneTab extends Tab {
         entries.add(Items.JUNGLE_DOOR);
         entries.add(Items.ACACIA_DOOR);
         entries.add(Items.DARK_OAK_DOOR);
-        entries.add(Items.CRIMSON_DOOR);
-        entries.add(Items.WARPED_DOOR);
         entries.add(Items.BAMBOO_DOOR);
         entries.add(Items.CHERRY_DOOR);
         entries.add(Items.MANGROVE_DOOR);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_DOOR);
+        //#endif
+        entries.add(Items.CRIMSON_DOOR);
+        entries.add(Items.WARPED_DOOR);
         //#if MC>=12100
         entries.add(Items.COPPER_DOOR);
         entries.add(Items.EXPOSED_COPPER_DOOR);
@@ -111,10 +120,14 @@ public class RedstoneTab extends Tab {
         entries.add(Items.JUNGLE_TRAPDOOR);
         entries.add(Items.ACACIA_TRAPDOOR);
         entries.add(Items.DARK_OAK_TRAPDOOR);
+        entries.add(Items.BAMBOO_TRAPDOOR);
+        entries.add(Items.CHERRY_TRAPDOOR);
+        entries.add(Items.MANGROVE_TRAPDOOR);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_TRAPDOOR);
+        //#endif
         entries.add(Items.CRIMSON_TRAPDOOR);
         entries.add(Items.WARPED_TRAPDOOR);
-        entries.add(Items.BAMBOO_TRAPDOOR);
-        entries.add(Items.MANGROVE_TRAPDOOR);
         //#if MC>=12100
         entries.add(Items.COPPER_TRAPDOOR);
         entries.add(Items.EXPOSED_COPPER_TRAPDOOR);
@@ -131,10 +144,13 @@ public class RedstoneTab extends Tab {
         entries.add(Items.JUNGLE_FENCE_GATE);
         entries.add(Items.ACACIA_FENCE_GATE);
         entries.add(Items.DARK_OAK_FENCE_GATE);
-        entries.add(Items.CRIMSON_FENCE_GATE);
-        entries.add(Items.WARPED_FENCE_GATE);
         entries.add(Items.BAMBOO_FENCE_GATE);
         entries.add(Items.CHERRY_FENCE_GATE);
         entries.add(Items.MANGROVE_FENCE_GATE);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_FENCE_GATE);
+        //#endif
+        entries.add(Items.CRIMSON_FENCE_GATE);
+        entries.add(Items.WARPED_FENCE_GATE);
     }
 }

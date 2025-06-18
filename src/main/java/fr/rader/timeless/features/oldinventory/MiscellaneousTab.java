@@ -4,7 +4,6 @@ import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.Items;
-import net.minecraft.registry.RegistryKey;
 import net.minecraft.text.Text;
 
 import static net.minecraft.item.ItemGroups.NATURAL;
@@ -62,10 +61,18 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.TADPOLE_BUCKET);
         entries.add(Items.BRICK);
         entries.add(Items.CLAY_BALL);
+        //#if MC>=12104
+        entries.add(Items.RESIN_BRICK);
+        entries.add(Items.RESIN_CLUMP);
+        //#endif
         entries.add(Items.PAPER);
         entries.add(Items.BOOK);
         entries.add(Items.SLIME_BALL);
         entries.add(Items.EGG);
+        //#if MC>=12106
+        entries.add(Items.BLUE_EGG);
+        entries.add(Items.BROWN_EGG);
+        //#endif
         entries.add(Items.GLOWSTONE_DUST);
         entries.add(Items.INK_SAC);
         entries.add(Items.GLOW_INK_SAC);
@@ -117,6 +124,9 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.CHICKEN_SPAWN_EGG);
         entries.add(Items.COD_SPAWN_EGG);
         entries.add(Items.COW_SPAWN_EGG);
+        //#if MC>=12104
+        entries.add(Items.CREAKING_SPAWN_EGG);
+        //#endif
         entries.add(Items.CREEPER_SPAWN_EGG);
         entries.add(Items.DOLPHIN_SPAWN_EGG);
         entries.add(Items.DONKEY_SPAWN_EGG);
@@ -132,6 +142,9 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.GLOW_SQUID_SPAWN_EGG);
         entries.add(Items.GOAT_SPAWN_EGG);
         entries.add(Items.GUARDIAN_SPAWN_EGG);
+        //#if MC>=12106
+        entries.add(Items.HAPPY_GHAST_SPAWN_EGG);
+        //#endif
         entries.add(Items.HOGLIN_SPAWN_EGG);
         entries.add(Items.HORSE_SPAWN_EGG);
         entries.add(Items.HUSK_SPAWN_EGG);
@@ -183,6 +196,9 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.ZOMBIE_HORSE_SPAWN_EGG);
         entries.add(Items.ZOMBIE_VILLAGER_SPAWN_EGG);
         entries.add(Items.ZOMBIFIED_PIGLIN_SPAWN_EGG);
+        //#if MC>=12106
+        entries.add(Items.DRIED_GHAST);
+        //#endif
         entries.add(Items.EXPERIENCE_BOTTLE);
         entries.add(Items.FIRE_CHARGE);
         entries.add(Items.WRITABLE_BOOK);
@@ -227,6 +243,9 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.MUSIC_DISC_CREATOR);
         entries.add(Items.MUSIC_DISC_CREATOR_MUSIC_BOX);
         //#endif
+        //#if MC>=12106
+        entries.add(Items.MUSIC_DISC_TEARS);
+        //#endif
         entries.add(Items.DISC_FRAGMENT_5);
         entries.add(Items.NAUTILUS_SHELL);
         entries.add(Items.HEART_OF_THE_SEA);
@@ -239,6 +258,10 @@ public class MiscellaneousTab extends Tab {
         //#if MC>=12100
         entries.add(Items.FLOW_BANNER_PATTERN);
         entries.add(Items.GUSTER_BANNER_PATTERN);
+        //#endif
+        //#if MC>=12102
+        entries.add(Items.FIELD_MASONED_BANNER_PATTERN);
+        entries.add(Items.BORDURE_INDENTED_BANNER_PATTERN);
         //#endif
         entries.add(Items.HONEYCOMB);
         entries.add(Items.SNIFFER_EGG);

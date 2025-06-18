@@ -13,7 +13,6 @@ import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.StatsScreen;
 import net.minecraft.client.gui.screen.option.*;
 import net.minecraft.client.gui.screen.pack.PackScreen;
-import net.minecraft.client.render.RenderLayer;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.math.ColorHelper;
@@ -24,6 +23,14 @@ import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
+//#if MC>=12106
+import net.minecraft.client.gl.RenderPipelines;
+//#endif
+
+//#if MC<=12105
+//$$ import net.minecraft.client.render.RenderLayer;
+//#endif
 
 import java.util.Arrays;
 
@@ -102,8 +109,10 @@ public abstract class MixinScreen {
 
     @Unique
     private void timeless$renderDirtBackground(DrawContext context) {
-        //#if MC>=12102
-        context.drawTexture(RenderLayer::getGuiTextured, OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0.0f, 0.0f, this.width, this.height, 32, 32, ColorHelper.getArgb(255, 64, 64, 64));
+        //#if MC>=12106
+        context.drawTexture(RenderPipelines.GUI_TEXTURED, OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0.0f, 0.0f, this.width, this.height, 32, 32, ColorHelper.getArgb(255, 64, 64, 64));
+        //#elseif MC>=12102
+        //$$ context.drawTexture(RenderLayer::getGuiTextured, OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0.0f, 0.0f, this.width, this.height, 32, 32, ColorHelper.getArgb(255, 64, 64, 64));
         //#else
         //$$ context.setShaderColor(0.25F, 0.25F, 0.25F, 1.0F);
         //$$ context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);

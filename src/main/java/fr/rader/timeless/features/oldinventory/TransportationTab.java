@@ -20,6 +20,24 @@ public class TransportationTab extends Tab {
         entries.add(Items.RAIL);
         entries.add(Items.ACTIVATOR_RAIL);
         entries.add(Items.SADDLE);
+        //#if MC>=12106
+        entries.add(Items.WHITE_HARNESS);
+        entries.add(Items.LIGHT_GRAY_HARNESS);
+        entries.add(Items.GRAY_HARNESS);
+        entries.add(Items.BLACK_HARNESS);
+        entries.add(Items.BROWN_HARNESS);
+        entries.add(Items.RED_HARNESS);
+        entries.add(Items.ORANGE_HARNESS);
+        entries.add(Items.YELLOW_HARNESS);
+        entries.add(Items.LIME_HARNESS);
+        entries.add(Items.GREEN_HARNESS);
+        entries.add(Items.CYAN_HARNESS);
+        entries.add(Items.LIGHT_BLUE_HARNESS);
+        entries.add(Items.BLUE_HARNESS);
+        entries.add(Items.PURPLE_HARNESS);
+        entries.add(Items.MAGENTA_HARNESS);
+        entries.add(Items.PINK_HARNESS);
+        //#endif
         entries.add(Items.MINECART);
         entries.add(Items.CHEST_MINECART);
         entries.add(Items.FURNACE_MINECART);

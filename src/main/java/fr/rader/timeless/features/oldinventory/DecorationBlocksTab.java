@@ -27,6 +27,9 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.ACACIA_SAPLING);
         entries.add(Items.DARK_OAK_SAPLING);
         entries.add(Items.CHERRY_SAPLING);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_SAPLING);
+        //#endif
         entries.add(Items.MANGROVE_PROPAGULE);
         entries.add(Items.OAK_LEAVES);
         entries.add(Items.SPRUCE_LEAVES);
@@ -38,6 +41,9 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.FLOWERING_AZALEA_LEAVES);
         entries.add(Items.CHERRY_LEAVES);
         entries.add(Items.MANGROVE_LEAVES);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_LEAVES);
+        //#endif
         entries.add(Items.COBWEB);
         //#if MC>=12004
         entries.add(Items.SHORT_GRASS);
@@ -45,6 +51,11 @@ public class DecorationBlocksTab extends Tab {
         //$$ entries.add(Items.GRASS);
         //#endif
         entries.add(Items.FERN);
+        //#if MC>=12105
+        entries.add(Items.BUSH);
+        entries.add(Items.FIREFLY_BUSH);
+        entries.add(Items.LEAF_LITTER);
+        //#endif
         entries.add(Items.AZALEA);
         entries.add(Items.FLOWERING_AZALEA);
         entries.add(Items.DEAD_BUSH);
@@ -62,14 +73,24 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.OXEYE_DAISY);
         entries.add(Items.CORNFLOWER);
         entries.add(Items.LILY_OF_THE_VALLEY);
+        //#if MC>=12104
+        entries.add(Items.CLOSED_EYEBLOSSOM);
+        entries.add(Items.OPEN_EYEBLOSSOM);
+        //#endif
         entries.add(Items.WITHER_ROSE);
         entries.add(Items.TORCHFLOWER);
         entries.add(Items.SPORE_BLOSSOM);
+        //#if MC>=12105
+        entries.add(Items.CACTUS_FLOWER);
+        //#endif
         entries.add(Items.BROWN_MUSHROOM);
         entries.add(Items.RED_MUSHROOM);
         entries.add(Items.CRIMSON_FUNGUS);
         entries.add(Items.WARPED_FUNGUS);
         entries.add(Items.PINK_PETALS);
+        //#if MC>=12105
+        entries.add(Items.WILDFLOWERS);
+        //#endif
         entries.add(Items.CRIMSON_ROOTS);
         entries.add(Items.WARPED_ROOTS);
         entries.add(Items.NETHER_SPROUTS);
@@ -79,9 +100,20 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.KELP);
         entries.add(Items.MOSS_CARPET);
         entries.add(Items.MOSS_BLOCK);
+        //#if MC>=12104
+        entries.add(Items.PALE_MOSS_CARPET);
+        entries.add(Items.PALE_MOSS_BLOCK);
+        //#endif
         entries.add(Items.HANGING_ROOTS);
+        //#if MC>=12104
+        entries.add(Items.PALE_HANGING_MOSS);
+        //#endif
         entries.add(Items.BIG_DRIPLEAF);
         entries.add(Items.SMALL_DRIPLEAF);
+        //#if MC>=12105
+        entries.add(Items.TALL_DRY_GRASS);
+        entries.add(Items.SHORT_DRY_GRASS);
+        //#endif
         entries.add(Items.BAMBOO);
         entries.add(Items.TORCH);
         entries.add(Items.END_ROD);
@@ -101,11 +133,14 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.JUNGLE_FENCE);
         entries.add(Items.ACACIA_FENCE);
         entries.add(Items.DARK_OAK_FENCE);
-        entries.add(Items.CRIMSON_FENCE);
-        entries.add(Items.WARPED_FENCE);
         entries.add(Items.BAMBOO_FENCE);
         entries.add(Items.CHERRY_FENCE);
         entries.add(Items.MANGROVE_FENCE);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_FENCE);
+        //#endif
+        entries.add(Items.CRIMSON_FENCE);
+        entries.add(Items.WARPED_FENCE);
         entries.add(Items.SOUL_TORCH);
         entries.add(Items.INFESTED_STONE);
         entries.add(Items.INFESTED_COBBLESTONE);
@@ -153,6 +188,9 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.TUFF_WALL);
         entries.add(Items.POLISHED_TUFF_WALL);
         entries.add(Items.TUFF_BRICK_WALL);
+        //#endif
+        //#if MC>=12104
+        entries.add(Items.RESIN_BRICK_WALL);
         //#endif
         entries.add(Items.ANVIL);
         entries.add(Items.CHIPPED_ANVIL);
@@ -265,16 +303,20 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.ACACIA_HANGING_SIGN);
         entries.add(Items.DARK_OAK_SIGN);
         entries.add(Items.DARK_OAK_HANGING_SIGN);
-        entries.add(Items.CRIMSON_SIGN);
-        entries.add(Items.CRIMSON_HANGING_SIGN);
-        entries.add(Items.WARPED_SIGN);
-        entries.add(Items.WARPED_HANGING_SIGN);
         entries.add(Items.BAMBOO_SIGN);
         entries.add(Items.BAMBOO_HANGING_SIGN);
         entries.add(Items.CHERRY_SIGN);
         entries.add(Items.CHERRY_HANGING_SIGN);
         entries.add(Items.MANGROVE_SIGN);
         entries.add(Items.MANGROVE_HANGING_SIGN);
+        //#if MC>=12104
+        entries.add(Items.PALE_OAK_SIGN);
+        entries.add(Items.PALE_OAK_HANGING_SIGN);
+        //#endif
+        entries.add(Items.CRIMSON_SIGN);
+        entries.add(Items.CRIMSON_HANGING_SIGN);
+        entries.add(Items.WARPED_SIGN);
+        entries.add(Items.WARPED_HANGING_SIGN);
         entries.add(Items.WHITE_BED);
         entries.add(Items.ORANGE_BED);
         entries.add(Items.MAGENTA_BED);
@@ -378,12 +420,7 @@ public class DecorationBlocksTab extends Tab {
     }
 
     private void addPaintingVariants(ItemGroup.DisplayContext displayContext, ItemGroup.Entries entries) {
-        displayContext.lookup()
-                //#if MC>=12102
-                .getOptional(RegistryKeys.PAINTING_VARIANT)
-                //#else
-                //$$ .getOptionalWrapper(RegistryKeys.PAINTING_VARIANT)
-                //#endif
+        getOptional(displayContext, RegistryKeys.PAINTING_VARIANT)
                 .ifPresent(
                         wrapper -> ItemGroups.addPaintings(
                                 entries,

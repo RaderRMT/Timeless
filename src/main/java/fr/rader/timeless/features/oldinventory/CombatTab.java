@@ -5,15 +5,15 @@ import net.minecraft.item.*;
 import net.minecraft.potion.Potion;
 import net.minecraft.registry.RegistryKeys;
 import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.ItemTags;
-import net.minecraft.registry.tag.TagKey;
 import net.minecraft.text.Text;
 
-import java.util.Set;
-
 //#if MC<=12004
-//$$ import java.util.EnumSet;
 //$$ import net.minecraft.enchantment.EnchantmentTarget;
+//$$ import java.util.EnumSet;
+//#elseif MC<=12006
+//$$ import net.minecraft.registry.tag.ItemTags;
+//$$ import net.minecraft.registry.tag.TagKey;
+//$$ import java.util.Set;
 //#endif
 
 import static net.minecraft.item.ItemGroups.COMBAT;

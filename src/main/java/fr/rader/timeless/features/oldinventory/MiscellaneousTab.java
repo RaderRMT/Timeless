@@ -246,6 +246,9 @@ public class MiscellaneousTab extends Tab {
         //#if MC>=12106
         entries.add(Items.MUSIC_DISC_TEARS);
         //#endif
+        //#if MC>=12107
+        entries.add(Items.MUSIC_DISC_LAVA_CHICKEN);
+        //#endif
         entries.add(Items.DISC_FRAGMENT_5);
         entries.add(Items.NAUTILUS_SHELL);
         entries.add(Items.HEART_OF_THE_SEA);

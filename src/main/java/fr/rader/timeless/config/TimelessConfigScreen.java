@@ -58,6 +58,11 @@ public class TimelessConfigScreen implements ModMenuApi {
         mc12006.addEntry(createBooleanEntry(entryBuilder, "useOldScreenBackground", true, config.useOldScreenBackground, value -> config.useOldScreenBackground = value).build());
         //#endif
 
+        //#if MC>=12106
+        ConfigCategory mc12106 = builder.getOrCreateCategory(Text.literal("1.21.6+"));
+        mc12106.addEntry(createBooleanEntry(entryBuilder, "disableEnvironmentalFog", true, config.disableEnvironmentalFog, value -> config.disableEnvironmentalFog = value).build());
+        //#endif
+
         builder.setSavingRunnable(config::write);
 
         return builder.build();

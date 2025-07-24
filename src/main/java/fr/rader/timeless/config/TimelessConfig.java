@@ -31,6 +31,9 @@ public class TimelessConfig {
     //#if MC>=12006
     public boolean useOldScreenBackground = true;
     //#endif
+    //#if MC>=12106
+    public boolean disableEnvironmentalFog = true;
+    //#endif
 
     public void write() {
         try (FileWriter writer = new FileWriter(TimelessConfig.CONFIG_PATH)) {

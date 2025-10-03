@@ -18,7 +18,9 @@
     //#if MC>=12006
     "oldbackground.MixinScreen",
     "oldbackground.MixinMessageScreen",
-    "oldbackground.MixinDownloadingTerrainScreen",
+    //#if MC<=12108
+    //$$ "oldbackground.MixinDownloadingTerrainScreen",
+    //#endif
     //#endif
 
     //#if MC>=12004

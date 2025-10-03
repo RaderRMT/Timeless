@@ -35,12 +35,31 @@ public class RedstoneTab extends Tab {
         entries.add(Items.TARGET);
         entries.add(Items.LEVER);
         entries.add(Items.LIGHTNING_ROD);
+        //#if MC>=12109
+        entries.add(Items.EXPOSED_LIGHTNING_ROD);
+        entries.add(Items.WEATHERED_LIGHTNING_ROD);
+        entries.add(Items.OXIDIZED_LIGHTNING_ROD);
+        entries.add(Items.WAXED_LIGHTNING_ROD);
+        entries.add(Items.WAXED_EXPOSED_LIGHTNING_ROD);
+        entries.add(Items.WAXED_WEATHERED_LIGHTNING_ROD);
+        entries.add(Items.WAXED_OXIDIZED_LIGHTNING_ROD);
+        //#endif
         entries.add(Items.DAYLIGHT_DETECTOR);
         entries.add(Items.SCULK_SHRIEKER);
         entries.add(Items.SCULK_SENSOR);
         entries.add(Items.CALIBRATED_SCULK_SENSOR);
         entries.add(Items.TRIPWIRE_HOOK);
         entries.add(Items.TRAPPED_CHEST);
+        //#if MC>=12190
+        entries.add(Items.COPPER_CHEST);
+        entries.add(Items.EXPOSED_COPPER_CHEST);
+        entries.add(Items.WEATHERED_COPPER_CHEST);
+        entries.add(Items.OXIDIZED_COPPER_CHEST);
+        entries.add(Items.WAXED_COPPER_CHEST);
+        entries.add(Items.WAXED_EXPOSED_COPPER_CHEST);
+        entries.add(Items.WAXED_WEATHERED_COPPER_CHEST);
+        entries.add(Items.WAXED_OXIDIZED_COPPER_CHEST);
+        //#endif
         entries.add(Items.TNT);
         entries.add(Items.REDSTONE_LAMP);
         //#if MC>=12100

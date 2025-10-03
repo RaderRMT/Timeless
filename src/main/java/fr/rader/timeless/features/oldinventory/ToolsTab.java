@@ -38,6 +38,12 @@ public class ToolsTab extends Tab {
         entries.add(Items.STONE_PICKAXE);
         entries.add(Items.STONE_AXE);
         entries.add(Items.STONE_HOE);
+        //#if MC>=12109
+        entries.add(Items.COPPER_SHOVEL);
+        entries.add(Items.COPPER_PICKAXE);
+        entries.add(Items.COPPER_AXE);
+        entries.add(Items.COPPER_HOE);
+        //#endif
         entries.add(Items.GOLDEN_SHOVEL);
         entries.add(Items.GOLDEN_PICKAXE);
         entries.add(Items.GOLDEN_AXE);

@@ -123,6 +123,9 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.CAVE_SPIDER_SPAWN_EGG);
         entries.add(Items.CHICKEN_SPAWN_EGG);
         entries.add(Items.COD_SPAWN_EGG);
+        //#if MC>=12109
+        entries.add(Items.COPPER_GOLEM_SPAWN_EGG);
+        //#endif
         entries.add(Items.COW_SPAWN_EGG);
         //#if MC>=12104
         entries.add(Items.CREAKING_SPAWN_EGG);
@@ -214,6 +217,9 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.GOLDEN_HORSE_ARMOR);
         entries.add(Items.DIAMOND_HORSE_ARMOR);
         entries.add(Items.LEATHER_HORSE_ARMOR);
+        //#if MC>=12109
+        entries.add(Items.COPPER_HORSE_ARMOR);
+        //#endif
         //#if MC>=12005
         entries.add(Items.WOLF_ARMOR);
         //#endif
@@ -222,6 +228,9 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.BEETROOT_SEEDS);
         entries.add(Items.SHULKER_SHELL);
         entries.add(Items.IRON_NUGGET);
+        //#if MC>=12109
+        entries.add(Items.COPPER_NUGGET);
+        //#endif
         entries.add(Items.MUSIC_DISC_13);
         entries.add(Items.MUSIC_DISC_CAT);
         entries.add(Items.MUSIC_DISC_BLOCKS);
@@ -306,6 +315,16 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.TRIAL_KEY);
         entries.add(Items.OMINOUS_TRIAL_KEY);
         entries.add(Items.WIND_CHARGE);
+        //#endif
+        //#if MC>=12109
+        entries.add(Items.COPPER_GOLEM_STATUE);
+        entries.add(Items.EXPOSED_COPPER_GOLEM_STATUE);
+        entries.add(Items.WEATHERED_COPPER_GOLEM_STATUE);
+        entries.add(Items.OXIDIZED_COPPER_GOLEM_STATUE);
+        entries.add(Items.WAXED_COPPER_GOLEM_STATUE);
+        entries.add(Items.WAXED_EXPOSED_COPPER_GOLEM_STATUE);
+        entries.add(Items.WAXED_WEATHERED_COPPER_GOLEM_STATUE);
+        entries.add(Items.WAXED_OXIDIZED_COPPER_GOLEM_STATUE);
         //#endif
     }
 

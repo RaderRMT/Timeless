@@ -7,7 +7,6 @@ import fr.rader.timeless.config.TimelessConfig;
 import me.shedaniel.clothconfig2.gui.AbstractConfigScreen;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
 import net.minecraft.client.gui.screen.MessageScreen;
 import net.minecraft.client.gui.screen.Screen;
 import net.minecraft.client.gui.screen.StatsScreen;
@@ -26,6 +25,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 //#if MC>=12106
 import net.minecraft.client.gl.RenderPipelines;
+//#endif
+
+//#if MC<=12108
+//$$ import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
 //#endif
 
 //#if MC<=12105
@@ -56,7 +59,9 @@ public abstract class MixinScreen {
             TelemetryInfoScreen.class,
             StatsScreen.class,
             MessageScreen.class,
-            DownloadingTerrainScreen.class,
+            //#if MC<=12108
+            //$$ DownloadingTerrainScreen.class,
+            //#endif
     };
 
     @Shadow public int width;

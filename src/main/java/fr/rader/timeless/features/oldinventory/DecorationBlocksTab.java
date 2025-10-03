@@ -116,6 +116,9 @@ public class DecorationBlocksTab extends Tab {
         //#endif
         entries.add(Items.BAMBOO);
         entries.add(Items.TORCH);
+        //#if MC>=12109
+        entries.add(Items.COPPER_TORCH);
+        //#endif
         entries.add(Items.END_ROD);
         entries.add(Items.CHORUS_PLANT);
         entries.add(Items.CHORUS_FLOWER);
@@ -153,7 +156,17 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.RED_MUSHROOM_BLOCK);
         entries.add(Items.MUSHROOM_STEM);
         entries.add(Items.IRON_BARS);
-        entries.add(Items.CHAIN);
+        //#if MC>=12109
+        Items.COPPER_BARS.forEach(entries::add);
+        //#endif
+        //#if MC>=12109
+        entries.add(Items.IRON_CHAIN);
+        //#else
+        //$$ entries.add(Items.CHAIN);
+        //#endif
+        //#if MC>=12109
+        Items.COPPER_CHAINS.forEach(entries::add);
+        //#endif
         entries.add(Items.GLASS_PANE);
         entries.add(Items.VINE);
         entries.add(Items.GLOW_LICHEN);
@@ -375,6 +388,9 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.BELL);
         entries.add(Items.LANTERN);
         entries.add(Items.SOUL_LANTERN);
+        //#if MC>=12109
+        Items.COPPER_LANTERNS.forEach(entries::add);
+        //#endif
         entries.add(Items.CAMPFIRE);
         entries.add(Items.SOUL_CAMPFIRE);
         entries.add(Items.SHROOMLIGHT);
@@ -416,6 +432,20 @@ public class DecorationBlocksTab extends Tab {
         entries.add(Items.VERDANT_FROGLIGHT);
         //#if MC>=12100
         entries.add(Items.VAULT);
+        //#endif
+        //#if MC>=12109
+        entries.add(Items.OAK_SHELF);
+        entries.add(Items.SPRUCE_SHELF);
+        entries.add(Items.BIRCH_SHELF);
+        entries.add(Items.JUNGLE_SHELF);
+        entries.add(Items.ACACIA_SHELF);
+        entries.add(Items.DARK_OAK_SHELF);
+        entries.add(Items.BAMBOO_SHELF);
+        entries.add(Items.CHERRY_SHELF);
+        entries.add(Items.MANGROVE_SHELF);
+        entries.add(Items.PALE_OAK_SHELF);
+        entries.add(Items.CRIMSON_SHELF);
+        entries.add(Items.WARPED_SHELF);
         //#endif
     }
 

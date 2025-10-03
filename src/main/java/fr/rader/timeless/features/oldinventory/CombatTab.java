@@ -31,6 +31,9 @@ public class CombatTab extends Tab {
         entries.add(Items.ARROW);
         entries.add(Items.WOODEN_SWORD);
         entries.add(Items.STONE_SWORD);
+        //#if MC>=12109
+        entries.add(Items.COPPER_SWORD);
+        //#endif
         entries.add(Items.GOLDEN_SWORD);
         entries.add(Items.IRON_SWORD);
         entries.add(Items.DIAMOND_SWORD);
@@ -43,6 +46,12 @@ public class CombatTab extends Tab {
         entries.add(Items.CHAINMAIL_CHESTPLATE);
         entries.add(Items.CHAINMAIL_LEGGINGS);
         entries.add(Items.CHAINMAIL_BOOTS);
+        //#if MC>=12109
+        entries.add(Items.COPPER_HELMET);
+        entries.add(Items.COPPER_CHESTPLATE);
+        entries.add(Items.COPPER_LEGGINGS);
+        entries.add(Items.COPPER_BOOTS);
+        //#endif
         entries.add(Items.IRON_HELMET);
         entries.add(Items.IRON_CHESTPLATE);
         entries.add(Items.IRON_LEGGINGS);

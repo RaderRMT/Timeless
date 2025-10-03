@@ -132,7 +132,11 @@ public class MoreWorldOptionsComponent {
         }
 
         if (this.worldCreator.getWorldType().isAmplified()) {
-            this.amplifiedWorldInfo.drawWithShadow(context, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, Constants.getTextColor());
+            //#if MC>=12109
+            this.amplifiedWorldInfo.draw(context, MultilineText.Alignment.LEFT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, false, Constants.getTextColor());
+            //#else
+            //$$ this.amplifiedWorldInfo.drawWithShadow(context, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, Constants.getTextColor());
+            //#endif
         }
 
         this.generateStructuresButton.visible = !isDebug;

@@ -24,6 +24,10 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
+//#if MC>=12109
+import net.minecraft.client.input.KeyInput;
+//#endif
+
 //#if MC<=11904
 //$$ import net.minecraft.client.util.math.MatrixStack;
 //$$ import net.minecraft.client.gui.DrawableHelper;
@@ -329,12 +333,20 @@ public abstract class MixinCreateWorldScreen extends Screen {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void timeless$keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
+    //#if MC>=12109
+    public void timeless$keyPressed(KeyInput input, CallbackInfoReturnable<Boolean> cir) {
+    //#else
+    //$$ public void timeless$keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
+    //#endif
         if (!TimelessConfig.get().useOldWorldMenu) {
             return;
         }
 
-        cir.setReturnValue(super.keyPressed(keyCode, scanCode, modifiers));
+        //#if MC>=12109
+        cir.setReturnValue(super.keyPressed(input));
+        //#else
+        //$$ cir.setReturnValue(super.keyPressed(keyCode, scanCode, modifiers));
+        //#endif
         cir.cancel();
     }
 

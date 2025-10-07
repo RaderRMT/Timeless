@@ -43,7 +43,7 @@ def mappingsVersions = [
         12105: "1.21.5+build.1",
         12106: "1.21.6+build.1",
         12108: "1.21.8+build.1",
-        12110: "1.21.10-rc1+build.1",
+        12110: "1.21.10+build.1",
 ]
 
 def fabricApiVersions = [

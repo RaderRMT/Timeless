@@ -16,7 +16,7 @@ subprojects {
 }
 
 preprocess {
-    val mc121010 = createNode("1.21.10-rc1", 12110, "yarn")
+    val mc121010 = createNode("1.21.10", 12110, "yarn")
     val mc12108 = createNode("1.21.8", 12108, "yarn")
     val mc12106 = createNode("1.21.6", 12106, "yarn")
     val mc12105 = createNode("1.21.5", 12105, "yarn")

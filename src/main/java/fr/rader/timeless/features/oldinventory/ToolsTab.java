@@ -44,14 +44,14 @@ public class ToolsTab extends Tab {
         entries.add(Items.COPPER_AXE);
         entries.add(Items.COPPER_HOE);
         //#endif
-        entries.add(Items.GOLDEN_SHOVEL);
-        entries.add(Items.GOLDEN_PICKAXE);
-        entries.add(Items.GOLDEN_AXE);
-        entries.add(Items.GOLDEN_HOE);
         entries.add(Items.IRON_SHOVEL);
         entries.add(Items.IRON_PICKAXE);
         entries.add(Items.IRON_AXE);
         entries.add(Items.IRON_HOE);
+        entries.add(Items.GOLDEN_SHOVEL);
+        entries.add(Items.GOLDEN_PICKAXE);
+        entries.add(Items.GOLDEN_AXE);
+        entries.add(Items.GOLDEN_HOE);
         entries.add(Items.DIAMOND_SHOVEL);
         entries.add(Items.DIAMOND_PICKAXE);
         entries.add(Items.DIAMOND_AXE);

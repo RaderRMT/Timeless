@@ -119,6 +119,9 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.BREEZE_SPAWN_EGG);
         //#endif
         entries.add(Items.CAMEL_SPAWN_EGG);
+        //#if MC>=12111
+        entries.add(Items.CAMEL_HUSK_SPAWN_EGG);
+        //#endif
         entries.add(Items.CAT_SPAWN_EGG);
         entries.add(Items.CAVE_SPIDER_SPAWN_EGG);
         entries.add(Items.CHICKEN_SPAWN_EGG);
@@ -156,8 +159,14 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.MAGMA_CUBE_SPAWN_EGG);
         entries.add(Items.MOOSHROOM_SPAWN_EGG);
         entries.add(Items.MULE_SPAWN_EGG);
+        //#if MC>=12111
+        entries.add(Items.NAUTILUS_SPAWN_EGG);
+        //#endif
         entries.add(Items.OCELOT_SPAWN_EGG);
         entries.add(Items.PANDA_SPAWN_EGG);
+        //#if MC>=12111
+        entries.add(Items.PARCHED_SPAWN_EGG);
+        //#endif
         entries.add(Items.PARROT_SPAWN_EGG);
         entries.add(Items.PHANTOM_SPAWN_EGG);
         entries.add(Items.PIG_SPAWN_EGG);
@@ -197,6 +206,9 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.ZOGLIN_SPAWN_EGG);
         entries.add(Items.ZOMBIE_SPAWN_EGG);
         entries.add(Items.ZOMBIE_HORSE_SPAWN_EGG);
+        //#if MC>=12111
+        entries.add(Items.ZOMBIE_NAUTILUS_SPAWN_EGG);
+        //#endif
         entries.add(Items.ZOMBIE_VILLAGER_SPAWN_EGG);
         entries.add(Items.ZOMBIFIED_PIGLIN_SPAWN_EGG);
         //#if MC>=12106
@@ -213,13 +225,21 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.PRISMARINE_SHARD);
         entries.add(Items.PRISMARINE_CRYSTALS);
         entries.add(Items.RABBIT_HIDE);
-        entries.add(Items.IRON_HORSE_ARMOR);
-        entries.add(Items.GOLDEN_HORSE_ARMOR);
-        entries.add(Items.DIAMOND_HORSE_ARMOR);
-        entries.add(Items.LEATHER_HORSE_ARMOR);
         //#if MC>=12109
         entries.add(Items.COPPER_HORSE_ARMOR);
         //#endif
+        entries.add(Items.IRON_HORSE_ARMOR);
+        entries.add(Items.GOLDEN_HORSE_ARMOR);
+        entries.add(Items.DIAMOND_HORSE_ARMOR);
+        //#if MC>=12111
+        entries.add(Items.NETHERITE_HORSE_ARMOR);
+        entries.add(Items.COPPER_NAUTILUS_ARMOR);
+        entries.add(Items.IRON_NAUTILUS_ARMOR);
+        entries.add(Items.GOLDEN_NAUTILUS_ARMOR);
+        entries.add(Items.DIAMOND_NAUTILUS_ARMOR);
+        entries.add(Items.NETHERITE_NAUTILUS_ARMOR);
+        //#endif
+        entries.add(Items.LEATHER_HORSE_ARMOR);
         //#if MC>=12005
         entries.add(Items.WOLF_ARMOR);
         //#endif

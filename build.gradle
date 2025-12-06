@@ -5,7 +5,7 @@ buildscript {
     project.ext.mcVersion = "${major}${minor.padLeft(2, '0')}${(patch ?: '').padLeft(2, '0')}" as int
 
     dependencies {
-        classpath 'fabric-loom:fabric-loom.gradle.plugin:1.11-SNAPSHOT'
+        classpath 'fabric-loom:fabric-loom.gradle.plugin:1.14-SNAPSHOT'
     }
 }
 
@@ -30,7 +30,10 @@ tasks.withType(JavaCompile).configureEach {
 
 version = project.name + '-' + project.mod_version
 group = "fr.rader"
-archivesBaseName = "timeless"
+
+base {
+    archivesName = "timeless"
+}
 
 def mappingsVersions = [
         11904: "1.19.4+build.2",
@@ -44,6 +47,7 @@ def mappingsVersions = [
         12106: "1.21.6+build.1",
         12108: "1.21.8+build.1",
         12110: "1.21.10+build.1",
+        12111: "1.21.11-rc2+build.1",
 ]
 
 def fabricApiVersions = [
@@ -58,6 +62,7 @@ def fabricApiVersions = [
         12106: "0.127.0+1.21.6",
         12108: "0.129.0+1.21.8",
         12110: "0.134.1+1.21.10",
+        12111: "0.139.4+1.21.11",
 ]
 
 def modMenuVersions = [
@@ -72,6 +77,7 @@ def modMenuVersions = [
         12106: "15.0.0-beta.1",
         12108: "15.0.0-beta.3",
         12110: "16.0.0-rc.1",
+        12111: "17.0.0-alpha.1",
 ]
 
 def clothConfigVersions = [
@@ -86,6 +92,7 @@ def clothConfigVersions = [
         12106: "19.0.146",
         12108: "19.0.147",
         12110: "20.0.148",
+        12111: "20.0.149",
 ]
 
 repositories {

@@ -34,36 +34,45 @@ public class CombatTab extends Tab {
         //#if MC>=12109
         entries.add(Items.COPPER_SWORD);
         //#endif
-        entries.add(Items.GOLDEN_SWORD);
         entries.add(Items.IRON_SWORD);
+        entries.add(Items.GOLDEN_SWORD);
         entries.add(Items.DIAMOND_SWORD);
         entries.add(Items.NETHERITE_SWORD);
+        //#if MC>=12111
+        entries.add(Items.WOODEN_SPEAR);
+        entries.add(Items.STONE_SPEAR);
+        entries.add(Items.COPPER_SPEAR);
+        entries.add(Items.IRON_SPEAR);
+        entries.add(Items.GOLDEN_SPEAR);
+        entries.add(Items.DIAMOND_SPEAR);
+        entries.add(Items.NETHERITE_SPEAR);
+        //#endif
         entries.add(Items.LEATHER_HELMET);
         entries.add(Items.LEATHER_CHESTPLATE);
         entries.add(Items.LEATHER_LEGGINGS);
         entries.add(Items.LEATHER_BOOTS);
-        entries.add(Items.CHAINMAIL_HELMET);
-        entries.add(Items.CHAINMAIL_CHESTPLATE);
-        entries.add(Items.CHAINMAIL_LEGGINGS);
-        entries.add(Items.CHAINMAIL_BOOTS);
         //#if MC>=12109
         entries.add(Items.COPPER_HELMET);
         entries.add(Items.COPPER_CHESTPLATE);
         entries.add(Items.COPPER_LEGGINGS);
         entries.add(Items.COPPER_BOOTS);
         //#endif
+        entries.add(Items.CHAINMAIL_HELMET);
+        entries.add(Items.CHAINMAIL_CHESTPLATE);
+        entries.add(Items.CHAINMAIL_LEGGINGS);
+        entries.add(Items.CHAINMAIL_BOOTS);
         entries.add(Items.IRON_HELMET);
         entries.add(Items.IRON_CHESTPLATE);
         entries.add(Items.IRON_LEGGINGS);
         entries.add(Items.IRON_BOOTS);
-        entries.add(Items.DIAMOND_HELMET);
-        entries.add(Items.DIAMOND_CHESTPLATE);
-        entries.add(Items.DIAMOND_LEGGINGS);
-        entries.add(Items.DIAMOND_BOOTS);
         entries.add(Items.GOLDEN_HELMET);
         entries.add(Items.GOLDEN_CHESTPLATE);
         entries.add(Items.GOLDEN_LEGGINGS);
         entries.add(Items.GOLDEN_BOOTS);
+        entries.add(Items.DIAMOND_HELMET);
+        entries.add(Items.DIAMOND_CHESTPLATE);
+        entries.add(Items.DIAMOND_LEGGINGS);
+        entries.add(Items.DIAMOND_BOOTS);
         entries.add(Items.NETHERITE_HELMET);
         entries.add(Items.NETHERITE_CHESTPLATE);
         entries.add(Items.NETHERITE_LEGGINGS);

@@ -16,6 +16,11 @@ import net.minecraft.client.gui.widget.TextFieldWidget;
 //$$ import net.minecraft.client.util.math.MatrixStack;
 //#endif
 
+//#if MC>=12111
+import net.minecraft.client.font.DrawnTextConsumer;
+import net.minecraft.client.font.Alignment;
+//#endif
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,12 +66,22 @@ public class MoreWorldOptionsComponent {
                     this.worldCreator.setGenerateStructures(shouldGenerateStructures);
                 });
 
-        this.worldTypeButton = CyclingButtonWidget.builder(WorldCreator.WorldType::getName)
+        //#if MC>=12111
+        this.worldTypeButton = CyclingButtonWidget.builder(WorldCreator.WorldType::getName, this.worldCreator.getWorldType())
                 .values(getWorldTypes())
-                .initially(this.worldCreator.getWorldType())
                 .build(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, WORLD_TYPE_TEXT, (button, worldType) -> {
                     this.worldCreator.setWorldType(worldType);
                 });
+
+        this.worldTypeButton.setValue(this.worldCreator.getWorldType());
+        //#else
+        //$$ this.worldTypeButton = CyclingButtonWidget.builder(WorldCreator.WorldType::getName)
+        //$$        .values(getWorldTypes())
+        //$$        .initially(this.worldCreator.getWorldType())
+        //$$        .build(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, WORLD_TYPE_TEXT, (button, worldType) -> {
+        //$$            this.worldCreator.setWorldType(worldType);
+        //$$        });
+        //#endif
 
         this.amplifiedWorldInfo = MultilineText.create(textRenderer, AMPLIFIED_INFO_TEXT, this.worldTypeButton.getWidth());
 
@@ -132,8 +147,13 @@ public class MoreWorldOptionsComponent {
         }
 
         if (this.worldCreator.getWorldType().isAmplified()) {
-            //#if MC>=12109
-            this.amplifiedWorldInfo.draw(context, MultilineText.Alignment.LEFT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, false, Constants.getTextColor());
+            //#if MC>=12111
+            // fixme: might want to use context.drawTextWithShadow
+            DrawnTextConsumer drawnTextConsumer = context.getTextConsumer();
+            this.amplifiedWorldInfo.draw(Alignment.LEFT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, drawnTextConsumer);
+            //context.drawText(this.textRenderer, AMPLIFIED_INFO_TEXT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, Constants.getTextColor(), false);
+            //#elseif MC>=12109
+            //$$ this.amplifiedWorldInfo.draw(context, MultilineText.Alignment.LEFT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, false, Constants.getTextColor());
             //#else
             //$$ this.amplifiedWorldInfo.drawWithShadow(context, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, Constants.getTextColor());
             //#endif

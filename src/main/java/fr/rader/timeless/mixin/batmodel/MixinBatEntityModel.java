@@ -22,6 +22,10 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.function.Function;
 
+//#if MC>=12111
+import net.minecraft.client.render.RenderLayers;
+//#endif
+
 @Mixin(BatEntityModel.class)
 public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderState> {
 
@@ -48,7 +52,11 @@ public abstract class MixinBatEntityModel extends EntityModel<BatEntityRenderSta
             return function;
         }
 
-        return RenderLayer::getEntityCutoutNoCull;
+        //#if MC>=12111
+        return RenderLayers::entityCutoutNoCull;
+        //#else
+        //$$ return RenderLayer::getEntityCutoutNoCull;
+        //#endif
     }
 
     @Inject(

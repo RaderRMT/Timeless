@@ -213,27 +213,50 @@ public abstract class MixinCreateWorldScreen extends Screen {
         int leftColumnX = this.halfWidth - 155;
         int rightColumnX = this.halfWidth + 5;
 
-        this.gameModeButton = CyclingButtonWidget.<WorldCreator.Mode>builder(value -> value.name)
+        //#if MC>=12111
+        this.gameModeButton = CyclingButtonWidget.<WorldCreator.Mode>builder(value -> value.name, this.worldCreator.getGameMode())
                 .values(List.of(
                         WorldCreator.Mode.SURVIVAL,
                         WorldCreator.Mode.HARDCORE,
                         WorldCreator.Mode.CREATIVE
                 ))
-                .initially(this.worldCreator.getGameMode())
                 .build(leftColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, GAME_MODE_LABEL, (button, gameMode) -> {
                     setGameMode(gameMode);
                 });
+
+        this.gameModeButton.setValue(this.worldCreator.getGameMode());
+        //#else
+        //$$ this.gameModeButton = CyclingButtonWidget.<WorldCreator.Mode>builder(value -> value.name)
+        //$$        .values(List.of(
+        //$$                WorldCreator.Mode.SURVIVAL,
+        //$$                WorldCreator.Mode.HARDCORE,
+        //$$                WorldCreator.Mode.CREATIVE
+        //$$        ))
+        //$$        .initially(this.worldCreator.getGameMode())
+        //$$        .build(leftColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, GAME_MODE_LABEL, (button, gameMode) -> {
+        //$$            setGameMode(gameMode);
+        //$$        });
+        //#endif
         this.worldCreator.addListener(creator -> {
             this.gameModeButton.setValue(this.worldCreator.getGameMode());
             this.gameModeButton.active = !this.worldCreator.isDebug();
         });
 
-        this.difficultyButton = CyclingButtonWidget.builder(Difficulty::getTranslatableName)
+        //#if MC>=12111
+        this.difficultyButton = CyclingButtonWidget.builder(Difficulty::getTranslatableName, this.worldCreator.getDifficulty())
                 .values(Difficulty.values())
-                .initially(this.worldCreator.getDifficulty())
                 .build(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, DIFFICULTY_TEXT, (button, difficulty) -> {
                     this.worldCreator.setDifficulty(difficulty);
                 });
+        this.difficultyButton.setValue(this.worldCreator.getDifficulty());
+        //#else
+        //$$ this.difficultyButton = CyclingButtonWidget.builder(Difficulty::getTranslatableName)
+        //$$         .values(Difficulty.values())
+        //$$         .initially(this.worldCreator.getDifficulty())
+        //$$         .build(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, DIFFICULTY_TEXT, (button, difficulty) -> {
+        //$$             this.worldCreator.setDifficulty(difficulty);
+        //$$         });
+        //#endif
         this.worldCreator.addListener(creator -> {
             this.difficultyButton.setValue(this.worldCreator.getDifficulty());
             this.difficultyButton.active = !this.worldCreator.isHardcore();
@@ -256,8 +279,10 @@ public abstract class MixinCreateWorldScreen extends Screen {
 
         this.gameRulesButton = ButtonWidget.builder(GAME_RULES_TEXT, button -> {
                     this.client.setScreen(new EditGameRulesScreen(
-                            //#if MC>=12102
-                            this.worldCreator.getGameRules().copy(getWorldCreator().getGeneratorOptionsHolder().dataConfiguration().enabledFeatures()),
+                            //#if MC>=12111
+                            this.worldCreator.getGameRules().withEnabledFeatures(getWorldCreator().getGeneratorOptionsHolder().dataConfiguration().enabledFeatures()),
+                            //#elseif MC>=12102
+                            //$$ this.worldCreator.getGameRules().copy(getWorldCreator().getGeneratorOptionsHolder().dataConfiguration().enabledFeatures()),
                             //#else
                             //$$ this.worldCreator.getGameRules().copy(),
                             //#endif

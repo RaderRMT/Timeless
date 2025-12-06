@@ -13,6 +13,10 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+//#if MC>=12111
+import net.minecraft.client.render.Camera;
+//#endif
+
 @Mixin(AtmosphericFogModifier.class)
 public abstract class MixinAtmosphericFogModifier {
 
@@ -20,7 +24,11 @@ public abstract class MixinAtmosphericFogModifier {
             method = "applyStartEndModifier",
             at = @At("TAIL")
     )
-    public void timeless$disableEnvironmentalFog(FogData data, Entity cameraEntity, BlockPos cameraPos, ClientWorld world, float viewDistance, RenderTickCounter tickCounter, CallbackInfo ci) {
+    //#if MC>=12111
+    public void timeless$disableEnvironmentalFog(FogData data, Camera camera, ClientWorld clientWorld, float f, RenderTickCounter renderTickCounter, CallbackInfo ci) {
+    //#else
+    //$$ public void timeless$disableEnvironmentalFog(FogData data, Entity cameraEntity, BlockPos cameraPos, ClientWorld world, float viewDistance, RenderTickCounter tickCounter, CallbackInfo ci) {
+    //#endif
         if (!TimelessConfig.get().disableEnvironmentalFog) {
             return;
         }

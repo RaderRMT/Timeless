@@ -225,6 +225,7 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.PRISMARINE_SHARD);
         entries.add(Items.PRISMARINE_CRYSTALS);
         entries.add(Items.RABBIT_HIDE);
+        entries.add(Items.LEATHER_HORSE_ARMOR);
         //#if MC>=12109
         entries.add(Items.COPPER_HORSE_ARMOR);
         //#endif
@@ -239,7 +240,6 @@ public class MiscellaneousTab extends Tab {
         entries.add(Items.DIAMOND_NAUTILUS_ARMOR);
         entries.add(Items.NETHERITE_NAUTILUS_ARMOR);
         //#endif
-        entries.add(Items.LEATHER_HORSE_ARMOR);
         //#if MC>=12005
         entries.add(Items.WOLF_ARMOR);
         //#endif

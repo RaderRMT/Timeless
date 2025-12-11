@@ -33,6 +33,10 @@ public abstract class MixinAtmosphericFogModifier {
             return;
         }
 
+        if (clientWorld.getRegistryKey() != ClientWorld.OVERWORLD) {
+            return;
+        }
+
         data.environmentalStart = Float.MAX_VALUE;
         data.environmentalEnd = Float.MAX_VALUE;
     }

@@ -25,9 +25,9 @@ public abstract class MixinAtmosphericFogModifier {
             at = @At("TAIL")
     )
     //#if MC>=12111
-    public void timeless$disableEnvironmentalFog(FogData data, Camera camera, ClientWorld clientWorld, float f, RenderTickCounter renderTickCounter, CallbackInfo ci) {
+    public void timeless$disableEnvironmentalFog(FogData data, Camera camera, ClientWorld clientWorld, float viewDistance, RenderTickCounter tickCounter, CallbackInfo ci) {
     //#else
-    //$$ public void timeless$disableEnvironmentalFog(FogData data, Entity cameraEntity, BlockPos cameraPos, ClientWorld world, float viewDistance, RenderTickCounter tickCounter, CallbackInfo ci) {
+    //$$ public void timeless$disableEnvironmentalFog(FogData data, Entity camera, BlockPos cameraPos, ClientWorld clientWorld, float viewDistance, RenderTickCounter tickCounter, CallbackInfo ci) {
     //#endif
         if (!TimelessConfig.get().disableEnvironmentalFog) {
             return;

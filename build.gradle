@@ -3,7 +3,6 @@ plugins {
     id 'maven-publish'
 }
 
-version = project.name + '-' + project.mod_version
 group = "fr.rader"
 
 repositories {
@@ -20,7 +19,7 @@ repositories {
 }
 
 base {
-    archivesName = "timeless"
+    archivesName = "timeless-${project.minecraft_version}-${project.mod_version}"
 }
 
 tasks.withType(JavaCompile).configureEach {
@@ -64,11 +63,5 @@ processResources {
                 "version": project.version,
                 "loader_version": project.loader_version
         )
-    }
-}
-
-jar {
-    from("LICENSE") {
-        rename { "${it}_${project.archivesBaseName}"}
     }
 }

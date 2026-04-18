@@ -1,59 +1,57 @@
 package fr.rader.timeless.features.oldinventory;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemGroups;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-
-import static net.minecraft.item.ItemGroups.FOOD_AND_DRINK;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class FoodstuffTab extends Tab {
 
     public FoodstuffTab() {
-        super(FOOD_AND_DRINK, ItemGroup.Row.BOTTOM, 1, Text.translatable("timeless.itemGroup.foodstuff"), new ItemStack(Items.APPLE));
+        super(CreativeModeTabs.FOOD_AND_DRINKS, CreativeModeTab.Row.BOTTOM, 1, Component.translatable("timeless.itemGroup.foodstuff"), () -> new ItemStack(Items.APPLE));
     }
 
     @Override
-    protected void populateTab(ItemGroup.DisplayContext displayContext, ItemGroup.Entries entries) {
-        entries.add(Items.APPLE);
-        entries.add(Items.MUSHROOM_STEW);
-        entries.add(Items.BREAD);
-        entries.add(Items.PORKCHOP);
-        entries.add(Items.COOKED_PORKCHOP);
-        entries.add(Items.GOLDEN_APPLE);
-        entries.add(Items.ENCHANTED_GOLDEN_APPLE);
-        entries.add(Items.COD);
-        entries.add(Items.SALMON);
-        entries.add(Items.TROPICAL_FISH);
-        entries.add(Items.PUFFERFISH);
-        entries.add(Items.COOKED_COD);
-        entries.add(Items.COOKED_SALMON);
-        entries.add(Items.CAKE);
-        entries.add(Items.COOKIE);
-        entries.add(Items.MELON_SLICE);
-        entries.add(Items.DRIED_KELP);
-        entries.add(Items.BEEF);
-        entries.add(Items.COOKED_BEEF);
-        entries.add(Items.CHICKEN);
-        entries.add(Items.COOKED_CHICKEN);
-        entries.add(Items.ROTTEN_FLESH);
-        entries.add(Items.SPIDER_EYE);
-        entries.add(Items.CARROT);
-        entries.add(Items.POTATO);
-        entries.add(Items.BAKED_POTATO);
-        entries.add(Items.POISONOUS_POTATO);
-        entries.add(Items.PUMPKIN_PIE);
-        entries.add(Items.RABBIT);
-        entries.add(Items.COOKED_RABBIT);
-        entries.add(Items.RABBIT_STEW);
-        ItemGroups.addSuspiciousStews(entries, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
-        entries.add(Items.MUTTON);
-        entries.add(Items.COOKED_MUTTON);
-        entries.add(Items.BEETROOT);
-        entries.add(Items.BEETROOT_SOUP);
-        entries.add(Items.SWEET_BERRIES);
-        entries.add(Items.GLOW_BERRIES);
-        entries.add(Items.HONEY_BOTTLE);
+    protected void populateTab(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output entries) {
+        entries.accept(Items.APPLE);
+        entries.accept(Items.MUSHROOM_STEW);
+        entries.accept(Items.BREAD);
+        entries.accept(Items.PORKCHOP);
+        entries.accept(Items.COOKED_PORKCHOP);
+        entries.accept(Items.GOLDEN_APPLE);
+        entries.accept(Items.ENCHANTED_GOLDEN_APPLE);
+        entries.accept(Items.COD);
+        entries.accept(Items.SALMON);
+        entries.accept(Items.TROPICAL_FISH);
+        entries.accept(Items.PUFFERFISH);
+        entries.accept(Items.COOKED_COD);
+        entries.accept(Items.COOKED_SALMON);
+        entries.accept(Items.CAKE);
+        entries.accept(Items.COOKIE);
+        entries.accept(Items.MELON_SLICE);
+        entries.accept(Items.DRIED_KELP);
+        entries.accept(Items.BEEF);
+        entries.accept(Items.COOKED_BEEF);
+        entries.accept(Items.CHICKEN);
+        entries.accept(Items.COOKED_CHICKEN);
+        entries.accept(Items.ROTTEN_FLESH);
+        entries.accept(Items.SPIDER_EYE);
+        entries.accept(Items.CARROT);
+        entries.accept(Items.POTATO);
+        entries.accept(Items.BAKED_POTATO);
+        entries.accept(Items.POISONOUS_POTATO);
+        entries.accept(Items.PUMPKIN_PIE);
+        entries.accept(Items.RABBIT);
+        entries.accept(Items.COOKED_RABBIT);
+        entries.accept(Items.RABBIT_STEW);
+        CreativeModeTabs.generateSuspiciousStews(entries, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
+        entries.accept(Items.MUTTON);
+        entries.accept(Items.COOKED_MUTTON);
+        entries.accept(Items.BEETROOT);
+        entries.accept(Items.BEETROOT_SOUP);
+        entries.accept(Items.SWEET_BERRIES);
+        entries.accept(Items.GLOW_BERRIES);
+        entries.accept(Items.HONEY_BOTTLE);
     }
 }

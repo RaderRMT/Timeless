@@ -1,10 +1,10 @@
 package fr.rader.timeless.mixin.icons;
 
+import com.mojang.blaze3d.platform.IconSet;
 import fr.rader.timeless.config.TimelessConfig;
 import fr.rader.timeless.features.icons.IconSupplier;
-import net.minecraft.client.util.Icons;
-import net.minecraft.resource.InputSupplier;
-import net.minecraft.resource.ResourcePack;
+import net.minecraft.server.packs.PackResources;
+import net.minecraft.server.packs.resources.IoSupplier;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -13,20 +13,20 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 import java.io.InputStream;
 import java.util.List;
 
-@Mixin(Icons.class)
-public abstract class MixinIcons {
+@Mixin(IconSet.class)
+public abstract class MixinIconSet {
 
     @Inject(
-            method = "getIcons",
+            method = "getStandardIcons",
             at = @At("HEAD"),
             cancellable = true
     )
-    public void timeless$getIcons(ResourcePack resourcePack, CallbackInfoReturnable<List<InputSupplier<InputStream>>> cir) {
+    public void timeless$getStandardIcons(final PackResources resources, CallbackInfoReturnable<List<IoSupplier<InputStream>>> cir) {
         if (!TimelessConfig.get().useOldWindowIcons) {
             return;
         }
 
-        List<InputSupplier<InputStream>> icons = List.of(
+        List<IoSupplier<InputStream>> icons = List.of(
                 IconSupplier.getIcon("icon_16x16.png"),
                 IconSupplier.getIcon("icon_32x32.png")
         );
@@ -39,7 +39,7 @@ public abstract class MixinIcons {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void timeless$getMacIcon(ResourcePack resourcePack, CallbackInfoReturnable<InputSupplier<InputStream>> cir) {
+    public void timeless$getMacIcon(final PackResources resources, CallbackInfoReturnable<IoSupplier<InputStream>> cir) {
         if (!TimelessConfig.get().useOldWindowIcons) {
             return;
         }

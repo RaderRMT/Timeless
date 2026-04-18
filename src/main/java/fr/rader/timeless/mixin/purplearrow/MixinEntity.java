@@ -1,8 +1,8 @@
 package fr.rader.timeless.mixin.purplearrow;
 
 import fr.rader.timeless.features.purplearrow.PurpleArrowHolder;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.projectile.arrow.Arrow;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
@@ -12,12 +12,12 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 public abstract class MixinEntity {
 
     @Inject(
-            method = "onRemoved",
+            method = "onRemoval",
             at = @At("HEAD")
     )
-    public void timeless$onRemoved(CallbackInfo ci) {
+    public void timeless$onRemoval(Entity.RemovalReason reason, CallbackInfo ci) {
         Entity entity = (Entity) (Object) this;
-        if (!(entity instanceof ArrowEntity)) {
+        if (!(entity instanceof Arrow)) {
             return;
         }
 

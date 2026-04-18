@@ -1,99 +1,10 @@
-import com.replaymod.gradle.preprocess.PreprocessTask
-
-buildscript {
-    def (major, minor, patch) = project.name.split("-")[0].tokenize('.')
-    project.ext.mcVersion = "${major}${minor.padLeft(2, '0')}${(patch ?: '').padLeft(2, '0')}" as int
-
-    dependencies {
-        classpath 'fabric-loom:fabric-loom.gradle.plugin:1.14-SNAPSHOT'
-    }
-}
-
 plugins {
+    id 'net.fabricmc.fabric-loom' version "${loom_version}"
     id 'maven-publish'
-}
-
-apply plugin: 'fabric-loom'
-apply plugin: 'com.replaymod.preprocess'
-
-tasks.withType(JavaCompile).configureEach {
-    sourceCompatibility = JavaVersion.VERSION_21
-
-    if (mcVersion >= 12006) {
-        options.release = 21
-        targetCompatibility = JavaVersion.VERSION_21
-    } else {
-        options.release = 17
-        targetCompatibility = JavaVersion.VERSION_17
-    }
 }
 
 version = project.name + '-' + project.mod_version
 group = "fr.rader"
-
-base {
-    archivesName = "timeless"
-}
-
-def mappingsVersions = [
-        11904: "1.19.4+build.2",
-        12001: "1.20.1+build.1",
-        12004: "1.20.4+build.3",
-        12006: "1.20.6+build.3",
-        12100: "1.21+build.9",
-        12101: "1.21.1+build.3",
-        12104: "1.21.4+build.8",
-        12105: "1.21.5+build.1",
-        12106: "1.21.6+build.1",
-        12108: "1.21.8+build.1",
-        12110: "1.21.10+build.1",
-        12111: "1.21.11+build.1",
-]
-
-def fabricApiVersions = [
-        11904: "0.83.0+1.19.4",
-        12001: "0.83.0+1.20.1",
-        12004: "0.96.4+1.20.4",
-        12006: "0.98.0+1.20.6",
-        12100: "0.102.0+1.21",
-        12101: "0.115.4+1.21.1",
-        12104: "0.119.2+1.21.4",
-        12105: "0.119.6+1.21.5",
-        12106: "0.127.0+1.21.6",
-        12108: "0.129.0+1.21.8",
-        12110: "0.134.1+1.21.10",
-        12111: "0.139.4+1.21.11",
-]
-
-def modMenuVersions = [
-        11904: "6.2.3",
-        12001: "7.0.1",
-        12004: "9.0.0",
-        12006: "10.0.0-beta.1",
-        12100: "11.0.3",
-        12101: "11.0.3",
-        12104: "13.0.3",
-        12105: "14.0.0-rc.2",
-        12106: "15.0.0-beta.1",
-        12108: "15.0.0-beta.3",
-        12110: "16.0.0-rc.1",
-        12111: "17.0.0-alpha.1",
-]
-
-def clothConfigVersions = [
-        11904: "10.0.96",
-        12001: "11.0.99",
-        12004: "13.0.121",
-        12006: "14.0.126",
-        12100: "15.0.140",
-        12101: "15.0.140",
-        12104: "17.0.144",
-        12105: "18.0.145",
-        12106: "19.0.146",
-        12108: "19.0.147",
-        12110: "20.0.148",
-        12111: "21.11.150",
-]
 
 repositories {
     maven {
@@ -108,42 +19,39 @@ repositories {
     }
 }
 
+base {
+    archivesName = "timeless"
+}
+
+tasks.withType(JavaCompile).configureEach {
+    it.options.release = 25
+}
+
 dependencies {
-    minecraft "com.mojang:minecraft:${project.name}"
-    mappings "net.fabricmc:yarn:${mappingsVersions[mcVersion]}:v2"
+    minecraft "com.mojang:minecraft:${project.minecraft_version}"
 
-    modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-    modApi("com.terraformersmc:modmenu:${modMenuVersions[mcVersion]}") {
+    implementation("com.terraformersmc:modmenu:${project.modmenu_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    modApi("me.shedaniel.cloth:cloth-config-fabric:${clothConfigVersions[mcVersion]}") {
+    implementation("me.shedaniel.cloth:cloth-config-fabric:${project.cloth_config_version}") {
         exclude(group: "net.fabricmc.fabric-api")
     }
 
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${fabricApiVersions[mcVersion]}"
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_api_version}"
 
     include(implementation(annotationProcessor("io.github.llamalad7:mixinextras-fabric:0.3.6")))
 }
 
-if (mcVersion >= 12100) {
-    loom.accessWidenerPath = rootProject.file("src/main/resources/timeless.accesswidener")
-} else if (mcVersion >= 12006) {
-    loom.accessWidenerPath = rootProject.file("versions/1.20.6/src/main/resources/timeless.accesswidener")
-} else if (mcVersion >= 12000) {
-    loom.accessWidenerPath = rootProject.file("versions/1.20.4/src/main/resources/timeless.accesswidener")
-} else {
-    loom.accessWidenerPath = rootProject.file("versions/1.19.4/src/main/resources/timeless.accesswidener")
-}
+loom.accessWidenerPath = rootProject.file("src/main/resources/timeless.accesswidener")
 
-preprocess {
-    vars.put("MC", project.mcVersion)
+java {
+    withSourcesJar()
 
-    keywords.set([
-            ".java": PreprocessTask.DEFAULT_KEYWORDS,
-            ".json": PreprocessTask.DEFAULT_KEYWORDS
-    ])
+    sourceCompatibility = JavaVersion.VERSION_25
+    targetCompatibility = JavaVersion.VERSION_25
 }
 
 processResources {
@@ -156,30 +64,6 @@ processResources {
                 "version": project.version,
                 "loader_version": project.loader_version
         )
-    }
-}
-
-loom {
-    runs {
-        client {
-            ideConfigGenerated = true
-        }
-    }
-}
-
-tasks.ideaSyncTask.doFirst {
-    def nativesPath = extension.getFiles().getNativesDirectory(project).getAbsolutePath()
-
-    loom.runConfigs.configureEach { config ->
-        if (config.name == "client") {
-            config.property("java.library.path", nativesPath)
-        }
-    }
-}
-
-java {
-    toolchain {
-        languageVersion.set(JavaLanguageVersion.of(21))
     }
 }
 

@@ -22,18 +22,10 @@ public class TimelessConfig {
     public boolean useOldInventoryLayout = true;
     public boolean enablePotionGlint = true;
     public boolean useOldPotionColors = true;
-    //#if MC>=12001
     public boolean useOldWindowIcons = true;
-    //#endif
-    //#if MC>=12004
     public boolean useOldBatModel = true;
-    //#endif
-    //#if MC>=12006
     public boolean useOldScreenBackground = true;
-    //#endif
-    //#if MC>=12106
     public boolean disableEnvironmentalFog = true;
-    //#endif
 
     public void write() {
         try (FileWriter writer = new FileWriter(TimelessConfig.CONFIG_PATH)) {

@@ -1,68 +1,65 @@
 package fr.rader.timeless.features.oldinventory;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.item.Items;
-import net.minecraft.text.Text;
-
-import static net.minecraft.item.ItemGroups.FUNCTIONAL;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
 
 public class TransportationTab extends Tab {
 
     public TransportationTab() {
-        super(FUNCTIONAL, ItemGroup.Row.TOP, 3, Text.translatable("timeless.itemGroup.transportation"), new ItemStack(Items.POWERED_RAIL));
+        super(CreativeModeTabs.FUNCTIONAL_BLOCKS, CreativeModeTab.Row.TOP, 3, Component.translatable("timeless.itemGroup.transportation"), () -> new ItemStack(Items.POWERED_RAIL));
     }
 
     @Override
-    protected void populateTab(ItemGroup.DisplayContext displayContext, ItemGroup.Entries entries) {
-        entries.add(Items.POWERED_RAIL);
-        entries.add(Items.DETECTOR_RAIL);
-        entries.add(Items.RAIL);
-        entries.add(Items.ACTIVATOR_RAIL);
-        entries.add(Items.SADDLE);
-        //#if MC>=12106
-        entries.add(Items.WHITE_HARNESS);
-        entries.add(Items.LIGHT_GRAY_HARNESS);
-        entries.add(Items.GRAY_HARNESS);
-        entries.add(Items.BLACK_HARNESS);
-        entries.add(Items.BROWN_HARNESS);
-        entries.add(Items.RED_HARNESS);
-        entries.add(Items.ORANGE_HARNESS);
-        entries.add(Items.YELLOW_HARNESS);
-        entries.add(Items.LIME_HARNESS);
-        entries.add(Items.GREEN_HARNESS);
-        entries.add(Items.CYAN_HARNESS);
-        entries.add(Items.LIGHT_BLUE_HARNESS);
-        entries.add(Items.BLUE_HARNESS);
-        entries.add(Items.PURPLE_HARNESS);
-        entries.add(Items.MAGENTA_HARNESS);
-        entries.add(Items.PINK_HARNESS);
-        //#endif
-        entries.add(Items.MINECART);
-        entries.add(Items.CHEST_MINECART);
-        entries.add(Items.FURNACE_MINECART);
-        entries.add(Items.TNT_MINECART);
-        entries.add(Items.HOPPER_MINECART);
-        entries.add(Items.CARROT_ON_A_STICK);
-        entries.add(Items.WARPED_FUNGUS_ON_A_STICK);
-        entries.add(Items.ELYTRA);
-        entries.add(Items.OAK_BOAT);
-        entries.add(Items.OAK_CHEST_BOAT);
-        entries.add(Items.SPRUCE_BOAT);
-        entries.add(Items.SPRUCE_CHEST_BOAT);
-        entries.add(Items.BIRCH_BOAT);
-        entries.add(Items.BIRCH_CHEST_BOAT);
-        entries.add(Items.JUNGLE_BOAT);
-        entries.add(Items.JUNGLE_CHEST_BOAT);
-        entries.add(Items.ACACIA_BOAT);
-        entries.add(Items.ACACIA_CHEST_BOAT);
-        entries.add(Items.DARK_OAK_BOAT);
-        entries.add(Items.DARK_OAK_CHEST_BOAT);
-        entries.add(Items.BAMBOO_RAFT);
-        entries.add(Items.BAMBOO_CHEST_RAFT);
-        entries.add(Items.CHERRY_BOAT);
-        entries.add(Items.CHERRY_CHEST_BOAT);
-        entries.add(Items.MANGROVE_BOAT);
-        entries.add(Items.MANGROVE_CHEST_BOAT);
+    protected void populateTab(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output entries) {
+        entries.accept(Items.POWERED_RAIL);
+        entries.accept(Items.DETECTOR_RAIL);
+        entries.accept(Items.RAIL);
+        entries.accept(Items.ACTIVATOR_RAIL);
+        entries.accept(Items.SADDLE);
+        entries.accept(Items.WHITE_HARNESS);
+        entries.accept(Items.LIGHT_GRAY_HARNESS);
+        entries.accept(Items.GRAY_HARNESS);
+        entries.accept(Items.BLACK_HARNESS);
+        entries.accept(Items.BROWN_HARNESS);
+        entries.accept(Items.RED_HARNESS);
+        entries.accept(Items.ORANGE_HARNESS);
+        entries.accept(Items.YELLOW_HARNESS);
+        entries.accept(Items.LIME_HARNESS);
+        entries.accept(Items.GREEN_HARNESS);
+        entries.accept(Items.CYAN_HARNESS);
+        entries.accept(Items.LIGHT_BLUE_HARNESS);
+        entries.accept(Items.BLUE_HARNESS);
+        entries.accept(Items.PURPLE_HARNESS);
+        entries.accept(Items.MAGENTA_HARNESS);
+        entries.accept(Items.PINK_HARNESS);
+        entries.accept(Items.MINECART);
+        entries.accept(Items.CHEST_MINECART);
+        entries.accept(Items.FURNACE_MINECART);
+        entries.accept(Items.TNT_MINECART);
+        entries.accept(Items.HOPPER_MINECART);
+        entries.accept(Items.CARROT_ON_A_STICK);
+        entries.accept(Items.WARPED_FUNGUS_ON_A_STICK);
+        entries.accept(Items.ELYTRA);
+        entries.accept(Items.OAK_BOAT);
+        entries.accept(Items.OAK_CHEST_BOAT);
+        entries.accept(Items.SPRUCE_BOAT);
+        entries.accept(Items.SPRUCE_CHEST_BOAT);
+        entries.accept(Items.BIRCH_BOAT);
+        entries.accept(Items.BIRCH_CHEST_BOAT);
+        entries.accept(Items.JUNGLE_BOAT);
+        entries.accept(Items.JUNGLE_CHEST_BOAT);
+        entries.accept(Items.ACACIA_BOAT);
+        entries.accept(Items.ACACIA_CHEST_BOAT);
+        entries.accept(Items.DARK_OAK_BOAT);
+        entries.accept(Items.DARK_OAK_CHEST_BOAT);
+        entries.accept(Items.BAMBOO_RAFT);
+        entries.accept(Items.BAMBOO_CHEST_RAFT);
+        entries.accept(Items.CHERRY_BOAT);
+        entries.accept(Items.CHERRY_CHEST_BOAT);
+        entries.accept(Items.MANGROVE_BOAT);
+        entries.accept(Items.MANGROVE_CHEST_BOAT);
     }
 }

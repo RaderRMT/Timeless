@@ -2,11 +2,13 @@ package fr.rader.timeless.mixin.oldinventory;
 
 import fr.rader.timeless.config.TimelessConfig;
 import fr.rader.timeless.features.oldinventory.*;
-import net.minecraft.block.Blocks;
-import net.minecraft.item.*;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.text.Text;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -17,18 +19,16 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.InvocationTargetException;
 
-@Mixin(ItemGroups.class)
-public abstract class MixinItemGroups {
+@Mixin(CreativeModeTabs.class)
+public abstract class MixinCreativeModeTabs {
 
     @Shadow @Final
-    public static RegistryKey<ItemGroup> INVENTORY;
+    public static ResourceKey<CreativeModeTab> INVENTORY;
 
     @Unique
-    private static final Class<?>[] timeless$tabs = {
-            //#if MC>=12101
+    private static final Class<?>[] timeless$TABS = {
             // we need this otherwise the game crashes
             OperatorTab.class,
-            //#endif
 
             // top tabs
             BuildingBlocksTab.class,
@@ -47,16 +47,16 @@ public abstract class MixinItemGroups {
     };
 
     @Inject(
-            method = "registerAndGetDefault",
+            method = "bootstrap",
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void timeless$registerAndGetDefault(Registry<ItemGroup> registry, CallbackInfoReturnable<ItemGroup> cir) {
+    private static void timeless$bootstrap(Registry<CreativeModeTab> registry, CallbackInfoReturnable<CreativeModeTab> cir) {
         if (!TimelessConfig.get().useOldInventoryLayout) {
             return;
         }
 
-        for (Class<?> clazz : timeless$tabs) {
+        for (Class<?> clazz : timeless$TABS) {
             try {
                 Tab tab = (Tab) clazz.getDeclaredConstructor().newInstance();
                 tab.register(registry);
@@ -68,18 +68,14 @@ public abstract class MixinItemGroups {
         cir.setReturnValue(Registry.register(
                 registry,
                 INVENTORY,
-                ItemGroup.create(ItemGroup.Row.BOTTOM, 6)
-                        .displayName(Text.translatable("itemGroup.inventory"))
+                CreativeModeTab.builder(CreativeModeTab.Row.BOTTOM, 6)
+                        .title(Component.translatable("itemGroup.inventory"))
                         .icon(() -> new ItemStack(Blocks.CHEST))
-                        //#if MC>=12100
-                        .texture(ItemGroup.getTabTextureId("inventory"))
-                        //#else
-                        //$$ .texture("inventory.png")
-                        //#endif
-                        .noRenderedName()
-                        .special()
-                        .type(ItemGroup.Type.INVENTORY)
-                        .noScrollbar()
+                        .backgroundTexture(CreativeModeTabs.INVENTORY_BACKGROUND)
+                        .hideTitle()
+                        .alignedRight()
+                        .type(CreativeModeTab.Type.INVENTORY)
+                        .noScrollBar()
                         .build()
         ));
     }

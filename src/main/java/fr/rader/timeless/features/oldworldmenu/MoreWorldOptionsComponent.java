@@ -1,25 +1,13 @@
 package fr.rader.timeless.features.oldworldmenu;
 
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.font.MultilineText;
-import net.minecraft.client.font.TextRenderer;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.world.CreateWorldScreen;
-import net.minecraft.client.gui.screen.world.LevelScreenProvider;
-import net.minecraft.client.gui.screen.world.WorldCreator;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.gui.widget.CyclingButtonWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-
-//#if MC<=11904
-//$$ import net.minecraft.client.util.math.MatrixStack;
-//#endif
-
-//#if MC>=12111
-import net.minecraft.client.font.DrawnTextConsumer;
-import net.minecraft.client.font.Alignment;
-//#endif
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.TextAlignment;
+import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
+import net.minecraft.client.gui.screens.worldselection.PresetEditor;
+import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,80 +16,71 @@ import static fr.rader.timeless.features.oldworldmenu.Constants.*;
 
 public class MoreWorldOptionsComponent {
 
-    private MultilineText amplifiedWorldInfo;
+    private MultiLineLabel amplifiedWorldInfo;
 
-    private TextFieldWidget seedField;
+    private EditBox seedField;
 
-    private CyclingButtonWidget<Boolean> generateStructuresButton;
+    private CycleButton<Boolean> generateStructuresButton;
 
-    private CyclingButtonWidget<WorldCreator.WorldType> worldTypeButton;
-    private ButtonWidget customizeWorldButton;
+    private CycleButton<WorldCreationUiState.WorldTypeEntry> worldTypeButton;
+    private Button customizeWorldButton;
 
-    private CyclingButtonWidget<Boolean> bonusChestButton;
+    private CycleButton<Boolean> bonusChestButton;
 
-    private WorldCreator worldCreator;
-    private TextRenderer textRenderer;
+    private WorldCreationUiState uiState;
+    private Font font;
     private int halfWidth;
 
     public MoreWorldOptionsComponent() {
-        this.amplifiedWorldInfo = MultilineText.EMPTY;
+        this.amplifiedWorldInfo = MultiLineLabel.EMPTY;
     }
 
-    public List<ClickableWidget> init(CreateWorldScreen createWorldScreen, TextRenderer textRenderer) {
-        this.worldCreator = createWorldScreen.getWorldCreator();
-        this.textRenderer = textRenderer;
+    public List<AbstractWidget> init(CreateWorldScreen createWorldScreen, Font font) {
+        this.uiState = createWorldScreen.getUiState();
+        this.font = font;
         this.halfWidth = createWorldScreen.width / 2;
 
-        List<ClickableWidget> elements = new ArrayList<>();
+        List<AbstractWidget> elements = new ArrayList<>();
 
-        this.seedField = new TextFieldWidget(textRenderer, this.halfWidth - 100, 60, 200, 20, SEED_LABEL);
-        this.seedField.setText(this.worldCreator.getSeed());
-        this.seedField.setChangedListener(this.worldCreator::setSeed);
+        this.seedField = new EditBox(font, this.halfWidth - 100, 60, 200, 20, SEED_LABEL);
+        this.seedField.setValue(this.uiState.getSeed());
+        this.seedField.setResponder(this.uiState::setSeed);
 
         int leftColumnX = this.halfWidth - 155;
         int rightColumnX = this.halfWidth + 5;
 
-        this.generateStructuresButton = CyclingButtonWidget.onOffBuilder(this.worldCreator.shouldGenerateStructures())
-                .build(leftColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, GENERATE_STRUCTURES_TEXT, (button, shouldGenerateStructures) -> {
-                    this.worldCreator.setGenerateStructures(shouldGenerateStructures);
+        this.generateStructuresButton = CycleButton.onOffBuilder(this.uiState.isGenerateStructures())
+                .create(leftColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, GENERATE_STRUCTURES_TEXT, (button, shouldGenerateStructures) -> {
+                    this.uiState.setGenerateStructures(shouldGenerateStructures);
                 });
 
-        //#if MC>=12111
-        this.worldTypeButton = CyclingButtonWidget.builder(WorldCreator.WorldType::getName, this.worldCreator.getWorldType())
-                .values(getWorldTypes())
-                .build(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, WORLD_TYPE_TEXT, (button, worldType) -> {
-                    this.worldCreator.setWorldType(worldType);
+        this.worldTypeButton = CycleButton.builder(WorldCreationUiState.WorldTypeEntry::describePreset, this.uiState.getWorldType())
+                .withValues(getWorldTypes())
+                .create(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, WORLD_TYPE_TEXT, (button, worldType) -> {
+                    this.uiState.setWorldType(worldType);
                 });
 
-        this.worldTypeButton.setValue(this.worldCreator.getWorldType());
-        //#else
-        //$$ this.worldTypeButton = CyclingButtonWidget.builder(WorldCreator.WorldType::getName)
-        //$$        .values(getWorldTypes())
-        //$$        .initially(this.worldCreator.getWorldType())
-        //$$        .build(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, WORLD_TYPE_TEXT, (button, worldType) -> {
-        //$$            this.worldCreator.setWorldType(worldType);
-        //$$        });
-        //#endif
+        this.worldTypeButton.setValue(this.uiState.getWorldType());
 
-        this.amplifiedWorldInfo = MultilineText.create(textRenderer, AMPLIFIED_INFO_TEXT, this.worldTypeButton.getWidth());
+        this.amplifiedWorldInfo = MultiLineLabel.create(font, AMPLIFIED_INFO_TEXT, this.worldTypeButton.getWidth());
 
-        this.customizeWorldButton = ButtonWidget.builder(CUSTOMIZE_TEXT, (button) -> {
-                    LevelScreenProvider levelScreenProvider = this.worldCreator.getLevelScreenProvider();
-                    if (levelScreenProvider != null) {
-                        MinecraftClient.getInstance().setScreen(
-                                levelScreenProvider.createEditScreen(
+        this.customizeWorldButton = Button.builder(CUSTOMIZE_TEXT, (button) -> {
+                    PresetEditor editor = this.uiState.getPresetEditor();
+                    if (editor != null) {
+                        Minecraft.getInstance().setScreen(
+                                editor.createEditScreen(
                                         createWorldScreen,
-                                        this.worldCreator.getGeneratorOptionsHolder()
+                                        this.uiState.getSettings()
                                 )
                         );
                     }
                 })
-                .dimensions(rightColumnX, 120, BUTTON_WIDTH, BUTTON_HEIGHT)
+                .bounds(rightColumnX, 120, BUTTON_WIDTH, BUTTON_HEIGHT)
                 .build();
 
-        this.bonusChestButton = CyclingButtonWidget.onOffBuilder(this.worldCreator.isBonusChestEnabled())
-                .build(leftColumnX, 151, BUTTON_WIDTH, BUTTON_HEIGHT, BONUS_CHEST_TEXT, (button, bonusChestEnabled) -> {
-                    this.worldCreator.setBonusChestEnabled(bonusChestEnabled);
+        this.bonusChestButton = CycleButton.onOffBuilder(this.uiState.isBonusChest())
+                .create(leftColumnX, 151, BUTTON_WIDTH, BUTTON_HEIGHT, BONUS_CHEST_TEXT, (button, bonusChestEnabled) -> {
+                    this.uiState.setBonusChest(bonusChestEnabled);
                 });
 
         elements.add(this.seedField);
@@ -113,14 +92,9 @@ public class MoreWorldOptionsComponent {
         return elements;
     }
 
-    //#if MC<=12001
-    //$$ public void tick() {
-    //$$     this.seedField.tick();
-    //$$ }
-    //#endif
 
     public boolean isDebug() {
-        return this.worldCreator.isDebug();
+        return this.uiState.isDebug();
     }
 
     public void setVisibility(boolean visible) {
@@ -138,64 +112,37 @@ public class MoreWorldOptionsComponent {
         this.seedField.setVisible(visible);
     }
 
-    //#if MC>=12000
-    public void render(DrawContext context) {
+    public void render(GuiGraphicsExtractor graphics) {
         boolean isDebug = isDebug();
 
         if (!isDebug) {
-            context.drawTextWithShadow(this.textRenderer, GENERATE_STRUCTURES_INFO_TEXT, this.halfWidth - 150, 122, Constants.getTextColor());
+            graphics.text(this.font, GENERATE_STRUCTURES_INFO_TEXT, this.halfWidth - 150, 122, Constants.getTextColor());
         }
 
-        if (this.worldCreator.getWorldType().isAmplified()) {
-            //#if MC>=12111
-            // fixme: might want to use context.drawTextWithShadow
-            DrawnTextConsumer drawnTextConsumer = context.getTextConsumer();
-            this.amplifiedWorldInfo.draw(Alignment.LEFT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, drawnTextConsumer);
-            //context.drawText(this.textRenderer, AMPLIFIED_INFO_TEXT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, Constants.getTextColor(), false);
-            //#elseif MC>=12109
-            //$$ this.amplifiedWorldInfo.draw(context, MultilineText.Alignment.LEFT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, false, Constants.getTextColor());
-            //#else
-            //$$ this.amplifiedWorldInfo.drawWithShadow(context, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, Constants.getTextColor());
-            //#endif
+        if (this.uiState.getWorldType().isAmplified()) {
+            this.amplifiedWorldInfo.visitLines(TextAlignment.LEFT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, graphics.textRenderer());
         }
 
         this.generateStructuresButton.visible = !isDebug;
         this.bonusChestButton.visible = !isDebug;
-        this.customizeWorldButton.visible = !isDebug && this.worldCreator.getLevelScreenProvider() != null;
+        this.customizeWorldButton.visible = !isDebug && this.uiState.getPresetEditor() != null;
     }
-    //#else
-    //$$ public void render(MatrixStack matrices) {
-    //$$     boolean isDebug = isDebug();
-    //$$
-    //$$     if (!isDebug) {
-    //$$         this.textRenderer.drawWithShadow(matrices, GENERATE_STRUCTURES_INFO_TEXT, this.halfWidth - 150, 122, GRAY_COLOR);
-    //$$     }
-    //$$
-    //$$     if (this.worldCreator.getWorldType().isAmplified()) {
-    //$$         this.amplifiedWorldInfo.drawWithShadow(matrices, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, GRAY_COLOR);
-    //$$     }
-    //$$
-    //$$     this.generateStructuresButton.visible = !isDebug;
-    //$$     this.bonusChestButton.visible = !isDebug;
-    //$$     this.customizeWorldButton.visible = !isDebug && this.worldCreator.getLevelScreenProvider() != null;
-    //$$ }
-    //#endif
 
-    private CyclingButtonWidget.Values<WorldCreator.WorldType> getWorldTypes() {
-        return new CyclingButtonWidget.Values<>() {
+    private CycleButton.ValueListSupplier<WorldCreationUiState.WorldTypeEntry> getWorldTypes() {
+        return new CycleButton.ValueListSupplier<>() {
 
             @Override
-            public List<WorldCreator.WorldType> getCurrent() {
-                if (CyclingButtonWidget.HAS_ALT_DOWN.getAsBoolean()) {
-                    return worldCreator.getExtendedWorldTypes();
+            public List<WorldCreationUiState.WorldTypeEntry> getSelectedList() {
+                if (CycleButton.DEFAULT_ALT_LIST_SELECTOR.getAsBoolean()) {
+                    return uiState.getAltPresetList();
                 }
 
-                return getDefaults();
+                return getDefaultList();
             }
 
             @Override
-            public List<WorldCreator.WorldType> getDefaults() {
-                return worldCreator.getNormalWorldTypes();
+            public List<WorldCreationUiState.WorldTypeEntry> getDefaultList() {
+                return uiState.getNormalPresetList();
             }
         };
     }

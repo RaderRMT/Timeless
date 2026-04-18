@@ -1,7 +1,7 @@
 package fr.rader.timeless.features.icons;
 
 import fr.rader.timeless.Timeless;
-import net.minecraft.resource.InputSupplier;
+import net.minecraft.server.packs.resources.IoSupplier;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -13,7 +13,7 @@ public class IconSupplier {
 
     private static final String ICON_PATH = "/assets/timeless/icons/";
 
-    public static InputSupplier<InputStream> getIcon(String path) {
+    public static IoSupplier<InputStream> getIcon(String path) {
         try {
             String iconPath = ICON_PATH + path;
 
@@ -22,7 +22,7 @@ public class IconSupplier {
                 throw new FileNotFoundException(iconPath);
             }
 
-            return InputSupplier.create(Path.of(iconURL.toURI()));
+            return IoSupplier.create(Path.of(iconURL.toURI()));
         } catch (URISyntaxException | FileNotFoundException e) {
             throw new RuntimeException(e);
         }

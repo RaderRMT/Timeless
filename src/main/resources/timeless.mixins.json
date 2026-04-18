@@ -6,40 +6,20 @@
   "mixins": [
   ],
   "client": [
-    "hitdirection.MixinPlayerEntity",
-    "oldinventory.MixinItemGroups",
+    "hitdirection.MixinPlayer",
+    "oldinventory.MixinCreativeModeTabs",
     "oldworldmenu.MixinCreateWorldScreen",
-    "piston.MixinPistonBlock",
-    "potion.color.MixinStatusEffect",
+    "piston.MixinPistonBaseBlock",
+    "potion.color.MixinMobEffect",
     "potion.glint.MixinPotionItem",
-    "purplearrow.MixinArrowEntityRenderer",
+    "purplearrow.MixinTippableArrowRenderer",
     "purplearrow.MixinEntity",
-
-    //#if MC>=12006
     "oldbackground.MixinScreen",
-    "oldbackground.MixinMessageScreen",
-    //#if MC<=12108
-    //$$ "oldbackground.MixinDownloadingTerrainScreen",
-    //#endif
-    //#endif
-
-    //#if MC>=12004
-    "batmodel.MixinBatEntityModel",
-    "batmodel.MixinBatEntityRenderer",
-    //#if MC>=12102
+    "batmodel.MixinBatModel",
+    "batmodel.MixinBatRenderer",
     "batmodel.MixinLivingEntityRenderer",
-    //#endif
-    //#endif
-
-    //#if MC>=12000
-    "icons.MixinIcons",
-    //#else
-    //$$ "icons.MixinMinecraftClient"
-    //#endif
-
-    //#if MC>=12106
-    "noenvfog.MixinAtmosphericFogModifier"
-    //#endif
+    "icons.MixinIconSet",
+    "noenvfog.MixinAtmosphericFogEnvironment"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -1,105 +1,71 @@
 package fr.rader.timeless.features.oldinventory;
 
-import net.minecraft.enchantment.Enchantment;
-import net.minecraft.item.*;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryKeys;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.registry.tag.InstrumentTags;
-import net.minecraft.resource.featuretoggle.FeatureFlags;
-import net.minecraft.text.Text;
-
-//#if MC<=12004
-//$$ import java.util.EnumSet;
-//$$ import net.minecraft.enchantment.EnchantmentTarget;
-//#elseif MC<=12006
-//$$ import java.util.Set;
-//$$ import net.minecraft.registry.tag.ItemTags;
-//$$ import net.minecraft.registry.tag.TagKey;
-//#endif
-
-import static net.minecraft.item.ItemGroups.TOOLS;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.network.chat.Component;
+import net.minecraft.tags.InstrumentTags;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 public class ToolsTab extends Tab {
 
     public ToolsTab() {
-        super(TOOLS, ItemGroup.Row.BOTTOM, 2, Text.translatable("timeless.itemGroup.tools"), new ItemStack(Items.IRON_AXE));
+        super(CreativeModeTabs.TOOLS_AND_UTILITIES, CreativeModeTab.Row.BOTTOM, 2, Component.translatable("timeless.itemGroup.tools"), () -> new ItemStack(Items.IRON_AXE));
     }
 
     @Override
-    protected void populateTab(ItemGroup.DisplayContext displayContext, ItemGroup.Entries entries) {
-        entries.add(Items.FLINT_AND_STEEL);
-        entries.add(Items.WOODEN_SHOVEL);
-        entries.add(Items.WOODEN_PICKAXE);
-        entries.add(Items.WOODEN_AXE);
-        entries.add(Items.WOODEN_HOE);
-        entries.add(Items.STONE_SHOVEL);
-        entries.add(Items.STONE_PICKAXE);
-        entries.add(Items.STONE_AXE);
-        entries.add(Items.STONE_HOE);
-        //#if MC>=12109
-        entries.add(Items.COPPER_SHOVEL);
-        entries.add(Items.COPPER_PICKAXE);
-        entries.add(Items.COPPER_AXE);
-        entries.add(Items.COPPER_HOE);
-        //#endif
-        entries.add(Items.IRON_SHOVEL);
-        entries.add(Items.IRON_PICKAXE);
-        entries.add(Items.IRON_AXE);
-        entries.add(Items.IRON_HOE);
-        entries.add(Items.GOLDEN_SHOVEL);
-        entries.add(Items.GOLDEN_PICKAXE);
-        entries.add(Items.GOLDEN_AXE);
-        entries.add(Items.GOLDEN_HOE);
-        entries.add(Items.DIAMOND_SHOVEL);
-        entries.add(Items.DIAMOND_PICKAXE);
-        entries.add(Items.DIAMOND_AXE);
-        entries.add(Items.DIAMOND_HOE);
-        entries.add(Items.NETHERITE_SHOVEL);
-        entries.add(Items.NETHERITE_PICKAXE);
-        entries.add(Items.NETHERITE_AXE);
-        entries.add(Items.NETHERITE_HOE);
-        entries.add(Items.COMPASS);
-        entries.add(Items.RECOVERY_COMPASS);
-        addBundle(displayContext, entries);
-        entries.add(Items.FISHING_ROD);
-        entries.add(Items.CLOCK);
-        entries.add(Items.SPYGLASS);
-        entries.add(Items.SHEARS);
-        getOptional(displayContext, RegistryKeys.ENCHANTMENT).ifPresent(wrapper -> {
-            addAllEnchantedBooks(displayContext, entries, wrapper);
+    protected void populateTab(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output entries) {
+        entries.accept(Items.FLINT_AND_STEEL);
+        entries.accept(Items.WOODEN_SHOVEL);
+        entries.accept(Items.WOODEN_PICKAXE);
+        entries.accept(Items.WOODEN_AXE);
+        entries.accept(Items.WOODEN_HOE);
+        entries.accept(Items.STONE_SHOVEL);
+        entries.accept(Items.STONE_PICKAXE);
+        entries.accept(Items.STONE_AXE);
+        entries.accept(Items.STONE_HOE);
+        entries.accept(Items.COPPER_SHOVEL);
+        entries.accept(Items.COPPER_PICKAXE);
+        entries.accept(Items.COPPER_AXE);
+        entries.accept(Items.COPPER_HOE);
+        entries.accept(Items.IRON_SHOVEL);
+        entries.accept(Items.IRON_PICKAXE);
+        entries.accept(Items.IRON_AXE);
+        entries.accept(Items.IRON_HOE);
+        entries.accept(Items.GOLDEN_SHOVEL);
+        entries.accept(Items.GOLDEN_PICKAXE);
+        entries.accept(Items.GOLDEN_AXE);
+        entries.accept(Items.GOLDEN_HOE);
+        entries.accept(Items.DIAMOND_SHOVEL);
+        entries.accept(Items.DIAMOND_PICKAXE);
+        entries.accept(Items.DIAMOND_AXE);
+        entries.accept(Items.DIAMOND_HOE);
+        entries.accept(Items.NETHERITE_SHOVEL);
+        entries.accept(Items.NETHERITE_PICKAXE);
+        entries.accept(Items.NETHERITE_AXE);
+        entries.accept(Items.NETHERITE_HOE);
+        entries.accept(Items.COMPASS);
+        entries.accept(Items.RECOVERY_COMPASS);
+        entries.accept(Items.BUNDLE);
+        entries.accept(Items.FISHING_ROD);
+        entries.accept(Items.CLOCK);
+        entries.accept(Items.SPYGLASS);
+        entries.accept(Items.SHEARS);
+        getOptional(parameters, Registries.ENCHANTMENT).ifPresent(wrapper -> {
+            addAllEnchantedBooks(parameters, entries, wrapper);
         });
-        entries.add(Items.NAME_TAG);
-        entries.add(Items.LEAD);
-        entries.add(Items.GOAT_HORN);
-        getOptional(displayContext, RegistryKeys.INSTRUMENT).ifPresent(wrapper -> {
-            ItemGroups.addInstruments(entries, wrapper, Items.GOAT_HORN, InstrumentTags.GOAT_HORNS, ItemGroup.StackVisibility.PARENT_AND_SEARCH_TABS);
+        entries.accept(Items.NAME_TAG);
+        entries.accept(Items.LEAD);
+        getOptional(parameters, Registries.INSTRUMENT).ifPresent(wrapper -> {
+            CreativeModeTabs.generateInstrumentTypes(entries, wrapper, Items.GOAT_HORN, InstrumentTags.GOAT_HORNS, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         });
     }
 
-    private void addBundle(ItemGroup.DisplayContext displayContext, ItemGroup.Entries entries) {
-        //#if MC>=12102
-        entries.add(Items.BUNDLE);
-        //#else
-        //$$ if (displayContext.enabledFeatures().contains(FeatureFlags.BUNDLE)) {
-        //$$     entries.add(Items.BUNDLE);
-        //$$ }
-        //#endif
-    }
-
-    private void addAllEnchantedBooks(ItemGroup.DisplayContext displayContext, ItemGroup.Entries entries, RegistryWrapper.Impl<Enchantment> wrapper) {
-        //#if MC>=12100
-        ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
-        ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
-        //#elseif MC>=12005
-        //$$ Set<TagKey<Item>> set = Set.of(ItemTags.VANISHING_ENCHANTABLE, ItemTags.MINING_ENCHANTABLE, ItemTags.MINING_LOOT_ENCHANTABLE, ItemTags.FISHING_ENCHANTABLE, ItemTags.DURABILITY_ENCHANTABLE);
-        //$$ ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY, displayContext.enabledFeatures());
-        //$$ ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY, displayContext.enabledFeatures());
-        //#else
-        //$$ EnumSet<EnchantmentTarget> set = EnumSet.of(EnchantmentTarget.VANISHABLE, EnchantmentTarget.DIGGER, EnchantmentTarget.FISHING_ROD, EnchantmentTarget.BREAKABLE);
-        //$$ ItemGroups.addMaxLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.PARENT_TAB_ONLY);
-        //$$ ItemGroups.addAllLevelEnchantedBooks(entries, wrapper, set, ItemGroup.StackVisibility.SEARCH_TAB_ONLY);
-        //#endif
+    private void addAllEnchantedBooks(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output entries, HolderLookup.RegistryLookup<Enchantment> wrapper) {
+        CreativeModeTabs.generateEnchantmentBookTypesOnlyMaxLevel(entries, wrapper, CreativeModeTab.TabVisibility.PARENT_TAB_ONLY);
+        CreativeModeTabs.generateEnchantmentBookTypesAllLevels(entries, wrapper, CreativeModeTab.TabVisibility.SEARCH_TAB_ONLY);
     }
 }

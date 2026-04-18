@@ -3,18 +3,16 @@ package fr.rader.timeless.mixin.oldworldmenu;
 import fr.rader.timeless.config.TimelessConfig;
 import fr.rader.timeless.features.oldworldmenu.Constants;
 import fr.rader.timeless.features.oldworldmenu.MoreWorldOptionsComponent;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.world.CreateWorldScreen;
-import net.minecraft.client.gui.screen.world.EditGameRulesScreen;
-import net.minecraft.client.gui.screen.world.WorldCreator;
-import net.minecraft.client.gui.widget.ButtonWidget;
-import net.minecraft.client.gui.widget.ClickableWidget;
-import net.minecraft.client.gui.widget.CyclingButtonWidget;
-import net.minecraft.client.gui.widget.TextFieldWidget;
-import net.minecraft.resource.DataConfiguration;
-import net.minecraft.text.Text;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.components.*;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.worldselection.CreateWorldScreen;
+import net.minecraft.client.gui.screens.worldselection.WorldCreationGameRulesScreen;
+import net.minecraft.client.gui.screens.worldselection.WorldCreationUiState;
+import net.minecraft.client.input.KeyEvent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.world.Difficulty;
+import net.minecraft.world.level.WorldDataConfiguration;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -24,18 +22,6 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
-//#if MC>=12109
-import net.minecraft.client.input.KeyInput;
-//#endif
-
-//#if MC<=11904
-//$$ import net.minecraft.client.util.math.MatrixStack;
-//$$ import net.minecraft.client.gui.DrawableHelper;
-//$$ import org.spongepowered.asm.mixin.injection.Redirect;
-//$$ import org.objectweb.asm.Opcodes;
-//$$ import net.minecraft.util.Identifier;
-//#endif
-
 import java.util.List;
 
 import static fr.rader.timeless.features.oldworldmenu.Constants.*;
@@ -44,154 +30,92 @@ import static fr.rader.timeless.features.oldworldmenu.Constants.*;
 public abstract class MixinCreateWorldScreen extends Screen {
 
     @Shadow
-    abstract void openPackScreen(DataConfiguration dataConfiguration);
-    @Shadow
-    protected abstract void createLevel();
+    protected abstract void openDataPackSelectionScreen(WorldDataConfiguration dataConfiguration);
 
     @Shadow
-    @Final
-    WorldCreator worldCreator;
+    protected abstract void onCreate();
 
-    @Shadow public abstract WorldCreator getWorldCreator();
+    @Shadow @Final
+    private WorldCreationUiState uiState;
 
-    @Unique private MoreWorldOptionsComponent moreWorldOptionsComponent;
-    @Unique private boolean isWorldOptionsToggled;
+    @Shadow
+    public abstract void popScreen();
 
-    @Unique private TextFieldWidget worldName;
-    @Unique private Text worldDirectoryName;
+    @Unique private MoreWorldOptionsComponent timeless$moreWorldOptionsComponent;
+    @Unique private boolean timeless$isWorldOptionsToggled;
 
-    @Unique private CyclingButtonWidget<WorldCreator.Mode> gameModeButton;
-    @Unique private WorldCreator.Mode nonDebugGameMode;
-    @Unique private Text gameModeHelp1;
-    @Unique private Text gameModeHelp2;
+    @Unique private EditBox timeless$worldName;
+    @Unique private Component timeless$worldDirectoryName;
 
-    @Unique private CyclingButtonWidget<Difficulty> difficultyButton;
-    @Unique private CyclingButtonWidget<Boolean> allowCheatsButton;
+    @Unique private CycleButton<WorldCreationUiState.SelectedGameMode> timeless$gameModeButton;
+    @Unique private WorldCreationUiState.SelectedGameMode timeless$nonDebugGameMode;
+    @Unique private Component timeless$gameModeHelp1;
+    @Unique private Component timeless$gameModeHelp2;
 
-    @Unique private ButtonWidget dataPacksButton;
-    @Unique private ButtonWidget gameRulesButton;
-    @Unique private ButtonWidget moreWorldOptionsButton;
+    @Unique private CycleButton<Difficulty> timeless$difficultyButton;
+    @Unique private CycleButton<Boolean> timeless$allowCheatsButton;
 
-    @Unique private int halfWidth;
+    @Unique private Button timeless$dataPacksButton;
+    @Unique private Button timeless$gameRulesButton;
+    @Unique private Button timeless$moreWorldOptionsButton;
 
-    protected MixinCreateWorldScreen(Text title) {
+    @Unique private int timeless$halfWidth;
+
+    protected MixinCreateWorldScreen(Component title) {
         super(title);
 
-        this.isWorldOptionsToggled = false;
+        this.timeless$isWorldOptionsToggled = false;
     }
 
-    //#if MC>=12006
     @Inject(
-            method = "renderDarkening",
+            // todo: not too sure about this:
+            method = "extractMenuBackground",
             at = @At("HEAD"),
             cancellable = true
     )
-    public void timeless$renderDarkening(DrawContext context, CallbackInfo ci) {
+    public void timeless$extractMenuBackground(GuiGraphicsExtractor graphics, CallbackInfo ci) {
         if (!TimelessConfig.get().useOldWorldMenu) {
             return;
         }
 
         ci.cancel();
     }
-    //#else
-    //$$ @Inject(
-    //$$         method = "renderBackgroundTexture",
-    //$$         at = @At("HEAD"),
-    //$$         cancellable = true
-    //$$ )
-    //$$ //#if MC>=12000
-    //$$ public void timeless$renderBackgroundTexture(DrawContext matrices, CallbackInfo ci) {
-    //$$ //#else
-    //$$ //$$ public void timeless$renderBackgroundTexture(MatrixStack matrices, CallbackInfo ci) {
-    //$$ //#endif
-    //$$     if (!TimelessConfig.get().useOldWorldMenu) {
-    //$$         return;
-    //$$     }
-    //$$
-    //$$     super.renderBackgroundTexture(matrices);
-    //$$     ci.cancel();
-    //$$ }
-    //#endif
 
     @Inject(
-            method = "render",
+            method = "extractRenderState",
             at = @At("HEAD"),
             cancellable = true
     )
-    //#if MC>=12000
-    public void timeless$render(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void timeless$extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
         if (!TimelessConfig.get().useOldWorldMenu) {
             return;
         }
 
-        //#if MC>=12006
-        super.render(context, mouseX, mouseY, delta);
-        //#elseif MC>=12002
-        //$$ renderBackground(context, mouseX, mouseY, delta);
-        //#else
-        //$$ renderBackground(context);
-        //#endif
+        super.extractRenderState(graphics, mouseX, mouseY, delta);
 
-        context.drawCenteredTextWithShadow(this.textRenderer, this.title, this.halfWidth, 20, -1);
+        graphics.centeredText(this.font, this.title, this.timeless$halfWidth, 20, -1);
 
-        int textPositionX = this.halfWidth - 100;
-        if (this.isWorldOptionsToggled) {
-            context.drawTextWithShadow(this.textRenderer, SEED_LABEL, textPositionX, 47, Constants.getTextColor());
-            context.drawTextWithShadow(this.textRenderer, SEED_INFO_LABEL, textPositionX, 85, Constants.getTextColor());
+        int textPositionX = this.timeless$halfWidth - 100;
+        if (this.timeless$isWorldOptionsToggled) {
+            graphics.text(this.font, SEED_LABEL, textPositionX, 47, Constants.getTextColor());
+            graphics.text(this.font, SEED_INFO_LABEL, textPositionX, 85, Constants.getTextColor());
 
-            this.moreWorldOptionsComponent.render(context);
+            this.timeless$moreWorldOptionsComponent.render(graphics);
         } else {
-            context.drawTextWithShadow(this.textRenderer, WORLD_NAME_LABEL, textPositionX, 47, Constants.getTextColor());
-            context.drawTextWithShadow(this.textRenderer, this.worldDirectoryName, textPositionX, 85, Constants.getTextColor());
+            graphics.text(this.font, WORLD_NAME_LABEL, textPositionX, 47, Constants.getTextColor());
+            graphics.text(this.font, this.timeless$worldDirectoryName, textPositionX, 85, Constants.getTextColor());
 
             textPositionX -= 50;
-            context.drawTextWithShadow(this.textRenderer, this.gameModeHelp1, textPositionX, 122, Constants.getTextColor());
-            context.drawTextWithShadow(this.textRenderer, this.gameModeHelp2, textPositionX, 134, Constants.getTextColor());
+            graphics.text(this.font, this.timeless$gameModeHelp1, textPositionX, 122, Constants.getTextColor());
+            graphics.text(this.font, this.timeless$gameModeHelp2, textPositionX, 134, Constants.getTextColor());
 
-            if (!this.worldCreator.isDebug()) {
-                context.drawTextWithShadow(this.textRenderer, ALLOW_CHEATS_INFO_LABEL, textPositionX, 172, Constants.getTextColor());
+            if (!this.uiState.isDebug()) {
+                graphics.text(this.font, ALLOW_CHEATS_INFO_LABEL, textPositionX, 172, Constants.getTextColor());
             }
         }
 
-        //#if MC<=12004
-        //$$ super.render(context, mouseX, mouseY, delta);
-        //#endif
-
         ci.cancel();
     }
-    //#else
-    //$$ public void timeless$render(MatrixStack matrices, int mouseX, int mouseY, float delta, CallbackInfo ci) {
-    //$$     if (!TimelessConfig.get().useOldWorldMenu) {
-    //$$         return;
-    //$$     }
-    //$$
-    //$$     renderBackground(matrices);
-    //$$     drawCenteredTextWithShadow(matrices, this.textRenderer, this.title, this.halfWidth, 20, -1);
-    //$$
-    //$$     int textPositionX = this.halfWidth - 100;
-    //$$     if (this.isWorldOptionsToggled) {
-    //$$         drawTextWithShadow(matrices, this.textRenderer, SEED_LABEL, textPositionX, 47, GRAY_COLOR);
-    //$$         drawTextWithShadow(matrices, this.textRenderer, SEED_INFO_LABEL, textPositionX, 85, GRAY_COLOR);
-    //$$
-    //$$         this.moreWorldOptionsComponent.render(matrices);
-    //$$     } else {
-    //$$         drawTextWithShadow(matrices, this.textRenderer, WORLD_NAME_LABEL, textPositionX, 47, GRAY_COLOR);
-    //$$         drawTextWithShadow(matrices, this.textRenderer, this.worldDirectoryName, textPositionX, 85, GRAY_COLOR);
-    //$$
-    //$$         textPositionX -= 50;
-    //$$         drawTextWithShadow(matrices, this.textRenderer, this.gameModeHelp1, textPositionX, 122, GRAY_COLOR);
-    //$$         drawTextWithShadow(matrices, this.textRenderer, this.gameModeHelp2, textPositionX, 134, GRAY_COLOR);
-    //$$
-    //$$         if (!this.worldCreator.isDebug()) {
-    //$$             drawTextWithShadow(matrices, this.textRenderer, ALLOW_CHEATS_INFO_LABEL, textPositionX, 172, GRAY_COLOR);
-    //$$         }
-    //$$     }
-    //$$
-    //$$     super.render(matrices, mouseX, mouseY, delta);
-    //$$
-    //$$     ci.cancel();
-    //$$ }
-    //#endif
 
     @Inject(
             method = "init",
@@ -203,272 +127,215 @@ public abstract class MixinCreateWorldScreen extends Screen {
             return;
         }
 
-        this.moreWorldOptionsComponent = new MoreWorldOptionsComponent();
-        this.halfWidth = this.width / 2;
+        this.timeless$moreWorldOptionsComponent = new MoreWorldOptionsComponent();
+        this.timeless$halfWidth = this.width / 2;
 
-        this.worldName = new TextFieldWidget(this.textRenderer, this.halfWidth - 100, 60, 200, 20, WORLD_NAME_LABEL);
-        this.worldName.setText(this.worldCreator.getWorldName());
-        this.worldName.setChangedListener(this::setWorldName);
+        this.timeless$worldName = new EditBox(this.font, this.timeless$halfWidth - 100, 60, 200, 20, WORLD_NAME_LABEL);
+        this.timeless$worldName.setValue(this.uiState.getName());
+        this.timeless$worldName.setResponder(this::timeless$setWorldName);
 
-        int leftColumnX = this.halfWidth - 155;
-        int rightColumnX = this.halfWidth + 5;
+        int leftColumnX = this.timeless$halfWidth - 155;
+        int rightColumnX = this.timeless$halfWidth + 5;
 
-        //#if MC>=12111
-        this.gameModeButton = CyclingButtonWidget.<WorldCreator.Mode>builder(value -> value.name, this.worldCreator.getGameMode())
-                .values(List.of(
-                        WorldCreator.Mode.SURVIVAL,
-                        WorldCreator.Mode.HARDCORE,
-                        WorldCreator.Mode.CREATIVE
+        this.timeless$gameModeButton = CycleButton.<WorldCreationUiState.SelectedGameMode>builder(value -> value.displayName, this.uiState.getGameMode())
+                .withValues(List.of(
+                        WorldCreationUiState.SelectedGameMode.SURVIVAL,
+                        WorldCreationUiState.SelectedGameMode.HARDCORE,
+                        WorldCreationUiState.SelectedGameMode.CREATIVE
                 ))
-                .build(leftColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, GAME_MODE_LABEL, (button, gameMode) -> {
-                    setGameMode(gameMode);
+                .create(leftColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, GAME_MODE_LABEL, (button, gameMode) -> {
+                    timeless$setGameMode(gameMode);
                 });
 
-        this.gameModeButton.setValue(this.worldCreator.getGameMode());
-        //#else
-        //$$ this.gameModeButton = CyclingButtonWidget.<WorldCreator.Mode>builder(value -> value.name)
-        //$$        .values(List.of(
-        //$$                WorldCreator.Mode.SURVIVAL,
-        //$$                WorldCreator.Mode.HARDCORE,
-        //$$                WorldCreator.Mode.CREATIVE
-        //$$        ))
-        //$$        .initially(this.worldCreator.getGameMode())
-        //$$        .build(leftColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, GAME_MODE_LABEL, (button, gameMode) -> {
-        //$$            setGameMode(gameMode);
-        //$$        });
-        //#endif
-        this.worldCreator.addListener(creator -> {
-            this.gameModeButton.setValue(this.worldCreator.getGameMode());
-            this.gameModeButton.active = !this.worldCreator.isDebug();
+        this.timeless$gameModeButton.setValue(this.uiState.getGameMode());
+        this.uiState.addListener(creator -> {
+            this.timeless$gameModeButton.setValue(this.uiState.getGameMode());
+            this.timeless$gameModeButton.active = !this.uiState.isDebug();
         });
 
-        //#if MC>=12111
-        this.difficultyButton = CyclingButtonWidget.builder(Difficulty::getTranslatableName, this.worldCreator.getDifficulty())
-                .values(Difficulty.values())
-                .build(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, DIFFICULTY_TEXT, (button, difficulty) -> {
-                    this.worldCreator.setDifficulty(difficulty);
+        this.timeless$difficultyButton = CycleButton.builder(Difficulty::getDisplayName, this.uiState.getDifficulty())
+                .withValues(Difficulty.values())
+                .create(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, DIFFICULTY_TEXT, (button, difficulty) -> {
+                    this.uiState.setDifficulty(difficulty);
                 });
-        this.difficultyButton.setValue(this.worldCreator.getDifficulty());
-        //#else
-        //$$ this.difficultyButton = CyclingButtonWidget.builder(Difficulty::getTranslatableName)
-        //$$         .values(Difficulty.values())
-        //$$         .initially(this.worldCreator.getDifficulty())
-        //$$         .build(rightColumnX, 100, BUTTON_WIDTH, BUTTON_HEIGHT, DIFFICULTY_TEXT, (button, difficulty) -> {
-        //$$             this.worldCreator.setDifficulty(difficulty);
-        //$$         });
-        //#endif
-        this.worldCreator.addListener(creator -> {
-            this.difficultyButton.setValue(this.worldCreator.getDifficulty());
-            this.difficultyButton.active = !this.worldCreator.isHardcore();
+        this.timeless$difficultyButton.setValue(this.uiState.getDifficulty());
+        this.uiState.addListener(creator -> {
+            this.timeless$difficultyButton.setValue(this.uiState.getDifficulty());
+            this.timeless$difficultyButton.active = !this.uiState.isHardcore();
         });
 
-        this.allowCheatsButton = CyclingButtonWidget.onOffBuilder(this.worldCreator.areCheatsEnabled())
-                .build(leftColumnX, 151, BUTTON_WIDTH, BUTTON_HEIGHT, ALLOW_CHEATS_TEXT, (button, allowCheats) -> {
-                    this.worldCreator.setCheatsEnabled(allowCheats);
+        this.timeless$allowCheatsButton = CycleButton.onOffBuilder(this.uiState.isAllowCommands())
+                .create(leftColumnX, 151, BUTTON_WIDTH, BUTTON_HEIGHT, ALLOW_CHEATS_TEXT, (button, allowCheats) -> {
+                    this.uiState.setAllowCommands(allowCheats);
                 });
-        this.worldCreator.addListener(creator -> {
-            this.allowCheatsButton.setValue(this.worldCreator.areCheatsEnabled());
-            this.allowCheatsButton.active = !this.worldCreator.isDebug() && !this.worldCreator.isHardcore();
+        this.uiState.addListener(creator -> {
+            this.timeless$allowCheatsButton.setValue(this.uiState.isAllowCommands());
+            this.timeless$allowCheatsButton.active = !this.uiState.isDebug() && !this.uiState.isHardcore();
         });
 
-        this.dataPacksButton = ButtonWidget.builder(DATA_PACKS_TEXT, button -> {
-                    openPackScreen(this.worldCreator.getGeneratorOptionsHolder().dataConfiguration());
+        this.timeless$dataPacksButton = Button.builder(DATA_PACKS_TEXT, button -> {
+                    openDataPackSelectionScreen(this.uiState.getSettings().dataConfiguration());
                 })
-                .dimensions(rightColumnX, 151, BUTTON_WIDTH, BUTTON_HEIGHT)
+                .bounds(rightColumnX, 151, BUTTON_WIDTH, BUTTON_HEIGHT)
                 .build();
 
-        this.gameRulesButton = ButtonWidget.builder(GAME_RULES_TEXT, button -> {
-                    this.client.setScreen(new EditGameRulesScreen(
-                            //#if MC>=12111
-                            this.worldCreator.getGameRules().withEnabledFeatures(getWorldCreator().getGeneratorOptionsHolder().dataConfiguration().enabledFeatures()),
-                            //#elseif MC>=12102
-                            //$$ this.worldCreator.getGameRules().copy(getWorldCreator().getGeneratorOptionsHolder().dataConfiguration().enabledFeatures()),
-                            //#else
-                            //$$ this.worldCreator.getGameRules().copy(),
-                            //#endif
-                            optional -> {
-                                this.client.setScreen(this);
-                                optional.ifPresent(this.worldCreator::setGameRules);
+        this.timeless$gameRulesButton = Button.builder(GAME_RULES_TEXT, button -> {
+                    this.minecraft.setScreen(new WorldCreationGameRulesScreen(
+                            this.uiState.getGameRules().copy(this.uiState.getSettings().dataConfiguration().enabledFeatures()), optional -> {
+                                    this.minecraft.setScreen(this);
+                                    optional.ifPresent(this.uiState::setGameRules);
                             }
                     ));
                 })
-                .dimensions(leftColumnX, 185, BUTTON_WIDTH, BUTTON_HEIGHT)
+                .bounds(leftColumnX, 185, BUTTON_WIDTH, BUTTON_HEIGHT)
                 .build();
 
-        this.moreWorldOptionsButton = ButtonWidget.builder(MORE_WORLD_OPTIONS_TEXT, button -> toggleWorldOptionsVisibility())
-                .dimensions(rightColumnX, 185, BUTTON_WIDTH, BUTTON_HEIGHT)
+        this.timeless$moreWorldOptionsButton = Button.builder(MORE_WORLD_OPTIONS_TEXT, button -> timeless$toggleWorldOptionsVisibility())
+                .bounds(rightColumnX, 185, BUTTON_WIDTH, BUTTON_HEIGHT)
                 .build();
 
-        ButtonWidget createNewWorldButton = ButtonWidget.builder(CREATE_NEW_WORLD_TEXT, button -> createLevel())
-                .dimensions(leftColumnX, this.height - 28, BUTTON_WIDTH, BUTTON_HEIGHT)
+        Button createNewWorldButton = Button.builder(CREATE_NEW_WORLD_TEXT, button -> onCreate())
+                .bounds(leftColumnX, this.height - 28, BUTTON_WIDTH, BUTTON_HEIGHT)
                 .build();
 
-        ButtonWidget cancelButton = ButtonWidget.builder(CANCEL_TEXT, button -> close())
-                .dimensions(rightColumnX, this.height - 28, BUTTON_WIDTH, BUTTON_HEIGHT)
+        Button cancelButton = Button.builder(CANCEL_TEXT, button -> popScreen())
+                .bounds(rightColumnX, this.height - 28, BUTTON_WIDTH, BUTTON_HEIGHT)
                 .build();
 
-        List<ClickableWidget> moreWorldOptionsElements = this.moreWorldOptionsComponent.init(
+        List<AbstractWidget> moreWorldOptionsElements = this.timeless$moreWorldOptionsComponent.init(
                 (CreateWorldScreen) (Object) this,
-                this.textRenderer
+                this.font
         );
 
-        addDrawableChild(this.worldName);
-        addDrawableChild(this.gameModeButton);
-        addDrawableChild(this.difficultyButton);
-        addDrawableChild(this.allowCheatsButton);
-        addDrawableChild(this.dataPacksButton);
-        addDrawableChild(this.gameRulesButton);
-        addDrawableChild(this.moreWorldOptionsButton);
+        addRenderableWidget(this.timeless$worldName);
+        addRenderableWidget(this.timeless$gameModeButton);
+        addRenderableWidget(this.timeless$difficultyButton);
+        addRenderableWidget(this.timeless$allowCheatsButton);
+        addRenderableWidget(this.timeless$dataPacksButton);
+        addRenderableWidget(this.timeless$gameRulesButton);
+        addRenderableWidget(this.timeless$moreWorldOptionsButton);
 
-        addDrawableChild(createNewWorldButton);
-        addDrawableChild(cancelButton);
+        addRenderableWidget(createNewWorldButton);
+        addRenderableWidget(cancelButton);
 
-        moreWorldOptionsElements.forEach(this::addDrawableChild);
+        moreWorldOptionsElements.forEach(this::addRenderableWidget);
 
-        updateWorldOptionsVisibility();
-        setInitialFocus(this.worldName);
+        timeless$updateWorldOptionsVisibility();
+        setInitialFocus(this.timeless$worldName);
 
-        this.worldCreator.update();
-        updateGameModeHelp(this.worldCreator.getGameMode());
-        updateWorldDirectoryName();
+        this.uiState.onChanged();
+        timeless$updateGameModeHelp(this.uiState.getGameMode());
+        timeless$updateWorldDirectoryName();
 
         ci.cancel();
     }
 
-    //#if MC<=12001
-    //$$ @Inject(
-    //$$         method = "tick",
-    //$$         at = @At("HEAD"),
-    //$$         cancellable = true
-    //$$ )
-    //$$ public void timeless$tick(CallbackInfo ci) {
-    //$$     if (!TimelessConfig.get().useOldWorldMenu) {
-    //$$         return;
-    //$$     }
-    //$$
-    //$$     this.worldName.tick();
-    //$$     this.moreWorldOptionsComponent.tick();
-    //$$
-    //$$     ci.cancel();
-    //$$ }
-    //#endif
+    @Inject(
+            method = "repositionElements",
+            at = @At("HEAD"),
+            cancellable = true
+    )
+    public void timeless$repositionElements(CallbackInfo ci) {
+        if (!TimelessConfig.get().useOldWorldMenu) {
+            return;
+        }
+
+        super.repositionElements();
+        ci.cancel();
+    }
 
     @Inject(
             method = "keyPressed",
             at = @At("HEAD"),
             cancellable = true
     )
-    //#if MC>=12109
-    public void timeless$keyPressed(KeyInput input, CallbackInfoReturnable<Boolean> cir) {
-    //#else
-    //$$ public void timeless$keyPressed(int keyCode, int scanCode, int modifiers, CallbackInfoReturnable<Boolean> cir) {
-    //#endif
+    public void timeless$keyPressed(KeyEvent input, CallbackInfoReturnable<Boolean> cir) {
         if (!TimelessConfig.get().useOldWorldMenu) {
             return;
         }
 
-        //#if MC>=12109
         cir.setReturnValue(super.keyPressed(input));
-        //#else
-        //$$ cir.setReturnValue(super.keyPressed(keyCode, scanCode, modifiers));
-        //#endif
         cir.cancel();
     }
 
-    //#if MC<12102
-    //$$ @Inject(
-    //$$         method = "initTabNavigation",
-    //$$         at = @At("HEAD"),
-    //$$         cancellable = true
-    //$$ )
-    //$$ public void timeless$initTabNavigation(CallbackInfo ci) {
-    //$$     if (!TimelessConfig.get().useOldWorldMenu) {
-    //$$         return;
-    //$$     }
-    //$$
-    //$$     super.initTabNavigation();
-    //$$     ci.cancel();
-    //$$ }
-    //#endif
-
     @Unique
-    private void setWorldName(String newWorldName) {
-        this.worldCreator.setWorldName(newWorldName);
+    private void timeless$setWorldName(String newWorldName) {
+        this.uiState.setName(newWorldName);
 
-        updateWorldDirectoryName();
+        timeless$updateWorldDirectoryName();
     }
 
     @Unique
-    private void updateWorldDirectoryName() {
-        this.worldDirectoryName = Text.empty()
+    private void timeless$updateWorldDirectoryName() {
+        this.timeless$worldDirectoryName = Component.empty()
                 .append(WORLD_DIRECTORY_NAME_LABEL)
                 .append(" ")
-                .append(this.worldCreator.getWorldDirectoryName());
+                .append(this.uiState.getTargetFolder());
     }
 
     @Unique
-    private void setGameMode(WorldCreator.Mode gameMode) {
-        this.worldCreator.setGameMode(gameMode);
+    private void timeless$setGameMode(WorldCreationUiState.SelectedGameMode gameMode) {
+        this.uiState.setGameMode(gameMode);
 
-        updateGameModeHelp(gameMode);
+        timeless$updateGameModeHelp(gameMode);
     }
 
     @Unique
-    private void updateGameModeHelp(WorldCreator.Mode gameMode) {
+    private void timeless$updateGameModeHelp(WorldCreationUiState.SelectedGameMode gameMode) {
         String gameModeName = gameMode.name().toLowerCase();
         if (gameModeName.equals("debug")) {
             gameModeName = "spectator";
         }
 
-        this.gameModeHelp1 = Text.translatable("timeless.selectWorld.gameMode." + gameModeName + ".line1");
-        this.gameModeHelp2 = Text.translatable("timeless.selectWorld.gameMode." + gameModeName + ".line2");
+        this.timeless$gameModeHelp1 = Component.translatable("timeless.selectWorld.gameMode." + gameModeName + ".line1");
+        this.timeless$gameModeHelp2 = Component.translatable("timeless.selectWorld.gameMode." + gameModeName + ".line2");
     }
 
     @Unique
-    private void toggleWorldOptionsVisibility() {
-        setWorldOptionsVisibility(!this.isWorldOptionsToggled);
+    private void timeless$toggleWorldOptionsVisibility() {
+        timeless$setWorldOptionsVisibility(!this.timeless$isWorldOptionsToggled);
     }
 
     @Unique
-    private void updateWorldOptionsVisibility() {
-        setWorldOptionsVisibility(this.isWorldOptionsToggled);
+    private void timeless$updateWorldOptionsVisibility() {
+        timeless$setWorldOptionsVisibility(this.timeless$isWorldOptionsToggled);
     }
 
     @Unique
-    private void setWorldOptionsVisibility(boolean visible) {
-        this.isWorldOptionsToggled = visible;
-        this.gameModeButton.visible = !visible;
-        this.difficultyButton.visible = !visible;
+    private void timeless$setWorldOptionsVisibility(boolean visible) {
+        this.timeless$isWorldOptionsToggled = visible;
+        this.timeless$gameModeButton.visible = !visible;
+        this.timeless$difficultyButton.visible = !visible;
 
-        if (this.moreWorldOptionsComponent.isDebug()) {
-            this.dataPacksButton.visible = false;
-            this.gameModeButton.active = false;
+        if (this.timeless$moreWorldOptionsComponent.isDebug()) {
+            this.timeless$dataPacksButton.visible = false;
+            this.timeless$gameModeButton.active = false;
 
-            if (this.nonDebugGameMode == null) {
-                this.nonDebugGameMode = this.gameModeButton.getValue();
+            if (this.timeless$nonDebugGameMode == null) {
+                this.timeless$nonDebugGameMode = this.timeless$gameModeButton.getValue();
             }
 
-            this.allowCheatsButton.visible = false;
-            setGameMode(WorldCreator.Mode.DEBUG);
+            this.timeless$allowCheatsButton.visible = false;
+            timeless$setGameMode(WorldCreationUiState.SelectedGameMode.DEBUG);
         } else {
-            this.gameModeButton.active = true;
-            if (this.nonDebugGameMode != null) {
-                setGameMode(this.nonDebugGameMode);
+            this.timeless$gameModeButton.active = true;
+            if (this.timeless$nonDebugGameMode != null) {
+                timeless$setGameMode(this.timeless$nonDebugGameMode);
             }
 
-            this.allowCheatsButton.visible = !visible;
-            this.dataPacksButton.visible = !visible;
+            this.timeless$allowCheatsButton.visible = !visible;
+            this.timeless$dataPacksButton.visible = !visible;
         }
 
-        this.moreWorldOptionsComponent.setVisibility(visible);
-        this.worldName.setVisible(!visible);
+        this.timeless$moreWorldOptionsComponent.setVisibility(visible);
+        this.timeless$worldName.setVisible(!visible);
 
         if (visible) {
-            this.moreWorldOptionsButton.setMessage(DONE_TEXT);
+            this.timeless$moreWorldOptionsButton.setMessage(DONE_TEXT);
         } else {
-            this.moreWorldOptionsButton.setMessage(MORE_WORLD_OPTIONS_TEXT);
+            this.timeless$moreWorldOptionsButton.setMessage(MORE_WORLD_OPTIONS_TEXT);
         }
 
-        this.gameRulesButton.visible = !visible;
+        this.timeless$gameRulesButton.visible = !visible;
     }
 }

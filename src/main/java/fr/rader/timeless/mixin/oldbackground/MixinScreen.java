@@ -1,21 +1,18 @@
-//#if MC>=12006
 package fr.rader.timeless.mixin.oldbackground;
 
-import com.terraformersmc.modmenu.gui.ModMenuOptionsScreen;
-import com.terraformersmc.modmenu.gui.ModsScreen;
 import fr.rader.timeless.config.TimelessConfig;
-import me.shedaniel.clothconfig2.gui.AbstractConfigScreen;
-import net.minecraft.client.MinecraftClient;
-import net.minecraft.client.gui.DrawContext;
-import net.minecraft.client.gui.screen.MessageScreen;
-import net.minecraft.client.gui.screen.Screen;
-import net.minecraft.client.gui.screen.StatsScreen;
-import net.minecraft.client.gui.screen.option.*;
-import net.minecraft.client.gui.screen.pack.PackScreen;
-import net.minecraft.text.Text;
-import net.minecraft.util.Identifier;
-import net.minecraft.util.math.ColorHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.screens.Screen;
+import net.minecraft.client.gui.screens.options.*;
+import net.minecraft.client.gui.screens.options.controls.ControlsScreen;
+import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen;
+import net.minecraft.client.renderer.RenderPipelines;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.Identifier;
+import net.minecraft.util.ARGB;
 import org.jetbrains.annotations.Nullable;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
@@ -23,75 +20,61 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
-//#if MC>=12106
-import net.minecraft.client.gl.RenderPipelines;
-//#endif
-
-//#if MC<=12108
-//$$ import net.minecraft.client.gui.screen.DownloadingTerrainScreen;
-//#endif
-
-//#if MC<=12105
-//$$ import net.minecraft.client.render.RenderLayer;
-//#endif
-
 import java.util.Arrays;
 
 @Mixin(Screen.class)
 public abstract class MixinScreen {
 
     @Unique
-    //#if MC>=12100
-    private static final Identifier OPTIONS_BACKGROUND_TEXTURE = Identifier.of("timeless", "textures/gui/options_background.png");
-    //#else
-    //$$ private static final Identifier OPTIONS_BACKGROUND_TEXTURE = new Identifier("timeless", "textures/gui/options_background.png");
-    //#endif
+    private static final Identifier timeless$OPTIONS_BACKGROUND_TEXTURE = Identifier.fromNamespaceAndPath("timeless", "textures/gui/options_background.png");
 
     @Unique
-    private static final Class<?>[] DIRT_BACKGROUND_CLASSES = {
-            GameOptionsScreen.class,
-            SoundOptionsScreen.class,
-            ChatOptionsScreen.class,
+    private static final Class<?>[] timeless$DIRT_BACKGROUND_CLASSES = {
+            ControlsScreen.class,
+            KeyBindsScreen.class,
             AccessibilityOptionsScreen.class,
-            VideoOptionsScreen.class,
-            LanguageOptionsScreen.class,
-            PackScreen.class,
-            TelemetryInfoScreen.class,
-            StatsScreen.class,
-            MessageScreen.class,
-            //#if MC<=12108
-            //$$ DownloadingTerrainScreen.class,
-            //#endif
+            ChatOptionsScreen.class,
+            FontOptionsScreen.class,
+            InWorldGameRulesScreen.class,
+            LanguageSelectScreen.class,
+            MouseSettingsScreen.class,
+            OnlineOptionsScreen.class,
+            OptionsScreen.class,
+            SkinCustomizationScreen.class,
+            SoundOptionsScreen.class,
+            VideoSettingsScreen.class,
+            WorldOptionsScreen.class,
     };
 
     @Shadow public int width;
     @Shadow public int height;
 
-    @Shadow @Nullable
-    protected MinecraftClient client;
+    @Shadow @Final @Nullable
+    protected Minecraft minecraft;
 
-    @Shadow public abstract void renderInGameBackground(DrawContext par1);
+    @Shadow
+    protected abstract void extractMenuBackground(GuiGraphicsExtractor graphics);
 
     @Unique
-    private boolean shouldRenderDirtBackground;
+    private boolean timeless$shouldRenderDirtBackground;
 
     @Inject(
-            method = "renderBackground",
+            method = "extractBackground",
             at = @At("HEAD"),
             cancellable = true
     )
-    private void timeless$renderBackground(DrawContext context, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    private void timeless$extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
         if (!TimelessConfig.get().useOldScreenBackground) {
             return;
         }
 
-        if (this.client.world == null) {
-            timeless$renderDirtBackground(context);
+        if (this.minecraft.level == null) {
+            timeless$renderDirtBackground(graphics);
         } else {
-            if (this.shouldRenderDirtBackground) {
-                timeless$renderDirtBackground(context);
+            if (this.timeless$shouldRenderDirtBackground) {
+                timeless$renderDirtBackground(graphics);
             } else {
-                renderInGameBackground(context);
+                extractMenuBackground(graphics);
             }
         }
 
@@ -99,30 +82,21 @@ public abstract class MixinScreen {
     }
 
     @Inject(
-            method = "<init>",
+            method = "<init>(Lnet/minecraft/network/chat/Component;)V",
             at = @At("TAIL")
     )
-    private void timeless$init(Text title, CallbackInfo ci) {
+    private void timeless$init(Component title, CallbackInfo ci) {
         Class<?> superClass = ((Screen) (Object) this).getClass();
 
-        if (superClass == ControlsOptionsScreen.class) {
-            this.shouldRenderDirtBackground = false;
+        if (superClass == ControlsScreen.class) {
+            this.timeless$shouldRenderDirtBackground = false;
         } else {
-            this.shouldRenderDirtBackground = Arrays.stream(DIRT_BACKGROUND_CLASSES).anyMatch(clazz -> clazz.isAssignableFrom(superClass));
+            this.timeless$shouldRenderDirtBackground = Arrays.stream(timeless$DIRT_BACKGROUND_CLASSES).anyMatch(clazz -> clazz.isAssignableFrom(superClass));
         }
     }
 
     @Unique
-    private void timeless$renderDirtBackground(DrawContext context) {
-        //#if MC>=12106
-        context.drawTexture(RenderPipelines.GUI_TEXTURED, OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0.0f, 0.0f, this.width, this.height, 32, 32, ColorHelper.getArgb(255, 64, 64, 64));
-        //#elseif MC>=12102
-        //$$ context.drawTexture(RenderLayer::getGuiTextured, OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0.0f, 0.0f, this.width, this.height, 32, 32, ColorHelper.getArgb(255, 64, 64, 64));
-        //#else
-        //$$ context.setShaderColor(0.25F, 0.25F, 0.25F, 1.0F);
-        //$$ context.drawTexture(OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0, 0.0F, 0.0F, this.width, this.height, 32, 32);
-        //$$ context.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        //#endif
+    private void timeless$renderDirtBackground(GuiGraphicsExtractor graphics) {
+        graphics.blit(RenderPipelines.GUI_TEXTURED, timeless$OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0.0f, 0.0f, this.width, this.height, 32, 32, ARGB.color(255, 64, 64, 64));
     }
 }
-//#endif

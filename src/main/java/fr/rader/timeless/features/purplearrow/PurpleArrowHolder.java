@@ -1,7 +1,7 @@
 package fr.rader.timeless.features.purplearrow;
 
-import net.minecraft.client.render.entity.state.ArrowEntityRenderState;
-import net.minecraft.entity.projectile.ArrowEntity;
+import net.minecraft.client.renderer.entity.state.ArrowRenderState;
+import net.minecraft.world.entity.projectile.arrow.AbstractArrow;
 
 import java.util.HashMap;
 
@@ -9,21 +9,21 @@ public class PurpleArrowHolder {
 
     private static PurpleArrowHolder instance;
 
-    private final HashMap<ArrowEntityRenderState, ArrowEntity> purpleArrows;
+    private final HashMap<ArrowRenderState, AbstractArrow> purpleArrows;
 
     private PurpleArrowHolder() {
         this.purpleArrows = new HashMap<>();
     }
 
-    public void addIfNotPresent(ArrowEntityRenderState renderState, ArrowEntity entity) {
+    public void addIfNotPresent(ArrowRenderState renderState, AbstractArrow entity) {
         this.purpleArrows.put(renderState, entity);
     }
 
-    public ArrowEntity get(ArrowEntityRenderState renderState) {
+    public AbstractArrow get(ArrowRenderState renderState) {
         return this.purpleArrows.get(renderState);
     }
 
-    public boolean contains(ArrowEntityRenderState renderState) {
+    public boolean contains(ArrowRenderState renderState) {
         return this.purpleArrows.containsKey(renderState);
     }
 

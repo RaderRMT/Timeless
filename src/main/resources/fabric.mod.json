@@ -8,7 +8,7 @@
     "Rader"
   ],
   "contact": {
-    "website": "https://rader.fr/",
+    "website": "https://github.com/RaderRMT/Timeless",
     "repo": "https://github.com/RaderRMT/Timeless"
   },
   "license": "GPL-3.0",
@@ -28,6 +28,6 @@
   "accessWidener": "timeless.accesswidener",
   "depends": {
     "fabricloader": ">=${loader_version}",
-    "fabric": "*"
+    "fabric-api": "*"
   }
 }

@@ -1,20 +1,19 @@
 package fr.rader.timeless.features.oldinventory;
 
-import net.minecraft.block.Blocks;
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.text.Text;
-
-import static net.minecraft.item.ItemGroups.HOTBAR;
+import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.CreativeModeTabs;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.level.block.Blocks;
 
 public class SavedHotbarsTab extends Tab {
 
     public SavedHotbarsTab() {
-        super(HOTBAR, ItemGroup.Row.TOP, 5, Text.translatable("itemGroup.hotbar"), new ItemStack(Blocks.BOOKSHELF));
+        super(CreativeModeTabs.HOTBAR, CreativeModeTab.Row.TOP, 5, Component.translatable("itemGroup.hotbar"), () -> new ItemStack(Blocks.BOOKSHELF));
     }
 
     @Override
-    protected void createItemGroup(ItemGroup.Builder builder) {
-        builder.special().type(ItemGroup.Type.HOTBAR);
+    protected void createItemGroup(CreativeModeTab.Builder builder) {
+        builder.alignedRight().type(CreativeModeTab.Type.HOTBAR);
     }
 }

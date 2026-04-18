@@ -1,12 +1,14 @@
-accessWidener	v2	named
+accessWidener	v2	official
 
-accessible method net/minecraft/item/ItemGroups addPaintings (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper$WrapperLookup;Lnet/minecraft/registry/RegistryWrapper$Impl;Ljava/util/function/Predicate;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
-accessible method net/minecraft/item/ItemGroups addPotions (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/item/ItemGroup$StackVisibility;Lnet/minecraft/resource/featuretoggle/FeatureSet;)V
-accessible method net/minecraft/item/ItemGroups addSuspiciousStews (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
-accessible method net/minecraft/item/ItemGroups addFireworkRockets (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
-accessible method net/minecraft/item/ItemGroups addInstruments (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/Item;Lnet/minecraft/registry/tag/TagKey;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
-accessible method net/minecraft/item/ItemGroups addMaxLevelEnchantedBooks (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
-accessible method net/minecraft/item/ItemGroups addAllLevelEnchantedBooks (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/registry/RegistryWrapper;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
-accessible method net/minecraft/item/ItemGroups addOminousBottles (Lnet/minecraft/item/ItemGroup$Entries;Lnet/minecraft/item/ItemGroup$StackVisibility;)V
+accessible method net/minecraft/world/item/CreativeModeTabs generatePresetPaintings (Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/core/HolderLookup$Provider;Lnet/minecraft/core/HolderLookup$RegistryLookup;Ljava/util/function/Predicate;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)V
+accessible method net/minecraft/world/item/CreativeModeTabs generatePotionEffectTypes (Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/core/HolderLookup;Lnet/minecraft/world/item/Item;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;Lnet/minecraft/world/flag/FeatureFlagSet;)V
+accessible method net/minecraft/world/item/CreativeModeTabs generateSuspiciousStews (Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)V
+accessible method net/minecraft/world/item/CreativeModeTabs generateFireworksAllDurations (Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)V
+accessible method net/minecraft/world/item/CreativeModeTabs generateInstrumentTypes (Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/core/HolderLookup;Lnet/minecraft/world/item/Item;Lnet/minecraft/tags/TagKey;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)V
+accessible method net/minecraft/world/item/CreativeModeTabs generateEnchantmentBookTypesOnlyMaxLevel (Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/core/HolderLookup;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)V
+accessible method net/minecraft/world/item/CreativeModeTabs generateEnchantmentBookTypesAllLevels (Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/core/HolderLookup;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)V
+accessible method net/minecraft/world/item/CreativeModeTabs generateOminousBottles (Lnet/minecraft/world/item/CreativeModeTab$Output;Lnet/minecraft/world/item/CreativeModeTab$TabVisibility;)V
+accessible method net/minecraft/world/item/CreativeModeTab$Builder type (Lnet/minecraft/world/item/CreativeModeTab$Type;)Lnet/minecraft/world/item/CreativeModeTab$Builder;
 
-accessible method net/minecraft/item/ItemGroup$Builder type (Lnet/minecraft/item/ItemGroup$Type;)Lnet/minecraft/item/ItemGroup$Builder;
+accessible field net/minecraft/world/item/CreativeModeTabs SEARCH_BACKGROUND Lnet/minecraft/resources/Identifier;
+accessible field net/minecraft/world/item/CreativeModeTabs INVENTORY_BACKGROUND Lnet/minecraft/resources/Identifier;

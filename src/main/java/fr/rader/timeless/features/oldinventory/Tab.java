@@ -1,46 +1,26 @@
 package fr.rader.timeless.features.oldinventory;
 
-import net.minecraft.item.ItemGroup;
-import net.minecraft.item.ItemStack;
-import net.minecraft.registry.Registry;
-import net.minecraft.registry.RegistryKey;
-import net.minecraft.registry.RegistryWrapper;
-import net.minecraft.text.Text;
+import net.minecraft.core.HolderLookup;
+import net.minecraft.core.Registry;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceKey;
+import net.minecraft.world.item.CreativeModeTab;
+import net.minecraft.world.item.ItemStack;
 
 import java.util.Optional;
 import java.util.function.Supplier;
 
 public abstract class Tab {
 
-    //#if MC>=12000
-    private final RegistryKey<ItemGroup> group;
-    //#else
-    //$$ private final ItemGroup group;
-    //#endif
-    private final ItemGroup.Row location;
+    private final ResourceKey<CreativeModeTab> group;
+    private final CreativeModeTab.Row location;
     private final int column;
-    private final Text title;
+    private final Component title;
     private final Supplier<ItemStack> icon;
 
-    //#if MC>=12000
-    private Registry<ItemGroup> registry;
-    //#else
-    //$$ private ItemGroup registry;
-    //#endif
+    private Registry<CreativeModeTab> registry;
 
-    //#if MC>=12000
-    protected Tab(RegistryKey<ItemGroup> group, ItemGroup.Row location, int column, Text title, ItemStack icon) {
-    //#else
-    //$$ protected Tab(ItemGroup group, ItemGroup.Row location, int column, Text title, ItemStack icon) {
-    //#endif
-        this(group, location, column, title, () -> icon);
-    }
-
-    //#if MC>=12000
-    protected Tab(RegistryKey<ItemGroup> group, ItemGroup.Row location, int column, Text title, Supplier<ItemStack> icon) {
-    //#else
-    //$$ protected Tab(ItemGroup group, ItemGroup.Row location, int column, Text title, Supplier<ItemStack> icon) {
-    //#endif
+    protected Tab(ResourceKey<CreativeModeTab> group, CreativeModeTab.Row location, int column, Component title, Supplier<ItemStack> icon) {
         this.group = group;
         this.location = location;
         this.column = column;
@@ -48,40 +28,26 @@ public abstract class Tab {
         this.icon = icon;
     }
 
-    protected void populateTab(ItemGroup.DisplayContext displayContext, ItemGroup.Entries entries) {
+    protected void populateTab(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output entries) {
     }
 
-    protected void createItemGroup(ItemGroup.Builder builder) {
-        builder.entries(this::populateTab);
+    protected void createItemGroup(CreativeModeTab.Builder builder) {
+        builder.displayItems(this::populateTab);
     }
 
-    //#if MC>=12000
-    protected Registry<ItemGroup> getRegistry() {
+    protected Registry<CreativeModeTab> getRegistry() {
         return this.registry;
     }
-    //#else
-    //$$ protected ItemGroup getRegistry() {
-    //$$     return this.registry;
-    //$$ }
-    //#endif
 
-    protected <T> Optional<? extends RegistryWrapper.Impl<T>> getOptional(ItemGroup.DisplayContext displayContext, RegistryKey<? extends Registry<? extends T>> registryRef) {
-        //#if MC>=12102
-        return displayContext.lookup().getOptional(registryRef);
-        //#else
-        //$$ return displayContext.lookup().getOptionalWrapper(registryRef);
-        //#endif
+    protected <T> Optional<? extends HolderLookup.RegistryLookup<T>> getOptional(CreativeModeTab.ItemDisplayParameters parameters, ResourceKey<? extends Registry<? extends T>> registryRef) {
+        return parameters.holders().lookup(registryRef);
     }
 
-    //#if MC>=12000
-    public final void register(Registry<ItemGroup> registry) {
-    //#else
-    //$$ public final void register(ItemGroup registry) {
-    //#endif
+    public final void register(Registry<CreativeModeTab> registry) {
         this.registry = registry;
 
-        ItemGroup.Builder builder = ItemGroup.create(this.location, this.column)
-                .displayName(this.title)
+        CreativeModeTab.Builder builder = CreativeModeTab.builder(this.location, this.column)
+                .title(this.title)
                 .icon(this.icon);
 
         createItemGroup(builder);

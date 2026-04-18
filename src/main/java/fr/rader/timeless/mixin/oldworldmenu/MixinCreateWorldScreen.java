@@ -180,9 +180,9 @@ public abstract class MixinCreateWorldScreen extends Screen {
                 .build();
 
         this.timeless$gameRulesButton = Button.builder(GAME_RULES_TEXT, button -> {
-                    this.minecraft.setScreen(new WorldCreationGameRulesScreen(
+                    this.minecraft.setScreenAndShow(new WorldCreationGameRulesScreen(
                             this.uiState.getGameRules().copy(this.uiState.getSettings().dataConfiguration().enabledFeatures()), optional -> {
-                                    this.minecraft.setScreen(this);
+                                    this.minecraft.setScreenAndShow(this);
                                     optional.ifPresent(this.uiState::setGameRules);
                             }
                     ));

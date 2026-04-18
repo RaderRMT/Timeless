@@ -67,7 +67,7 @@ public class MoreWorldOptionsComponent {
         this.customizeWorldButton = Button.builder(CUSTOMIZE_TEXT, (button) -> {
                     PresetEditor editor = this.uiState.getPresetEditor();
                     if (editor != null) {
-                        Minecraft.getInstance().setScreen(
+                        Minecraft.getInstance().setScreenAndShow(
                                 editor.createEditScreen(
                                         createWorldScreen,
                                         this.uiState.getSettings()

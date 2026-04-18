@@ -56,6 +56,7 @@ public class MiscellaneousTab extends Tab {
         entries.accept(Items.TROPICAL_FISH_BUCKET);
         entries.accept(Items.AXOLOTL_BUCKET);
         entries.accept(Items.TADPOLE_BUCKET);
+        entries.accept(Items.SULFUR_CUBE_BUCKET);
         entries.accept(Items.BRICK);
         entries.accept(Items.CLAY_BALL);
         entries.accept(Items.RESIN_BRICK);
@@ -70,22 +71,7 @@ public class MiscellaneousTab extends Tab {
         entries.accept(Items.INK_SAC);
         entries.accept(Items.GLOW_INK_SAC);
         entries.accept(Items.COCOA_BEANS);
-        entries.accept(Items.WHITE_DYE);
-        entries.accept(Items.ORANGE_DYE);
-        entries.accept(Items.MAGENTA_DYE);
-        entries.accept(Items.LIGHT_BLUE_DYE);
-        entries.accept(Items.YELLOW_DYE);
-        entries.accept(Items.LIME_DYE);
-        entries.accept(Items.PINK_DYE);
-        entries.accept(Items.GRAY_DYE);
-        entries.accept(Items.LIGHT_GRAY_DYE);
-        entries.accept(Items.CYAN_DYE);
-        entries.accept(Items.PURPLE_DYE);
-        entries.accept(Items.BLUE_DYE);
-        entries.accept(Items.BROWN_DYE);
-        entries.accept(Items.GREEN_DYE);
-        entries.accept(Items.RED_DYE);
-        entries.accept(Items.BLACK_DYE);
+        Items.DYE.forEach(entries::accept);
         entries.accept(Items.BONE_MEAL);
         entries.accept(Items.BONE);
         entries.accept(Items.SUGAR);
@@ -165,6 +151,7 @@ public class MiscellaneousTab extends Tab {
         entries.accept(Items.SQUID_SPAWN_EGG);
         entries.accept(Items.STRAY_SPAWN_EGG);
         entries.accept(Items.STRIDER_SPAWN_EGG);
+        entries.accept(Items.SULFUR_CUBE_SPAWN_EGG);
         entries.accept(Items.TADPOLE_SPAWN_EGG);
         entries.accept(Items.TRADER_LLAMA_SPAWN_EGG);
         entries.accept(Items.TROPICAL_FISH_SPAWN_EGG);
@@ -281,13 +268,7 @@ public class MiscellaneousTab extends Tab {
         entries.accept(Items.TRIAL_KEY);
         entries.accept(Items.OMINOUS_TRIAL_KEY);
         entries.accept(Items.WIND_CHARGE);
-        entries.accept(Items.COPPER_GOLEM_STATUE);
-        entries.accept(Items.EXPOSED_COPPER_GOLEM_STATUE);
-        entries.accept(Items.WEATHERED_COPPER_GOLEM_STATUE);
-        entries.accept(Items.OXIDIZED_COPPER_GOLEM_STATUE);
-        entries.accept(Items.WAXED_COPPER_GOLEM_STATUE);
-        entries.accept(Items.WAXED_EXPOSED_COPPER_GOLEM_STATUE);
-        entries.accept(Items.WAXED_WEATHERED_COPPER_GOLEM_STATUE);
-        entries.accept(Items.WAXED_OXIDIZED_COPPER_GOLEM_STATUE);
+        Items.COPPER_GOLEM_STATUE.weathering().forEach(entries::accept);
+        Items.COPPER_GOLEM_STATUE.waxed().forEach(entries::accept);
     }
 }

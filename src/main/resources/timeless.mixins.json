@@ -6,20 +6,22 @@
   "mixins": [
   ],
   "client": [
+    "batmodel.MixinBatModel",
+    "batmodel.MixinBatRenderer",
+    "batmodel.MixinLivingEntityRenderer",
     "hitdirection.MixinPlayer",
+    "icons.MixinIconSet",
+    "noenvfog.MixinAtmosphericFogEnvironment",
+    "oldbackground.MixinScreen",
     "oldinventory.MixinCreativeModeTabs",
+    "oldpausemenu.MixinPauseScreen",
+    "oldtitlescreen.MixinTitleScreen",
     "oldworldmenu.MixinCreateWorldScreen",
     "piston.MixinPistonBaseBlock",
     "potion.color.MixinMobEffect",
     "potion.glint.MixinPotionItem",
-    "purplearrow.MixinTippableArrowRenderer",
     "purplearrow.MixinEntity",
-    "oldbackground.MixinScreen",
-    "batmodel.MixinBatModel",
-    "batmodel.MixinBatRenderer",
-    "batmodel.MixinLivingEntityRenderer",
-    "icons.MixinIconSet",
-    "noenvfog.MixinAtmosphericFogEnvironment"
+    "purplearrow.MixinTippableArrowRenderer"
   ],
   "injectors": {
     "defaultRequire": 1

@@ -26,6 +26,8 @@ public class TimelessConfig {
     public boolean useOldBatModel = true;
     public boolean useOldScreenBackground = true;
     public boolean disableEnvironmentalFog = true;
+    public boolean restoreOldTitleScreen = true;
+    public boolean restoreOldPauseScreen = true;
 
     public void write() {
         try (FileWriter writer = new FileWriter(TimelessConfig.CONFIG_PATH)) {

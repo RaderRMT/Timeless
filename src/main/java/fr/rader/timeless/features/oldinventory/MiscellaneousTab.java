@@ -222,6 +222,7 @@ public class MiscellaneousTab extends Tab {
         entries.accept(Items.MUSIC_DISC_CREATOR_MUSIC_BOX);
         entries.accept(Items.MUSIC_DISC_TEARS);
         entries.accept(Items.MUSIC_DISC_LAVA_CHICKEN);
+        entries.accept(Items.MUSIC_DISC_BOUNCE);
         entries.accept(Items.DISC_FRAGMENT_5);
         entries.accept(Items.NAUTILUS_SHELL);
         entries.accept(Items.HEART_OF_THE_SEA);

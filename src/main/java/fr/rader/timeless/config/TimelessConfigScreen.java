@@ -27,7 +27,7 @@ public class TimelessConfigScreen implements ModMenuApi {
                 .setTitle(Component.translatable("text.modmenu.timeless.title"));
 
         ConfigEntryBuilder entryBuilder = builder.entryBuilder();
-        ConfigCategory general = builder.getOrCreateCategory(Component.literal("1.19.4+"));
+        ConfigCategory general = builder.getOrCreateCategory(Component.literal("General"));
 
         general.addEntry(createBooleanEntry(entryBuilder, "useOldWorldMenu", true, config.useOldWorldMenu, value -> config.useOldWorldMenu = value).build());
         general.addEntry(createBooleanEntry(entryBuilder, "disableHitDirection", true, config.disableHitDirection, value -> config.disableHitDirection = value).build());
@@ -36,12 +36,9 @@ public class TimelessConfigScreen implements ModMenuApi {
         general.addEntry(createBooleanEntry(entryBuilder, "useOldInventoryLayout", true, config.useOldInventoryLayout, value -> config.useOldInventoryLayout = value).requireRestart().build());
         general.addEntry(createBooleanEntry(entryBuilder, "enablePotionGlint", true, config.enablePotionGlint, value -> config.enablePotionGlint = value).build());
         general.addEntry(createBooleanEntry(entryBuilder, "useOldPotionColors", true, config.useOldPotionColors, value -> config.useOldPotionColors = value).build());
+        general.addEntry(createBooleanEntry(entryBuilder, "useOldWindowIcons", true, config.useOldWindowIcons, value -> config.useOldWindowIcons = value).requireRestart().build());
 
-        ConfigCategory mc12001 = builder.getOrCreateCategory(Component.literal("1.20.1+"));
-        mc12001.addEntry(createBooleanEntry(entryBuilder, "useOldWindowIcons", true, config.useOldWindowIcons, value -> config.useOldWindowIcons = value).requireRestart().build());
-
-        ConfigCategory mc12004 = builder.getOrCreateCategory(Component.literal("1.20.4+"));
-        mc12004.addEntry(createBooleanEntry(entryBuilder, "useOldBatModel", true, config.useOldBatModel, value -> {
+        general.addEntry(createBooleanEntry(entryBuilder, "useOldBatModel", true, config.useOldBatModel, value -> {
             if (config.useOldBatModel != value) {
                 Minecraft.getInstance().reloadResourcePacks();
             }
@@ -49,11 +46,10 @@ public class TimelessConfigScreen implements ModMenuApi {
             config.useOldBatModel = value;
         }).build());
 
-        ConfigCategory mc12006 = builder.getOrCreateCategory(Component.literal("1.20.5+"));
-        mc12006.addEntry(createBooleanEntry(entryBuilder, "useOldScreenBackground", true, config.useOldScreenBackground, value -> config.useOldScreenBackground = value).build());
-
-        ConfigCategory mc12106 = builder.getOrCreateCategory(Component.literal("1.21.6+"));
-        mc12106.addEntry(createBooleanEntry(entryBuilder, "disableEnvironmentalFog", true, config.disableEnvironmentalFog, value -> config.disableEnvironmentalFog = value).build());
+        general.addEntry(createBooleanEntry(entryBuilder, "useOldScreenBackground", true, config.useOldScreenBackground, value -> config.useOldScreenBackground = value).build());
+        general.addEntry(createBooleanEntry(entryBuilder, "disableEnvironmentalFog", true, config.disableEnvironmentalFog, value -> config.disableEnvironmentalFog = value).build());
+        general.addEntry(createBooleanEntry(entryBuilder, "restoreOldTitleScreen", true, config.restoreOldTitleScreen, value -> config.restoreOldTitleScreen = value).build());
+        general.addEntry(createBooleanEntry(entryBuilder, "restoreOldPauseScreen", true, config.restoreOldPauseScreen, value -> config.restoreOldPauseScreen = value).build());
 
         builder.setSavingRunnable(config::write);
 

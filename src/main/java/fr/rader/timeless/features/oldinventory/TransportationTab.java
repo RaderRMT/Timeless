@@ -61,5 +61,7 @@ public class TransportationTab extends Tab {
         entries.accept(Items.CHERRY_CHEST_BOAT);
         entries.accept(Items.MANGROVE_BOAT);
         entries.accept(Items.MANGROVE_CHEST_BOAT);
+        entries.accept(Items.PALE_OAK_BOAT);
+        entries.accept(Items.PALE_OAK_CHEST_BOAT);
     }
 }

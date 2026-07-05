@@ -55,6 +55,7 @@ public class RedstoneTab extends Tab {
         entries.accept(Items.CHERRY_BUTTON);
         entries.accept(Items.MANGROVE_BUTTON);
         entries.accept(Items.PALE_OAK_BUTTON);
+        entries.accept(Items.POPLAR_BUTTON);
         entries.accept(Items.CRIMSON_BUTTON);
         entries.accept(Items.WARPED_BUTTON);
         entries.accept(Items.STONE_PRESSURE_PLATE);
@@ -71,6 +72,7 @@ public class RedstoneTab extends Tab {
         entries.accept(Items.CHERRY_PRESSURE_PLATE);
         entries.accept(Items.MANGROVE_PRESSURE_PLATE);
         entries.accept(Items.PALE_OAK_PRESSURE_PLATE);
+        entries.accept(Items.POPLAR_PRESSURE_PLATE);
         entries.accept(Items.CRIMSON_PRESSURE_PLATE);
         entries.accept(Items.WARPED_PRESSURE_PLATE);
         entries.accept(Items.IRON_DOOR);
@@ -84,6 +86,7 @@ public class RedstoneTab extends Tab {
         entries.accept(Items.CHERRY_DOOR);
         entries.accept(Items.MANGROVE_DOOR);
         entries.accept(Items.PALE_OAK_DOOR);
+        entries.accept(Items.POPLAR_DOOR);
         entries.accept(Items.CRIMSON_DOOR);
         entries.accept(Items.WARPED_DOOR);
         Items.COPPER_DOOR.forEach(entries::accept);
@@ -98,6 +101,7 @@ public class RedstoneTab extends Tab {
         entries.accept(Items.CHERRY_TRAPDOOR);
         entries.accept(Items.MANGROVE_TRAPDOOR);
         entries.accept(Items.PALE_OAK_TRAPDOOR);
+        entries.accept(Items.POPLAR_TRAPDOOR);
         entries.accept(Items.CRIMSON_TRAPDOOR);
         entries.accept(Items.WARPED_TRAPDOOR);
         Items.COPPER_TRAPDOOR.forEach(entries::accept);
@@ -111,6 +115,7 @@ public class RedstoneTab extends Tab {
         entries.accept(Items.CHERRY_FENCE_GATE);
         entries.accept(Items.MANGROVE_FENCE_GATE);
         entries.accept(Items.PALE_OAK_FENCE_GATE);
+        entries.accept(Items.POPLAR_FENCE_GATE);
         entries.accept(Items.CRIMSON_FENCE_GATE);
         entries.accept(Items.WARPED_FENCE_GATE);
     }

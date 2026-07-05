@@ -3,6 +3,7 @@ package fr.rader.timeless.mixin.icons;
 import com.mojang.blaze3d.platform.IconSet;
 import fr.rader.timeless.config.TimelessConfig;
 import fr.rader.timeless.features.icons.IconSupplier;
+import net.minecraft.server.packs.PackMetadataResources;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.resources.IoSupplier;
 import org.spongepowered.asm.mixin.Mixin;
@@ -21,7 +22,7 @@ public abstract class MixinIconSet {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void timeless$getStandardIcons(final PackResources resources, CallbackInfoReturnable<List<IoSupplier<InputStream>>> cir) {
+    public void timeless$getStandardIcons(PackMetadataResources resources, CallbackInfoReturnable<List<IoSupplier<InputStream>>> cir) {
         if (!TimelessConfig.get().useOldWindowIcons) {
             return;
         }
@@ -39,7 +40,7 @@ public abstract class MixinIconSet {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void timeless$getMacIcon(final PackResources resources, CallbackInfoReturnable<IoSupplier<InputStream>> cir) {
+    public void timeless$getMacIcon(PackMetadataResources resources, CallbackInfoReturnable<IoSupplier<InputStream>> cir) {
         if (!TimelessConfig.get().useOldWindowIcons) {
             return;
         }

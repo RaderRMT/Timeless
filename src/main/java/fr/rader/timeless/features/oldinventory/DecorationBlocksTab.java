@@ -26,6 +26,7 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.DARK_OAK_SAPLING);
         entries.accept(Items.CHERRY_SAPLING);
         entries.accept(Items.PALE_OAK_SAPLING);
+        entries.accept(Items.POPLAR_SAPLING);
         entries.accept(Items.MANGROVE_PROPAGULE);
         entries.accept(Items.OAK_LEAVES);
         entries.accept(Items.SPRUCE_LEAVES);
@@ -38,11 +39,15 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.CHERRY_LEAVES);
         entries.accept(Items.MANGROVE_LEAVES);
         entries.accept(Items.PALE_OAK_LEAVES);
+        entries.accept(Items.RED_POPLAR_LEAVES);
+        entries.accept(Items.ORANGE_POPLAR_LEAVES);
+        entries.accept(Items.YELLOW_POPLAR_LEAVES);
         entries.accept(Items.COBWEB);
         entries.accept(Items.SHORT_GRASS);
         entries.accept(Items.FERN);
         entries.accept(Items.BUSH);
         entries.accept(Items.FIREFLY_BUSH);
+        entries.accept(Items.RED_SHRUB);
         entries.accept(Items.LEAF_LITTER);
         entries.accept(Items.AZALEA);
         entries.accept(Items.FLOWERING_AZALEA);
@@ -70,6 +75,7 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.CACTUS_FLOWER);
         entries.accept(Items.BROWN_MUSHROOM);
         entries.accept(Items.RED_MUSHROOM);
+        entries.accept(Items.SHELF_MUSHROOM);
         entries.accept(Items.CRIMSON_FUNGUS);
         entries.accept(Items.WARPED_FUNGUS);
         entries.accept(Items.PINK_PETALS);
@@ -115,6 +121,7 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.CHERRY_FENCE);
         entries.accept(Items.MANGROVE_FENCE);
         entries.accept(Items.PALE_OAK_FENCE);
+        entries.accept(Items.POPLAR_FENCE);
         entries.accept(Items.CRIMSON_FENCE);
         entries.accept(Items.WARPED_FENCE);
         entries.accept(Items.SOUL_TORCH);
@@ -231,6 +238,8 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.MANGROVE_HANGING_SIGN);
         entries.accept(Items.PALE_OAK_SIGN);
         entries.accept(Items.PALE_OAK_HANGING_SIGN);
+        entries.accept(Items.POPLAR_SIGN);
+        entries.accept(Items.POPLAR_HANGING_SIGN);
         entries.accept(Items.CRIMSON_SIGN);
         entries.accept(Items.CRIMSON_HANGING_SIGN);
         entries.accept(Items.WARPED_SIGN);
@@ -300,6 +309,7 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.CHERRY_SHELF);
         entries.accept(Items.MANGROVE_SHELF);
         entries.accept(Items.PALE_OAK_SHELF);
+        entries.accept(Items.POPLAR_SHELF);
         entries.accept(Items.CRIMSON_SHELF);
         entries.accept(Items.WARPED_SHELF);
     }

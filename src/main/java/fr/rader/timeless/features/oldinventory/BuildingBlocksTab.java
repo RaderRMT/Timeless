@@ -54,6 +54,7 @@ public class BuildingBlocksTab extends Tab {
         entries.accept(Items.CHERRY_PLANKS);
         entries.accept(Items.MANGROVE_PLANKS);
         entries.accept(Items.PALE_OAK_PLANKS);
+        entries.accept(Items.POPLAR_PLANKS);
         entries.accept(Items.CRIMSON_PLANKS);
         entries.accept(Items.WARPED_PLANKS);
         entries.accept(Items.BEDROCK);
@@ -101,6 +102,7 @@ public class BuildingBlocksTab extends Tab {
         entries.accept(Items.CHERRY_LOG);
         entries.accept(Items.MANGROVE_LOG);
         entries.accept(Items.PALE_OAK_LOG);
+        entries.accept(Items.POPLAR_LOG);
         entries.accept(Items.CRIMSON_STEM);
         entries.accept(Items.WARPED_STEM);
         entries.accept(Items.STRIPPED_OAK_LOG);
@@ -113,6 +115,7 @@ public class BuildingBlocksTab extends Tab {
         entries.accept(Items.STRIPPED_CHERRY_LOG);
         entries.accept(Items.STRIPPED_MANGROVE_LOG);
         entries.accept(Items.STRIPPED_PALE_OAK_LOG);
+        entries.accept(Items.STRIPPED_POPLAR_LOG);
         entries.accept(Items.STRIPPED_CRIMSON_STEM);
         entries.accept(Items.STRIPPED_WARPED_STEM);
         entries.accept(Items.STRIPPED_OAK_WOOD);
@@ -124,6 +127,7 @@ public class BuildingBlocksTab extends Tab {
         entries.accept(Items.STRIPPED_CHERRY_WOOD);
         entries.accept(Items.STRIPPED_MANGROVE_WOOD);
         entries.accept(Items.STRIPPED_PALE_OAK_WOOD);
+        entries.accept(Items.STRIPPED_POPLAR_WOOD);
         entries.accept(Items.STRIPPED_CRIMSON_HYPHAE);
         entries.accept(Items.STRIPPED_WARPED_HYPHAE);
         entries.accept(Items.OAK_WOOD);
@@ -134,6 +138,7 @@ public class BuildingBlocksTab extends Tab {
         entries.accept(Items.DARK_OAK_WOOD);
         entries.accept(Items.CHERRY_WOOD);
         entries.accept(Items.MANGROVE_WOOD);
+        entries.accept(Items.POPLAR_WOOD);
         entries.accept(Items.CRIMSON_HYPHAE);
         entries.accept(Items.WARPED_HYPHAE);
         entries.accept(Items.SPONGE);
@@ -145,6 +150,8 @@ public class BuildingBlocksTab extends Tab {
         entries.accept(Items.CHISELED_SANDSTONE);
         entries.accept(Items.CUT_SANDSTONE);
         Items.WOOL.forEach(entries::accept);
+        Items.WOOL_STAIRS.forEach(entries::accept);
+        Items.WOOL_SLAB.forEach(entries::accept);
         entries.accept(Items.OAK_SLAB);
         entries.accept(Items.SPRUCE_SLAB);
         entries.accept(Items.BIRCH_SLAB);
@@ -155,6 +162,7 @@ public class BuildingBlocksTab extends Tab {
         entries.accept(Items.CHERRY_SLAB);
         entries.accept(Items.MANGROVE_SLAB);
         entries.accept(Items.PALE_OAK_SLAB);
+        entries.accept(Items.POPLAR_SLAB);
         entries.accept(Items.CRIMSON_SLAB);
         entries.accept(Items.WARPED_SLAB);
         entries.accept(Items.STONE_SLAB);

@@ -1,5 +1,6 @@
 package fr.rader.timeless.mixin.purplearrow;
 
+import fr.rader.timeless.config.TimelessConfig;
 import fr.rader.timeless.features.purplearrow.PurpleArrowHolder;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.projectile.arrow.Arrow;
@@ -16,6 +17,10 @@ public abstract class MixinEntity {
             at = @At("HEAD")
     )
     public void timeless$onRemoval(Entity.RemovalReason reason, CallbackInfo ci) {
+        if (!TimelessConfig.get().skeletonShootPurpleArrow) {
+            return;
+        }
+
         Entity entity = (Entity) (Object) this;
         if (!(entity instanceof Arrow)) {
             return;

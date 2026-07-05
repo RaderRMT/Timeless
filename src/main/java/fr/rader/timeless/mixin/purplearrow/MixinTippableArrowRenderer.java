@@ -50,6 +50,10 @@ public abstract class MixinTippableArrowRenderer {
             at = @At("HEAD")
     )
     public void timeless$extractRenderState(Arrow entity, TippableArrowRenderState state, float f, CallbackInfo ci) {
+        if (!TimelessConfig.get().skeletonShootPurpleArrow) {
+            return;
+        }
+
         this.timeless$arrowHolder.addIfNotPresent(state, entity);
     }
 }

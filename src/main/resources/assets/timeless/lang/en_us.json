@@ -23,6 +23,10 @@
   "timeless.config.description.useOldScreenBackground": "Use the old backgrounds screens used to have.",
   "timeless.config.name.disableEnvironmentalFog": "Disable Environmental Fog",
   "timeless.config.description.disableEnvironmentalFog": "Removes the environmental fog that adds\na blue-ish tint to far blocks.",
+  "timeless.config.name.restoreOldTitleScreen": "Restore Old Title Screen",
+  "timeless.config.description.restoreOldTitleScreen": "Re-implement the previous Title Screen layout.",
+  "timeless.config.name.restoreOldPauseScreen": "Restore Old Pause Screen",
+  "timeless.config.description.restoreOldPauseScreen": "Re-implement the previous Pause Screen layout.",
 
   "timeless.itemGroup.decorationBlocks": "Decoration Blocks",
   "timeless.itemGroup.transportation": "Transportation",

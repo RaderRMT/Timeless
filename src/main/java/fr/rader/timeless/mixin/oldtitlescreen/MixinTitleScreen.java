@@ -97,9 +97,8 @@ public abstract class MixinTitleScreen extends Screen {
         this.friends = this.addRenderableWidget(
                 CommonButtons.friends(
                         20,
-                        _ -> OnlineOptionsScreen.confirmFriendsListEnabled(this.minecraft, () -> this.minecraft.gui.setScreen(new FriendsOverlayScreen(this)),
-                        this
-                )
+                        _ -> OnlineOptionsScreen.confirmFriendsListEnabled(this.minecraft, () -> this.minecraft.gui.setScreen(new FriendsOverlayScreen(this)), this),
+                        !this.minecraft.isDemo()
                 )
         );
 

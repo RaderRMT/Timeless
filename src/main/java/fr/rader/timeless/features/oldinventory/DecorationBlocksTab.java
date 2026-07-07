@@ -245,6 +245,7 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.WARPED_SIGN);
         entries.accept(Items.WARPED_HANGING_SIGN);
         Items.BED.forEach(entries::accept);
+        entries.accept(Items.STRAW_BED);
         entries.accept(Items.ITEM_FRAME);
         entries.accept(Items.GLOW_ITEM_FRAME);
         entries.accept(Items.FLOWER_POT);
@@ -312,6 +313,7 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.POPLAR_SHELF);
         entries.accept(Items.CRIMSON_SHELF);
         entries.accept(Items.WARPED_SHELF);
+        Items.CUSHION.forEach(entries::accept);
     }
 
     private void addPaintingVariants(CreativeModeTab.ItemDisplayParameters parameters, CreativeModeTab.Output entries) {

@@ -236,6 +236,7 @@ public class BuildingBlocksTab extends Tab {
         entries.accept(Items.CHERRY_STAIRS);
         entries.accept(Items.MANGROVE_STAIRS);
         entries.accept(Items.PALE_OAK_STAIRS);
+        entries.accept(Items.POPLAR_STAIRS);
         entries.accept(Items.CRIMSON_STAIRS);
         entries.accept(Items.WARPED_STAIRS);
         entries.accept(Items.QUARTZ_BLOCK);

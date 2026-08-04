@@ -268,6 +268,8 @@ public class BuildingBlocksTab extends Tab {
         entries.accept(Items.RED_NETHER_BRICKS);
         entries.accept(Items.BONE_BLOCK);
         Items.CONCRETE.forEach(entries::accept);
+        Items.CONCRETE_STAIRS.forEach(entries::accept);
+        Items.CONCRETE_SLAB.forEach(entries::accept);
         Items.CONCRETE_POWDER.forEach(entries::accept);
         entries.accept(Items.DEAD_TUBE_CORAL_BLOCK);
         entries.accept(Items.DEAD_BRAIN_CORAL_BLOCK);

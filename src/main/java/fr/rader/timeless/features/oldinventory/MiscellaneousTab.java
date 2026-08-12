@@ -176,11 +176,6 @@ public class MiscellaneousTab extends Tab {
         entries.accept(Items.FIRE_CHARGE);
         entries.accept(Items.WRITABLE_BOOK);
         entries.accept(Items.MAP);
-        entries.accept(Items.ANCIENT_CITY_MAP);
-        entries.accept(Items.MINESHAFT_MAP);
-        entries.accept(Items.DESERT_PYRAMID_MAP);
-        entries.accept(Items.ABANDONED_CAMPSITE_MAP);
-        entries.accept(Items.WARM_OCEAN_RUINS_MAP);
         entries.accept(Items.NETHER_STAR);
         CreativeModeTabs.generateFireworksAllDurations(entries, CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS);
         entries.accept(Items.FIREWORK_STAR);

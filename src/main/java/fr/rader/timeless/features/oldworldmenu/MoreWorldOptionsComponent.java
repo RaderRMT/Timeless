@@ -99,16 +99,16 @@ public class MoreWorldOptionsComponent {
 
     public void setVisibility(boolean visible) {
         if (isDebug()) {
-            this.generateStructuresButton.visible = false;
-            this.bonusChestButton.visible = false;
-            this.customizeWorldButton.visible = false;
+            this.generateStructuresButton.setVisible(false);
+            this.bonusChestButton.setVisible(false);
+            this.customizeWorldButton.setVisible(false);
         } else {
-            this.generateStructuresButton.visible = visible;
-            this.bonusChestButton.visible = visible;
-            this.customizeWorldButton.visible = visible;
+            this.generateStructuresButton.setVisible(visible);
+            this.bonusChestButton.setVisible(visible);
+            this.customizeWorldButton.setVisible(visible);
         }
 
-        this.worldTypeButton.visible = visible;
+        this.worldTypeButton.setVisible(visible);
         this.seedField.setVisible(visible);
     }
 
@@ -123,9 +123,9 @@ public class MoreWorldOptionsComponent {
             this.amplifiedWorldInfo.visitLines(TextAlignment.LEFT, this.worldTypeButton.getX() + 2, this.worldTypeButton.getY() + 22, 9, graphics.textRenderer());
         }
 
-        this.generateStructuresButton.visible = !isDebug;
-        this.bonusChestButton.visible = !isDebug;
-        this.customizeWorldButton.visible = !isDebug && this.uiState.getPresetEditor() != null;
+        this.generateStructuresButton.setVisible(!isDebug);
+        this.bonusChestButton.setVisible(!isDebug);
+        this.customizeWorldButton.setVisible(!isDebug && this.uiState.getPresetEditor() != null);
     }
 
     private CycleButton.ValueListSupplier<WorldCreationUiState.WorldTypeEntry> getWorldTypes() {

@@ -304,18 +304,18 @@ public abstract class MixinCreateWorldScreen extends Screen {
     @Unique
     private void timeless$setWorldOptionsVisibility(boolean visible) {
         this.timeless$isWorldOptionsToggled = visible;
-        this.timeless$gameModeButton.visible = !visible;
-        this.timeless$difficultyButton.visible = !visible;
+        this.timeless$gameModeButton.setVisible(!visible);
+        this.timeless$difficultyButton.setVisible(!visible);
 
         if (this.timeless$moreWorldOptionsComponent.isDebug()) {
-            this.timeless$dataPacksButton.visible = false;
+            this.timeless$dataPacksButton.setVisible(false);
             this.timeless$gameModeButton.active = false;
 
             if (this.timeless$nonDebugGameMode == null) {
                 this.timeless$nonDebugGameMode = this.timeless$gameModeButton.getValue();
             }
 
-            this.timeless$allowCheatsButton.visible = false;
+            this.timeless$allowCheatsButton.setVisible(false);
             timeless$setGameMode(WorldCreationUiState.SelectedGameMode.DEBUG);
         } else {
             this.timeless$gameModeButton.active = true;
@@ -323,8 +323,8 @@ public abstract class MixinCreateWorldScreen extends Screen {
                 timeless$setGameMode(this.timeless$nonDebugGameMode);
             }
 
-            this.timeless$allowCheatsButton.visible = !visible;
-            this.timeless$dataPacksButton.visible = !visible;
+            this.timeless$allowCheatsButton.setVisible(!visible);
+            this.timeless$dataPacksButton.setVisible(!visible);
         }
 
         this.timeless$moreWorldOptionsComponent.setVisibility(visible);
@@ -336,6 +336,6 @@ public abstract class MixinCreateWorldScreen extends Screen {
             this.timeless$moreWorldOptionsButton.setMessage(MORE_WORLD_OPTIONS_TEXT);
         }
 
-        this.timeless$gameRulesButton.visible = !visible;
+        this.timeless$gameRulesButton.setVisible(!visible);
     }
 }

@@ -27,8 +27,8 @@ public abstract class MixinIconSet {
         }
 
         List<IoSupplier<InputStream>> icons = List.of(
-                IconSupplier.getIcon("icon_16x16.png"),
-                IconSupplier.getIcon("icon_32x32.png")
+                IconSupplier.getIcon("icon_32x32.png"),
+                IconSupplier.getIcon("icon_16x16.png")
         );
 
         cir.setReturnValue(icons);

@@ -85,7 +85,7 @@ public abstract class MixinPistonBaseBlock {
             return;
         }
 
-        level.playSound(null, pos, SoundEvents.ANVIL_PLACE, SoundSource.BLOCKS, 0.5f, level.getRandom().nextFloat() * 0.25f + 0.4f);
+        level.playSound(null, pos, SoundEvents.ANVIL.placeSound().get(), SoundSource.BLOCKS, 0.5f, level.getRandom().nextFloat() * 0.25f + 0.4f);
         level.addParticle(ParticleTypes.LARGE_SMOKE, pos.getX() + 0.5, pos.getY() + 0.8, pos.getZ() + 0.5, 0.0, 0.0, 0.0);
 
         this.timeless$wasPowered = true;

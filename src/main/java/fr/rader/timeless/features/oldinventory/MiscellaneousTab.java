@@ -48,6 +48,7 @@ public class MiscellaneousTab extends Tab {
         entries.accept(Items.LAVA_BUCKET);
         entries.accept(Items.POWDER_SNOW_BUCKET);
         entries.accept(Items.SNOWBALL);
+        entries.accept(Items.ICE_BALL);
         entries.accept(Items.LEATHER);
         entries.accept(Items.MILK_BUCKET);
         entries.accept(Items.PUFFERFISH_BUCKET);
@@ -111,6 +112,7 @@ public class MiscellaneousTab extends Tab {
         entries.accept(Items.EVOKER_SPAWN_EGG);
         entries.accept(Items.FOX_SPAWN_EGG);
         entries.accept(Items.FROG_SPAWN_EGG);
+        entries.accept(Items.FROSTBITE_SPAWN_EGG);
         entries.accept(Items.GHAST_SPAWN_EGG);
         entries.accept(Items.GLOW_SQUID_SPAWN_EGG);
         entries.accept(Items.GOAT_SPAWN_EGG);
@@ -223,6 +225,7 @@ public class MiscellaneousTab extends Tab {
         entries.accept(Items.MUSIC_DISC_TEARS);
         entries.accept(Items.MUSIC_DISC_LAVA_CHICKEN);
         entries.accept(Items.MUSIC_DISC_BOUNCE);
+        entries.accept(Items.MUSIC_DISC_FLURRY);
         entries.accept(Items.DISC_FRAGMENT_5);
         entries.accept(Items.NAUTILUS_SHELL);
         entries.accept(Items.HEART_OF_THE_SEA);

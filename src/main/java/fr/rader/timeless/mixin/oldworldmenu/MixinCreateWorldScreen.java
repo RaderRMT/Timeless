@@ -86,12 +86,12 @@ public abstract class MixinCreateWorldScreen extends Screen {
             at = @At("HEAD"),
             cancellable = true
     )
-    public void timeless$extractRenderState(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float delta, CallbackInfo ci) {
+    public void timeless$extractRenderState(GuiGraphicsExtractor graphics, CallbackInfo ci) {
         if (!TimelessConfig.get().useOldWorldMenu) {
             return;
         }
 
-        super.extractRenderState(graphics, mouseX, mouseY, delta);
+        super.extractRenderState(graphics);
 
         graphics.centeredText(this.font, this.title, this.timeless$halfWidth, 20, -1);
 

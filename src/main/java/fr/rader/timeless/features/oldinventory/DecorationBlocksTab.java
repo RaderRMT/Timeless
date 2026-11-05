@@ -179,6 +179,11 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.SULFUR_WALL);
         entries.accept(Items.POLISHED_SULFUR_WALL);
         entries.accept(Items.SULFUR_BRICK_WALL);
+        entries.accept(Items.PACKED_ICE_BRICK_WALL);
+        entries.accept(Items.SNOW_BRICK_WALL);
+        entries.accept(Items.CALCITE_WALL);
+        entries.accept(Items.POLISHED_CALCITE_WALL);
+        entries.accept(Items.POLISHED_CALCITE_BRICK_WALL);
         entries.accept(Items.ANVIL);
         entries.accept(Items.CHIPPED_ANVIL);
         entries.accept(Items.DAMAGED_ANVIL);
@@ -288,8 +293,10 @@ public class DecorationBlocksTab extends Tab {
         entries.accept(Items.MEDIUM_AMETHYST_BUD);
         entries.accept(Items.LARGE_AMETHYST_BUD);
         entries.accept(Items.AMETHYST_CLUSTER);
+        entries.accept(Items.ICE_CRYSTAL);
         entries.accept(Items.POINTED_DRIPSTONE);
         entries.accept(Items.SULFUR_SPIKE);
+        entries.accept(Items.ICICLE);
         entries.accept(Items.DECORATED_POT);
         entries.accept(Items.DRAGON_EGG);
         entries.accept(Items.MANGROVE_ROOTS);

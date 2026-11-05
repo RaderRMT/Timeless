@@ -3,12 +3,12 @@ package fr.rader.timeless.mixin.oldbackground;
 import fr.rader.timeless.config.TimelessConfig;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
+import net.minecraft.client.gui.GuiPipeline;
 import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.client.gui.screens.WorldOptionsScreen;
 import net.minecraft.client.gui.screens.options.*;
 import net.minecraft.client.gui.screens.options.controls.ControlsScreen;
 import net.minecraft.client.gui.screens.options.controls.KeyBindsScreen;
-import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.ARGB;
@@ -64,7 +64,7 @@ public abstract class MixinScreen {
             at = @At("HEAD"),
             cancellable = true
     )
-    private void timeless$extractBackground(GuiGraphicsExtractor graphics, int mouseX, int mouseY, float a, CallbackInfo ci) {
+    private void timeless$extractBackground(GuiGraphicsExtractor graphics, CallbackInfo ci) {
         if (!TimelessConfig.get().useOldScreenBackground) {
             return;
         }
@@ -98,6 +98,6 @@ public abstract class MixinScreen {
 
     @Unique
     private void timeless$renderDirtBackground(GuiGraphicsExtractor graphics) {
-        graphics.blit(RenderPipelines.GUI_TEXTURED, timeless$OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0.0f, 0.0f, this.width, this.height, 32, 32, ARGB.color(255, 64, 64, 64));
+        graphics.blit(GuiPipeline.TEXTURED, timeless$OPTIONS_BACKGROUND_TEXTURE, 0, 0, 0.0f, 0.0f, this.width, this.height, 32, 32, ARGB.color(255, 64, 64, 64));
     }
 }

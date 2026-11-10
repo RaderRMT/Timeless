@@ -328,7 +328,6 @@ public class DecorationBlocksTab extends Tab {
                 .ifPresent(
                         wrapper -> CreativeModeTabs.generatePresetPaintings(
                                 entries,
-                                parameters.holders(),
                                 wrapper,
                                 variant -> !variant.is(PaintingVariantTags.PLACEABLE),
                                 CreativeModeTab.TabVisibility.PARENT_AND_SEARCH_TABS

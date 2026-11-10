@@ -3,6 +3,7 @@ package fr.rader.timeless.mixin.oldinventory;
 import fr.rader.timeless.config.TimelessConfig;
 import fr.rader.timeless.features.oldinventory.*;
 import net.minecraft.core.Registry;
+import net.minecraft.core.WritableRegistry;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.item.CreativeModeTab;
@@ -15,6 +16,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.lang.reflect.InvocationTargetException;
@@ -51,7 +53,7 @@ public abstract class MixinCreativeModeTabs {
             at = @At("HEAD"),
             cancellable = true
     )
-    private static void timeless$bootstrap(Registry<CreativeModeTab> registry, CallbackInfoReturnable<CreativeModeTab> cir) {
+    private static void timeless$bootstrap(WritableRegistry<CreativeModeTab> registry, CallbackInfo ci) {
         if (!TimelessConfig.get().useOldInventoryLayout) {
             return;
         }
@@ -65,7 +67,7 @@ public abstract class MixinCreativeModeTabs {
             }
         }
 
-        cir.setReturnValue(Registry.register(
+        Registry.register(
                 registry,
                 INVENTORY,
                 CreativeModeTab.builder(CreativeModeTab.Row.BOTTOM, 6)
@@ -77,6 +79,8 @@ public abstract class MixinCreativeModeTabs {
                         .type(CreativeModeTab.Type.INVENTORY)
                         .noScrollBar()
                         .build()
-        ));
+        );
+
+        ci.cancel();
     }
 }
